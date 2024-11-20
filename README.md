@@ -31,4 +31,4 @@ void ( async function () {
 To view Softio's documentation, simply visit this link to read <a href="https://github.com/AryaFardmanesh/softio/blob/main/DOCS/api.md">all available APIs</a>. We try to always keep our documentation up to date so that you can easily use our package.
 
 # Licence
-Softio is licensed under the MIT, allowing you to modify it safely.
+Softio is licensed under the <a href="https://github.com/AryaFardmanesh/softio/blob/main/LICENSE">MIT</a>, allowing you to modify it safely.
