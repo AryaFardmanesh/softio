@@ -23,7 +23,7 @@ const softio = require( 'softio' );
 
 void ( async function () {
 
-  const name = await softio.input( 'Enter your name:  );
+  const name = await softio.input( 'Enter your name: ' );
   softio.writeln( `Welcome ${ name }.` );
 
 } ) ();
