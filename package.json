@@ -1,6 +1,6 @@
 {
 	"name": "softio",
-	"version": "0.0.0",
+	"version": "0.0.3",
 	"description": "The NodeJs library for write/read from terminal.",
 	"main": "dist/main.js",
 	"scripts": {
@@ -21,6 +21,13 @@
 		"name": "Arya Fardmanesh",
 		"email": "AryaFardmanesh.1383@gmail.com",
 		"url": "https://github.com/AryaFardmanesh/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AryaFardmanesh/softio"
+	},
+	"bugs": {
+		"url": "https://github.com/AryaFardmanesh/softio/issues"
 	},
 	"license": "MIT",
 	"devDependencies": {

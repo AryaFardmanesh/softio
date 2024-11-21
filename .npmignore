@@ -1,0 +1,6 @@
+build/
+DOCS/
+logo/
+build.config.js
+env.json
+gulpfile.js
