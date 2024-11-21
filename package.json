@@ -1,0 +1,23 @@
+{
+	"name": "softio",
+	"version": "0.0.0",
+	"description": "The NodeJs library for write/read from terminal.",
+	"main": "dist/main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"softio",
+		"nodejs",
+		"console",
+		"javascript",
+		"terminal",
+		"stdio"
+	],
+	"author": {
+		"name": "Arya Fardmanesh",
+		"email": "AryaFardmanesh.1383@gmail.com",
+		"url": "https://github.com/AryaFardmanesh/"
+	},
+	"license": "MIT"
+}
