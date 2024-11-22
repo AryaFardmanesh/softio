@@ -10,8 +10,13 @@ const babelConfig = {
 	presets: [ '@babel/env' ]
 };
 
+const terserConfig = {
+	// The terser config https://github.com/terser/terser#minify-options
+};
+
 module.exports = {
 	entry: srcFilePath,
 	output: distDirPath,
 	babel: babelConfig,
+	terser: terserConfig,
 };
