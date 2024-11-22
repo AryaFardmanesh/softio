@@ -11,6 +11,10 @@ const mode = env?.env || 'development';
 
 const webpackConfig = {
 	mode: mode,
+	output: {
+		library: 'softio',
+		libraryTarget: 'umd'
+	},
 	target: 'node'
 };
 
