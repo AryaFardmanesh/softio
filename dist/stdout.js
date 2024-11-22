@@ -1,0 +1,1 @@
+"use strict";var softio=require("./softio"),stdout=process.stdout;softio.write=function(t){var o;t="function"==typeof(null===(o=t)||void 0===o?void 0:o.toString)?t.toString():void 0===t?"undefined":"<Unknown>",stdout.write(t)};
