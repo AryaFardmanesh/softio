@@ -1,1 +1,3 @@
-// Let's start the project.
+require( './stdout' );
+
+module.exports = require( './softio' );

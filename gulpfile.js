@@ -1,7 +1,10 @@
 const gulp = require( 'gulp' );
 const clean = require( 'gulp-clean' );
-const webpack = require( 'webpack-stream' );
+const babel = require( 'gulp-babel' );
+const terser = require( 'gulp-terser' );
+const replace = require( 'gulp-string-replace' );
 const config = require( './build.config' );
+const pkg = require( './package.json' );
 
 
 /**
@@ -22,7 +25,9 @@ gulp.task( 'clean', () => {
 gulp.task( 'build', () => {
 	return (
 		gulp.src( config.entry )
-			.pipe( webpack( config.webpack ) )
+			.pipe( babel( config.babel ) )
+			.pipe( terser( config.terser ) )
+			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( config.output ) )
 	);
 } );
