@@ -22,7 +22,7 @@ softio.write( 'Hello ' );
 softio.write( 'world!' );
 ```
 
-- `writeln( message: any ) -> void`: This method prints the input message to the console, automatically appending a newline `\n`` at the end.
+- `writeln( message: any ) -> void`: This method prints the input message to the console, automatically appending a newline `\n` at the end.
 
 **Note:** If no arguments are given to this function (i.e. the message value is undefined), it will only append a newline `\n`.
 
