@@ -1,1 +1,1 @@
-"use strict";require("./stdout"),module.exports=require("./softio");
+"use strict";require("./stdout"),require("./stdin"),module.exports=require("./softio");

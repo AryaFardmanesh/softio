@@ -1,1 +1,1 @@
-"use strict";module.exports={version:"0.1.12"};
+"use strict";module.exports={version:"0.3.12"};
