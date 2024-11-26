@@ -37,3 +37,12 @@ const obj = {
 // This line below now displays a '\n' in the output instead of the word 'undefined'.
 softio.writeln( obj.other /* 'other' is undefined */ );
 ```
+
+# Inputs APIs
+
+- `async input( message: string ) -> string`: This method data from input.
+
+```js
+const name = await softio.input( "Enter your name: " );
+softio.writeln( `Welcome ${ name }.` );
+```
