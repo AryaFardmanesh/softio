@@ -5,6 +5,7 @@ const webpack = require( 'webpack-stream' );
 const babel = require( 'gulp-babel' );
 const terser = require( 'gulp-terser' );
 const replace = require( 'gulp-string-replace' );
+const writeFooter = require( 'gulp-footer' );
 const config = require( './build.config' );
 const pkg = require( './package.json' );
 
@@ -59,6 +60,18 @@ gulp.task( 'build', () => {
 } );
 
 /**
+ * @name patch
+ * @description This Gulp task used for patch 'export' to the final file.
+**/
+gulp.task( 'patch', () => {
+	return (
+		gulp.src( config.outputWithFileName )
+			.pipe( writeFooter( 'module.exports=softio.softio;' ) )
+			.pipe( gulp.dest( config.output ) )
+	);
+} );
+
+/**
  * @name default
  * @description The default Gulp task.
 **/
@@ -66,5 +79,6 @@ module.exports.default = gulp.series(
 	gulp.task( 'clean' ),
 	gulp.task( 'tscompile' ),
 	gulp.task( 'build' ),
+	gulp.task( 'patch' ),
 	gulp.task( 'clean:private' )
 );
