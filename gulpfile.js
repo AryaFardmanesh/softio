@@ -1,5 +1,6 @@
 const gulp = require( 'gulp' );
 const clean = require( 'gulp-clean' );
+const typescript = require( 'gulp-typescript' );
 const babel = require( 'gulp-babel' );
 const terser = require( 'gulp-terser' );
 const replace = require( 'gulp-string-replace' );
@@ -25,6 +26,7 @@ gulp.task( 'clean', () => {
 gulp.task( 'build', () => {
 	return (
 		gulp.src( config.entry )
+			.pipe( typescript( config.tscofig ) )
 			.pipe( babel( config.babel ) )
 			.pipe( terser( config.terser ) )
 			.pipe( replace( '@VERSION', pkg.version ) )
