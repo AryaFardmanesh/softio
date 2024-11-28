@@ -4,6 +4,7 @@ const tscofig = require( './tsconfig.json' );
 const sep = path.sep;
 
 const distDirPath = path.join( __dirname, ( 'dist' + sep ) );
+const outputWithFileName = path.join( distDirPath, 'main.js' );
 const privateDistDirPath = path.join( __dirname, ( '_dist' + sep ) );
 const compiledFilePath = path.join( privateDistDirPath, 'main.js' );
 const srcDirPath = path.join( __dirname, ( 'src' + sep ) );
@@ -19,12 +20,16 @@ const terserConfig = {
 
 const webpackConfig = {
 	// The webpack configuration document https://webpack.js.org/configuration/
-	mode: 'production'
+	mode: 'production',
+	output: {
+		library: 'softio'
+	}
 };
 
 module.exports = {
 	entry: srcFilePath,
 	output: distDirPath,
+	outputWithFileName: outputWithFileName,
 	compiledDirPath: privateDistDirPath,
 	compiledFilePath: compiledFilePath,
 	babel: babelConfig,
