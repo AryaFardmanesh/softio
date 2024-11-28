@@ -1,6 +1,7 @@
 const gulp = require( 'gulp' );
 const clean = require( 'gulp-clean' );
 const typescript = require( 'gulp-typescript' );
+const webpack = require( 'webpack-stream' );
 const babel = require( 'gulp-babel' );
 const terser = require( 'gulp-terser' );
 const replace = require( 'gulp-string-replace' );
@@ -10,12 +11,35 @@ const pkg = require( './package.json' );
 
 /**
  * @name clean
- * @description This Gulp task used for clean dist/ directory.
+ * @description This Gulp task used for clean dist/ and _dist/ directory.
 **/
 gulp.task( 'clean', () => {
 	return (
-		gulp.src( config.output, { allowEmpty: true, read: false } )
+		gulp.src( [ config.output, config.compiledDirPath ], { allowEmpty: true, read: false } )
 			.pipe( clean() )
+	);
+} );
+
+/**
+ * @name clean:private
+ * @description This Gulp task used for clean _dist/ directory.
+**/
+gulp.task( 'clean:private', () => {
+	return (
+		gulp.src( config.compiledDirPath, { allowEmpty: true, read: false } )
+			.pipe( clean() )
+	);
+} );
+
+/**
+ * @name tscompile
+ * @description This Gulp task used compile TypeScript to JavaScript.
+**/
+gulp.task( 'tscompile', () => {
+	return (
+		gulp.src( config.entry )
+			.pipe( typescript( config.tscofig ) )
+			.pipe( gulp.dest( config.compiledDirPath ) )
 	);
 } );
 
@@ -25,8 +49,8 @@ gulp.task( 'clean', () => {
 **/
 gulp.task( 'build', () => {
 	return (
-		gulp.src( config.entry )
-			.pipe( typescript( config.tscofig ) )
+		gulp.src( config.compiledFilePath )
+			.pipe( webpack( config.webpack ) )
 			.pipe( babel( config.babel ) )
 			.pipe( terser( config.terser ) )
 			.pipe( replace( '@VERSION', pkg.version ) )
@@ -40,5 +64,7 @@ gulp.task( 'build', () => {
 **/
 module.exports.default = gulp.series(
 	gulp.task( 'clean' ),
-	gulp.task( 'build' )
+	gulp.task( 'tscompile' ),
+	gulp.task( 'build' ),
+	gulp.task( 'clean:private' )
 );
