@@ -72,6 +72,17 @@ gulp.task( 'patch', () => {
 } );
 
 /**
+ * @name append:d
+ * @description This Gulp task used for, move main.d.ts file to /dist/ directory
+**/
+gulp.task( 'append:d', () => {
+	return (
+		gulp.src( config.declareFilePath )
+			.pipe( gulp.dest( config.output ) )
+	);
+} );
+
+/**
  * @name default
  * @description The default Gulp task.
 **/
@@ -80,5 +91,6 @@ module.exports.default = gulp.series(
 	gulp.task( 'tscompile' ),
 	gulp.task( 'build' ),
 	gulp.task( 'patch' ),
-	gulp.task( 'clean:private' )
+	gulp.task( 'clean:private' ),
+	gulp.task( 'append:d' )
 );
