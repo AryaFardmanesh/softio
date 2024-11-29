@@ -54,7 +54,6 @@ gulp.task( 'build', () => {
 			.pipe( webpack( config.webpack ) )
 			.pipe( babel( config.babel ) )
 			.pipe( terser( config.terser ) )
-			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( config.output ) )
 	);
 } );
@@ -67,6 +66,7 @@ gulp.task( 'patch', () => {
 	return (
 		gulp.src( config.outputWithFileName )
 			.pipe( writeFooter( 'module.exports=softio.softio;' ) )
+			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( config.output ) )
 	);
 } );
