@@ -1,6 +1,6 @@
 build/
 DOCS/
 logo/
+src/
 build.config.js
-env.json
 gulpfile.js
