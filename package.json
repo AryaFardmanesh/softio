@@ -3,10 +3,17 @@
 	"version": "0.48.42",
 	"description": "The NodeJs library for write/read from terminal.",
 	"main": "dist/main.js",
+	"types": "dist/main.d.ts",
 	"scripts": {
 		"build": "npx gulp",
 		"test": "npx jest"
 	},
+	"files": [
+		"./dist/main.js",
+		"./dist/main.d.ts",
+		"./README.md",
+		"./LICENSE"
+	],
 	"keywords": [
 		"softio",
 		"nodejs",
