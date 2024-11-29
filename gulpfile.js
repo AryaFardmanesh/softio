@@ -54,7 +54,6 @@ gulp.task( 'build', () => {
 			.pipe( webpack( config.webpack ) )
 			.pipe( babel( config.babel ) )
 			.pipe( terser( config.terser ) )
-			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( config.output ) )
 	);
 } );
@@ -67,6 +66,18 @@ gulp.task( 'patch', () => {
 	return (
 		gulp.src( config.outputWithFileName )
 			.pipe( writeFooter( 'module.exports=softio.softio;' ) )
+			.pipe( replace( '@VERSION', pkg.version ) )
+			.pipe( gulp.dest( config.output ) )
+	);
+} );
+
+/**
+ * @name append:d
+ * @description This Gulp task used for, move main.d.ts file to /dist/ directory
+**/
+gulp.task( 'append:d', () => {
+	return (
+		gulp.src( config.declareFilePath )
 			.pipe( gulp.dest( config.output ) )
 	);
 } );
@@ -80,5 +91,6 @@ module.exports.default = gulp.series(
 	gulp.task( 'tscompile' ),
 	gulp.task( 'build' ),
 	gulp.task( 'patch' ),
-	gulp.task( 'clean:private' )
+	gulp.task( 'clean:private' ),
+	gulp.task( 'append:d' )
 );
