@@ -11,7 +11,7 @@ export default {
 		const msgLen: number = message.length;
 		const midPos: number = ( col / 2 ) - ( msgLen / 2 );
 
-		for ( let i: number = 0; i < midPos; i++ ) {
+		for ( let i: number = midPos; i >= 0; i-- ) {
 			centerMessage += ' ';
 		}
 
