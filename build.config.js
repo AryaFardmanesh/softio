@@ -21,6 +21,7 @@ const terserConfig = {
 const webpackConfig = {
 	// The webpack configuration document https://webpack.js.org/configuration/
 	mode: 'production',
+	target: 'node',
 	output: {
 		library: 'softio'
 	}
