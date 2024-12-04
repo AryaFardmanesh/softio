@@ -4,14 +4,14 @@
  * @description This function concatenates the arguments
  * together with a whitespace and prints it in the output.
 **/
-export declare function write( ...message: [ unknown ] ): void;
+export declare function write( ...message: unknown[] ): void;
 
 /**
  * @description This function concatenates the arguments
  * with a blank space and creates a new line at the end
  * and prints it in the output.
 **/
-export declare function writeln( ...message: [ unknown ] ): void;
+export declare function writeln( ...message: unknown[] ): void;
 
 /**
  * @description This function is used to print a string.
@@ -20,7 +20,7 @@ export declare function writeln( ...message: [ unknown ] ): void;
  * address.
  * https://github.com/AryaFardmanesh/softio/blob/main/DOCS/api.md
 **/
-export declare function printf( message: string, ...argv: [ unknown ] ): void;
+export declare function printf( message: string, ...argv: unknown[] ): void;
 
 /**
  * @description This function is implemented to print an error
@@ -28,7 +28,7 @@ export declare function printf( message: string, ...argv: [ unknown ] ): void;
  * except that you write the input method to the operating system's
  * 'stderr' instead of 'stdout'.
 **/
-export declare function error( message: string, ...argv: [ unknown ] ): void;
+export declare function error( message: string, ...argv: unknown[] ): void;
 
 // ========== Output Methods ==========
 

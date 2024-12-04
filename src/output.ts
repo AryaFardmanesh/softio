@@ -16,7 +16,7 @@ function convertToString( data: unknown ): string {
 	return '<@UNKNOWN_TYPE_ERROR@>';
 }
 
-function parserMessageArray( message: [ unknown ] ): string {
+function parserMessageArray( message: unknown[] ): string {
 	let messageStr: string = '';
 
 	for ( const each of message ) {
@@ -28,7 +28,7 @@ function parserMessageArray( message: [ unknown ] ): string {
 	return messageStr.slice( 0, -1 );
 }
 
-function formatMessage( message: string, ...argv: [ unknown ] ): string {
+function formatMessage( message: string, ...argv: unknown[] ): string {
 	let formatMessage: string = '';
 	let argvPtr = 0;
 
@@ -48,17 +48,17 @@ function formatMessage( message: string, ...argv: [ unknown ] ): string {
 }
 
 export default {
-	write( ...message: [ unknown ] ): void {
+	write( ...message: unknown[] ): void {
 		const messageStr: string = parserMessageArray( message );
 		stdout.write( messageStr );
 	},
 
-	writeln( ...message: [ unknown ] ): void {
+	writeln( ...message: unknown[] ): void {
 		message.push( '\n' );
 		this.write( ...message );
 	},
 
-	printf( message: string = '', ...argv: [ unknown ] ): void {
+	printf( message: string = '', ...argv: unknown[] ): void {
 		if ( typeof message !== 'string' ) {
 			throw new TypeError( `The 'printf' method given only string message.` );
 		}
@@ -68,7 +68,7 @@ export default {
 		stdout.write( message );
 	},
 
-	error( message: string = '', ...argv: [ unknown ] ): void {
+	error( message: string = '', ...argv: unknown[] ): void {
 		if ( typeof message !== 'string' ) {
 			throw new TypeError( `The 'error' method given only string message.` );
 		}
