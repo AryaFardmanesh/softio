@@ -1,48 +1,53 @@
-# Softio.js APIs Documentation
-In this file we are going to list all the APIs available in Softio and explain them all.
-These lists are divided into four parts, the first part is the APIs for working with output. The second part is for working with inputs and the third part is for terminal properties and styles and finally we will discuss the Event APIs.
+# Softio Documentation
+In this file we are going to explain the methods available in Softio and how to use them.
 
-## Table of contents
-- Output APIs
-- Input APIs
-- Attribute APIs
-- Events APIs
+## Outputs Methods
 
-# Output APIs
-Using these methods, you can print a message to the output and display it to the user.
+### `write( ...message: unknown[] ): void`
 
-These methods include:
-- `write( message: any ) -> void`: This method prints the input message to the output.
+This method is for displaying (printing) information to the console.
 
-**Note:** This method does not add any newline like `\n` to the end of your message and displays all messages one after the other. Take a look at the example below.
+Bugs:
+1. This method does not have the ability to print objects in the current version.
 
+---
+
+### `writeln( ...message: unknown[] ): void`
+
+This method is used to display information. The only difference between this method and the `write` method is that this method adds a newline at the end of your input message.
+
+Bugs:
+1. This method does not have the ability to print objects in the current version.
+
+---
+
+### `printf( message: string, ...argv: unknown[] ): void`
+
+This method is implemented with the logic of the `printf` function in the C language. In this way, in the first input you give the message to the function as a string, you can declare variables in the text that you give as a message to the function, then in the next inputs this function sends these variables to the function and this function itself replaces them in your message and displays the result.
+
+Note: You can specify the position of each argument using `%v`.
+
+Example:
 ```js
-// Output: Hello world!
-softio.write( 'Hello ' );
-softio.write( 'world!' );
+const name = 'Jhon';
+const role = 'admin';
+
+// Output: Hello Jhon. Your role is admin.
+softio.printf( 'Hello %v. Your role is %v.', name, role );
 ```
 
-- `writeln( message: any ) -> void`: This method prints the input message to the console, automatically appending a newline `\n` at the end.
+---
 
-**Note:** If no arguments are given to this function (i.e. the message value is undefined), it will only append a newline `\n`.
+### `error( message: string, ...argv: unknown[] ): void`
 
-***Problem***: If you accidentally pass an undefined value to this function, it will just display it as a `\n`, which means that when debugging your project, you will have to use other methods to print out the value that might be undefined.
+This function is implemented exactly with the logic of the `printf` function, except that it prints the message as an error.
+More precisely, it writes the sent message to the operating system's `stderr`.
 
-Consider the following example:
+Example:
 ```js
-const obj = {
-	value: 'test'
-};
+const name = 'Jhon';
+const role = 'admin';
 
-// This line below now displays a '\n' in the output instead of the word 'undefined'.
-softio.writeln( obj.other /* 'other' is undefined */ );
-```
-
-# Inputs APIs
-
-- `async input( message: string ) -> string`: This method data from input.
-
-```js
-const name = await softio.input( "Enter your name: " );
-softio.writeln( `Welcome ${ name }.` );
+// Output: Error: By user Jhon with admin role.
+softio.error( 'Error: By user %v with %v role.', name, role );
 ```
