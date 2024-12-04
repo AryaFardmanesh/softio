@@ -54,8 +54,13 @@ export default {
 	},
 
 	writeln( ...message: unknown[] ): void {
+<<<<<<< HEAD
 		const messageStr: string = parserMessageArray( message ) + '\n';
 		stdout.write( messageStr );
+=======
+		message.push( '\n' );
+		this.write( ...message );
+>>>>>>> e1bef98 (Change: unknown params.)
 	},
 
 	printf( message: string = '', ...argv: unknown[] ): void {
