@@ -54,8 +54,8 @@ export default {
 	},
 
 	writeln( ...message: unknown[] ): void {
-		message.push( '\n' );
-		this.write( ...message );
+		const messageStr: string = parserMessageArray( message ) + '\n';
+		stdout.write( messageStr );
 	},
 
 	printf( message: string = '', ...argv: unknown[] ): void {
