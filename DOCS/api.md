@@ -1,7 +1,7 @@
 # Softio Documentation
 In this file we are going to explain the methods available in Softio and how to use them.
 
-## Outputs Methods
+## Outputs Methods (Stdout, Stderr)
 
 ### `write( ...message?: unknown[] ): void`
 
@@ -54,6 +54,8 @@ softio.error( 'Error: By user %v with %v role.', name, role );
 
 ---
 
+## Input Methods (Stdin)
+
 ### `input( message?: string ): Promise<string>`
 
 Using this method you can read text from the input. This method reads the input text until the user presses the Enter button and returns the text after pressing Enter.
@@ -98,4 +100,123 @@ Example:
 ```js
 // Input message: Enter your age: 
 const age = softio.readNumber( 'Enter your age: ' );
+```
+
+---
+
+## Helper Methods
+
+### `center( message: string ): string`
+
+The method center align the input text. By adding enough space to the beginning of the input text to center it on the page.
+
+Example:
+```js
+softio.write(
+	softio.center( 'Welcome.' )
+);
+
+/*
+Terminal window:
+|----------------------------------------|
+|                Welcome.                |
+|----------------------------------------|
+*/
+```
+
+***Exception***:
+- This method uses mathematical calculations to center your text relative to the length and width of the terminal screen. So if you print centered text on a line that already contains text, that text will no longer be centered.
+
+For example:
+```js
+softio.write( 'Hello world!' );
+softio.write(
+	softio.center( 'Welcome.' )
+);
+
+/*
+Terminal window:
+|----------------------------------------|
+|Hello world!                Welcome.    |
+|----------------------------------------|
+*/
+```
+
+But it's work when use this:
+
+```js
+// Create new line after your message.
+softio.writeln( 'Hello world!' );
+softio.write(
+	softio.center( 'Welcome.' )
+);
+
+/*
+Terminal window:
+|----------------------------------------|
+|Hello world!                            |
+|                Welcome.                |
+|----------------------------------------|
+*/
+```
+
+---
+
+### `clear(): void`
+
+This method clears the user's terminal screen.
+
+For example:
+```js
+softio.write( 'Hello world!' );
+softio.clear();
+
+/*
+Terminal window:
+|----------------------------------------|
+|                                        |
+|----------------------------------------|
+*/
+```
+
+---
+
+## Attributes Methods
+
+### `assessor title( string ): string`
+
+This is an assessor that allows you to read the page title and set it.
+
+For example:
+```js
+// Get and print terminal title.
+softio.writeln( softio.title );
+
+// Set terminal title as 'some title'.
+softio.title = 'some title';
+```
+
+---
+
+### `get width(): number`
+
+This property returns the current screen width of the user's terminal.
+
+For example:
+```js
+softio.writeln(
+	softio.width
+);
+```
+---
+
+### `get height(): number`
+
+This property returns the current screen height of the user's terminal.
+
+For example:
+```js
+softio.writeln(
+	softio.height
+);
 ```
