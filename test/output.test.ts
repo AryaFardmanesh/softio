@@ -3,12 +3,14 @@ import output from '../src/output';
 
 const stdout = process.stdout;
 const stderr = process.stderr;
-const stdoutSpy = jest.spyOn( stdout, 'write' );
-const stderrSpy = jest.spyOn( stderr, 'write' );
 
 beforeEach( () => {
-	stdoutSpy.mockClear();
-	stderrSpy.mockClear();
+	jest.spyOn( stdout, 'write' ).mockImplementationOnce( ( str ) => {
+		return str as any;
+	} );
+	jest.spyOn( stderr, 'write' ).mockImplementationOnce( ( str ) => {
+		return str as any;
+	} );
 } );
 
 describe( 'The Output Group Test', () => {
