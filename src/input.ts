@@ -22,6 +22,29 @@ export default {
 	},
 
 	async confirm( message: string = '' ): Promise<boolean> {
+		/*
+			@Warning: We must check the type of the input
+			message before doing anything because it may
+			cause an error.
+			The input message is checked once more when it
+			is given to the "input" function, but we cannot
+			rely on checking the "input" data type alone
+			because if the input message is anything other
+			than a string, it will be affected by the
+			"message += ' (y/n) ';"	expression.
+
+			Consider the following examples:
+				message: <number>( 2 )
+				<- message += ' (y/n) ';
+				-> '2 (y/n) '
+
+			Therefore, type checking must be done in this
+			method.
+		*/
+		if ( typeof message !== 'string' ) {
+			throw new TypeError( `The 'confirm' function only takes a string as a message.` );
+		}
+
 		message += ' (y/n) ';
 
 		const result = ( await this.input( message ) ).trim().toUpperCase();
