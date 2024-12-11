@@ -6,9 +6,7 @@ export default {
 	},
 
 	set title( value: string ) {
-		if ( typeof value === 'undefined' ) {
-			value = this.title;
-		}else if ( typeof value !== 'string' ) {
+		if ( typeof value !== 'string' ) {
 			throw new TypeError( `The 'title' property only takes a string as a title.` );
 		}
 

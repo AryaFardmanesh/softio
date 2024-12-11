@@ -164,6 +164,13 @@ describe( 'The Output Group Test', () => {
 			expect( stdout.write ).toHaveBeenCalledWith( `argv1 Hello argv2\n` );
 		} );
 
+		it( 'Should throw an error if the message is not a string - Unit 5', () => {
+			expect( () => { output.printf( 123 as any ) } ).toThrow( TypeError );
+			expect( () => { output.printf( 1.3 as any ) } ).toThrow( TypeError );
+			expect( () => { output.printf( true as any ) } ).toThrow( TypeError );
+			expect( () => { output.printf( null as any ) } ).toThrow( TypeError );
+		} );
+
 	} );
 
 
@@ -198,6 +205,13 @@ describe( 'The Output Group Test', () => {
 
 			output.error( message, ...argv );
 			expect( stderr.write ).toHaveBeenCalledWith( `argv1 Hello argv2\n` );
+		} );
+
+		it( 'Should throw an error if the message is not a string - Unit 5', () => {
+			expect( () => { output.error( 123 as any ) } ).toThrow( TypeError );
+			expect( () => { output.error( 1.3 as any ) } ).toThrow( TypeError );
+			expect( () => { output.error( true as any ) } ).toThrow( TypeError );
+			expect( () => { output.error( null as any ) } ).toThrow( TypeError );
 		} );
 
 	} );
