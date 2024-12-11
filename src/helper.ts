@@ -6,16 +6,18 @@ export default {
 			throw new TypeError( `The 'center' function only takes a string as a message.` );
 		}
 
-		let centerMessage: string = '';
 		const col: number = stdout.columns;
-		const msgLen: number = message.length;
-		const midPos: number = ( col / 2 ) - ( msgLen / 2 );
+		const colMid: number = col / 2;
+		const endSpace: number = colMid - ( message.length / 2 );
+		let centerMessage: string = '';
 
-		for ( let i: number = midPos; i >= 0; i-- ) {
+		// Columns start from one.
+		for ( let i: number = 1; i <= endSpace; i++ ) {
 			centerMessage += ' ';
 		}
+		centerMessage += message;
 
-		return ( centerMessage + message );
+		return centerMessage;
 	},
 
 	clear(): void {
