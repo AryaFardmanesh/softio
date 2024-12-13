@@ -1,4 +1,5 @@
 import readline from 'node:readline/promises';
+import typeCheck from './utils/type-check';
 
 const stdin = process.stdin;
 const stdout = process.stdout;
@@ -41,24 +42,24 @@ export default {
 			Therefore, type checking must be done in this
 			method.
 		*/
-		if ( typeof message !== 'string' ) {
-			throw new TypeError( `The 'confirm' function only takes a string as a message.` );
-		}
+		typeCheck( 'confirm', 'string', message );
 
 		message += ' (y/n) ';
 
 		const result = ( await this.input( message ) ).trim().toUpperCase();
-		let isOk = false;
 
-		if ( result === 'Y' || result === 'YES' || result === 'OK' ) {
-			isOk = true;
+		switch ( result ) {
+			case 'Y':
+			case 'YES':
+			case 'OK':
+				return true;
+			default:
+				return false;
 		}
-
-		return isOk;
 	},
 
 	async readNumber( message: string = '' ): Promise<number> {
-		const result = ( await this.input( message ) ).trim();
+		const result = await this.input( message );
 		return Number( result );
 	},
 };
