@@ -79,3 +79,30 @@ export declare function center( message: string ): string;
 export declare function clear(): void;
 
 // ========== Helper Methods ==========
+
+
+// ========== Event Methods ==========
+
+declare enum eventTypes {
+	close 		= 'close'	,
+	error 		= 'error'	,
+	prefinish 	= 'prefinish'	,
+	finish 		= 'finish'	,
+	drain 		= 'drain'	,
+	data 		= 'data'	,
+	end 		= 'end'		,
+	readable 	= 'readable'	,
+	resize 		= 'resize'	,
+}
+
+/**
+ * @description This method sets an event for the terminal.
+**/
+export declare function addEventListener( type: eventTypes, listener: Function ): void;
+
+/**
+ * @description This method deletes an event that has already been set.
+**/
+export declare function removeEventListener( type: eventTypes ): void;
+
+// ========== Event Methods ==========
