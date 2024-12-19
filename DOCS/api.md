@@ -220,3 +220,59 @@ softio.writeln(
 	softio.height
 );
 ```
+
+---
+
+## Events Methods
+
+### `declare enum eventTypes`
+
+```ts
+declare enum eventTypes {
+	close 		= 'close'	,
+	error 		= 'error'	,
+	prefinish 	= 'prefinish'	,
+	finish 		= 'finish'	,
+	drain 		= 'drain'	,
+	data 		= 'data'	,
+	end 		= 'end'		,
+	readable 	= 'readable'	,
+	resize 		= 'resize'	,
+}
+```
+
+### `addEventListener( type: eventTypes, listener: Function ): void`
+
+This method registers the input function as an event in the terminal and calls that function when that event occurs.
+
+**Note:** The event names are taken from the NodeJS documentation itself and their functionality is all related to NodeJS itself, in essence this method is just an interface and does not do anything special.
+Of course, it should be said that the NodeJS documentation does not refer to its website, because the definition of events is not mentioned in the NodeJS documentation itself. Rather, we have obtained them ourselves by studying the source code and trial and error.
+
+**Note:** Some events are defined by NodeJS itself, so Softio does not remove those default events, but puts them in the new event you register so that the default function is called after your function to avoid possible problems.
+
+For example:
+```js
+// Get and print terminal title.
+softio.addEventListener( 'resize', () => {
+	softio.writeln( 'Window resized!' );
+} );
+```
+
+---
+
+### `removeEventListener( type: eventTypes,  ): void`
+
+This method deletes an event that has already been set.
+
+**Note:** This method does not delete default functions.
+
+For example:
+```js
+// Get and print terminal title.
+softio.addEventListener( 'resize', () => {
+	softio.writeln( 'Window resized!' );
+} );
+
+// The above event (resize) is canceled.
+softio.removeEventListener( 'resize' );
+```
