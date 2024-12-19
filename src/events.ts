@@ -12,6 +12,7 @@ const enum eventTypes {
 	resize 		= 'resize'	,
 }
 
+// This interface is for defining _events objects.
 interface INodeEvents {
 	close		: undefined | Function	,
 	error		: undefined | Function	,
@@ -24,6 +25,19 @@ interface INodeEvents {
 	resize		: undefined | Function	,
 }
 
+/*
+	Declare: There is no mention of this function in the
+	NodeJS documentation itself, so we have to
+	define it ourselves.
+
+	Why: Basically, we discovered the _events object from
+	within the NodeJS source code and wrote this code by
+	studying and testing.
+	Basically, there is no specific documentation for this
+	object provided by NodeJS itself and there is no .d.ts
+	file for process.stdout._events mentioned in TypeScript.
+	So we have to define it ourselves.
+*/
 declare const process: NodeJS.Process & {
 	stdout: {
 		_events: INodeEvents
