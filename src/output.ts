@@ -1,5 +1,5 @@
 import formatMessage from "./utils/format-msg";
-import parserMessageArray from "./utils/parse-msg-arr";
+import silentEcho from "./utils/silent-echo";
 import typeCheck from "./utils/type-check";
 
 const stdout = process.stdout;
@@ -7,12 +7,12 @@ const stderr = process.stderr;
 
 export default {
 	write( ...message: unknown[] ): void {
-		const messageStr: string = parserMessageArray( message );
+		const messageStr: string = silentEcho( ...message );
 		stdout.write( messageStr );
 	},
 
 	writeln( ...message: unknown[] ): void {
-		const messageStr: string = parserMessageArray( message ) + '\n';
+		const messageStr: string = ( silentEcho( ...message ) + '\n' );
 		stdout.write( messageStr );
 	},
 

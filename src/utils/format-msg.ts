@@ -1,4 +1,4 @@
-import convertToString from "./convert-to-string";
+import silentEcho from "./silent-echo";
 
 /**
  * @description This function reads the input message
@@ -14,7 +14,7 @@ export default function formatMessage( message: string, ...argv: unknown[] ): st
 
 		if ( ch === '%' && message[ i + 1 ] === 'v' ) {
 			i++;
-			formatMessage += convertToString( argv[ argvCursor++ ] );
+			formatMessage += silentEcho( argv[ argvCursor++ ] );
 			continue;
 		}
 

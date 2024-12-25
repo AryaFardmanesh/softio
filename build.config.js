@@ -8,7 +8,7 @@ const outputWithFileName = path.join( distDirPath, 'main.js' );
 const privateDistDirPath = path.join( __dirname, ( '_dist' + sep ) );
 const compiledFilePath = path.join( privateDistDirPath, 'main.js' );
 const srcDirPath = path.join( __dirname, ( 'src' + sep ) );
-const srcFilePath = path.join( srcDirPath, '/**/*.ts' );
+const srcFilePath = [ path.join( srcDirPath, '/**/*.ts' ), path.join( srcDirPath, '/**/*.js' ) ];
 const declareFilePath = path.join( srcDirPath, 'main.d.ts' );
 
 const babelConfig = {
