@@ -1,12 +1,14 @@
 {
 	"name": "softio",
-	"version": "1.5.0",
+	"version": "1.9.0",
 	"description": "The NodeJs library for write/read from terminal.",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"scripts": {
-		"build": "npx gulp",
-		"test": "npx jest"
+		"clean:temp": "gulp clean:temp",
+		"clean": "gulp clean:out",
+		"build": "gulp",
+		"test": "jest"
 	},
 	"files": [
 		"./dist/main.js",
