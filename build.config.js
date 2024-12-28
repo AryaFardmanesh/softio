@@ -1,17 +1,8 @@
 const path = require( 'node:path' );
-const tscofig = require( './tsconfig.json' );
-
-const sep = path.sep;
-
-const distDirPath = path.join( __dirname, ( 'dist' + sep ) );
-const outputWithFileName = path.join( distDirPath, 'main.js' );
-const privateDistDirPath = path.join( __dirname, ( '_dist' + sep ) );
-const compiledFilePath = path.join( privateDistDirPath, 'main.js' );
-const srcDirPath = path.join( __dirname, ( 'src' + sep ) );
-const srcFilePath = [ path.join( srcDirPath, '/**/*.ts' ), path.join( srcDirPath, '/**/*.js' ) ];
-const declareFilePath = path.join( srcDirPath, 'main.d.ts' );
+const tsconfig = require( './tsconfig.json' );
 
 const babelConfig = {
+	// The terser config document https://babeljs.io/docs/configuration
 	presets: [ '@babel/env' ]
 };
 
@@ -24,19 +15,13 @@ const webpackConfig = {
 	mode: 'production',
 	target: 'node',
 	output: {
-		library: 'softio'
+		libraryTarget: 'commonjs2'
 	}
 };
 
 module.exports = {
-	entry: srcFilePath,
-	output: distDirPath,
-	outputWithFileName: outputWithFileName,
-	compiledDirPath: privateDistDirPath,
-	compiledFilePath: compiledFilePath,
-	declareFilePath: declareFilePath,
 	babel: babelConfig,
 	terser: terserConfig,
 	webpack: webpackConfig,
-	tscofig: tscofig.compilerOptions
+	tsconfig: tsconfig.compilerOptions
 };
