@@ -10,87 +10,47 @@ const config = require( './build.config' );
 const pkg = require( './package.json' );
 
 
-/**
- * @name clean
- * @description This Gulp task used for clean dist/ and _dist/ directory.
-**/
-gulp.task( 'clean', () => {
-	return (
-		gulp.src( [ config.output, config.compiledDirPath ], { allowEmpty: true, read: false } )
-			.pipe( clean() )
-	);
+gulp.task( 'clean:out', () => {
+	return gulp.src( './dist/', { allowEmpty: true, read: false } )
+		.pipe( clean() );
 } );
 
-/**
- * @name clean:private
- * @description This Gulp task used for clean _dist/ directory.
-**/
-gulp.task( 'clean:private', () => {
-	return (
-		gulp.src( config.compiledDirPath, { allowEmpty: true, read: false } )
-			.pipe( clean() )
-	);
+gulp.task( 'clean:temp', () => {
+	return gulp.src( [ '!./dist/main.js', './dist/**/**' ], { allowEmpty: true, read: false } )
+		.pipe( clean() );
 } );
 
-/**
- * @name tscompile
- * @description This Gulp task used compile TypeScript to JavaScript.
-**/
 gulp.task( 'tscompile', () => {
 	return (
-		gulp.src( config.entry )
-			.pipe( typescript( config.tscofig ) )
-			.pipe( gulp.dest( config.compiledDirPath ) )
+		gulp.src( [ './src/**/*.ts', './src/**/*.js' ] )
+			.pipe( typescript( config.tsconfig ) )
+			.pipe( gulp.dest( './dist/' ) )
 	);
 } );
 
-/**
- * @name build
- * @description This Gulp task used build the project.
-**/
 gulp.task( 'build', () => {
 	return (
-		gulp.src( config.compiledFilePath )
+		gulp.src( './dist/main.js' )
+			.pipe( replace( '@VERSION', pkg.version ) )
+			.pipe( replace( '@NAME', pkg.name ) )
 			.pipe( webpack( config.webpack ) )
 			.pipe( babel( config.babel ) )
 			.pipe( terser( config.terser ) )
-			.pipe( gulp.dest( config.output ) )
+			.pipe( gulp.dest( './dist/' ) )
 	);
 } );
 
-/**
- * @name patch
- * @description This Gulp task used for patch 'export' to the final file.
-**/
-gulp.task( 'patch', () => {
+gulp.task( 'attach:declare', () => {
 	return (
-		gulp.src( config.outputWithFileName )
-			.pipe( writeFooter( 'module.exports=softio.softio;' ) )
-			.pipe( replace( '@VERSION', pkg.version ) )
-			.pipe( gulp.dest( config.output ) )
+		gulp.src( './src/**/*.d.ts' )
+			.pipe( gulp.dest( './dist/' ) )
 	);
 } );
 
-/**
- * @name append:d
- * @description This Gulp task used for, move main.d.ts file to /dist/ directory
-**/
-gulp.task( 'append:d', () => {
-	return (
-		gulp.src( config.declareFilePath )
-			.pipe( gulp.dest( config.output ) )
-	);
-} );
-
-/**
- * @name default
- * @description The default Gulp task.
-**/
 module.exports.default = gulp.series(
-	gulp.task( 'clean' ),
+	gulp.task( 'clean:out' ),
 	gulp.task( 'tscompile' ),
 	gulp.task( 'build' ),
-	gulp.task( 'patch' ),
-	gulp.task( 'clean:private' ),
-	gulp.task( 'append:d' )
+	gulp.task( 'clean:temp' ),
+	gulp.task( 'attach:declare' ),
 );
