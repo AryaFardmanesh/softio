@@ -4,7 +4,7 @@ const typescript = require( 'gulp-typescript' );
 const webpack = require( 'webpack-stream' );
 const babel = require( 'gulp-babel' );
 const terser = require( 'gulp-terser' );
-const replace = require( 'gulp-string-replace' );
+const replace = require( 'gulp-replace' );
 const config = require( './build.config' );
 const pkg = require( './package.json' );
 
@@ -30,11 +30,10 @@ gulp.task( 'tscompile', () => {
 gulp.task( 'build', () => {
 	return (
 		gulp.src( './dist/main.js' )
-			.pipe( replace( '@VERSION', pkg.version ) )
-			.pipe( replace( '@NAME', pkg.name ) )
 			.pipe( webpack( config.webpack ) )
 			.pipe( babel( config.babel ) )
 			.pipe( terser( config.terser ) )
+			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
 } );
