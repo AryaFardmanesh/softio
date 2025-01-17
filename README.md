@@ -64,7 +64,7 @@ Softio is licensed under the [MIT License](https://github.com/AryaFardmanesh/sof
 
 ## Contributing
 
-We welcome contributions from the community! If you’d like to help us improve Softio, please check out our [contributing guide]((https://github.com/AryaFardmanesh/softio/blob/main/DOCS/contribution.md)).
+We welcome contributions from the community! If you’d like to help us improve Softio, please check out our [contributing guide](https://github.com/AryaFardmanesh/softio/blob/main/DOCS/contribution.md).
 
 ---
 
