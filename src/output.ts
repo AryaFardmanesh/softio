@@ -1,34 +1,29 @@
-import formatMessage from "./utils/format-msg";
-import silentEcho from "./utils/silent-echo";
-import typeCheck from "./utils/type-check";
+import formatMessage from './utils/formatmsg';
+import silentEcho from './utils/silentecho';
+import typeCheck from './utils/typecheck';
+import { stdout } from './var/stdout';
+import { stderr } from './var/stderr';
 
-const stdout = process.stdout;
-const stderr = process.stderr;
-
-export default {
-	write( ...message: unknown[] ): void {
+export default class Out {
+	public static write( ...message: unknown[] ): void {
 		const messageStr: string = silentEcho( ...message );
 		stdout.write( messageStr );
-	},
+	}
 
-	writeln( ...message: unknown[] ): void {
+	public static writeln( ...message: unknown[] ): void {
 		const messageStr: string = ( silentEcho( ...message ) + '\n' );
 		stdout.write( messageStr );
-	},
+	}
 
-	printf( message: string = '', ...argv: unknown[] ): void {
+	public static printf( message: string, ...argv: unknown[] ): void {
 		typeCheck( 'printf', 'string', message );
-
 		message = formatMessage( message, ...argv );
-
 		stdout.write( message );
-	},
+	}
 
-	error( message: string = '', ...argv: unknown[] ): void {
+	public static error( message: string, ...argv: unknown[] ): void {
 		typeCheck( 'error', 'string', message );
-
 		message = formatMessage( message, ...argv );
-
 		stderr.write( message );
-	},
-};
+	}
+}

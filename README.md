@@ -1,57 +1,71 @@
-# Welcome to Softio project. 🔥
+# Welcome to Softio! 🚀
+
 <p align="center">
-	<img src="https://github.com/AryaFardmanesh/softio/blob/main/logo/logo-300x300.png" alt="The softio logo." />
+	<img src="https://github.com/AryaFardmanesh/softio/blob/main/logo/logo-300x300.png" alt="The Softio logo." />
 	<br />
 	<a href="https://www.designevo.com/" title="Free Online Logo Maker"><b>&copy; Logo Copyright By DesignEvo 🙏</b></a>
 </p>
 
-In late 1995, Brendan Eich released the first version of JavaScript. It is known as one of the main languages ​​of browsers (client side). Later, a person named Ryan Dahl managed to create NodeJs in mid-2009, which allowed users to use JavaScript outside the browser.
+## Introduction
 
-JavaScript, like any other programming language, has its strengths and weaknesses.
+In the realm of programming, JavaScript has been a cornerstone since its inception by Brendan Eich in 1995. Fast forward to mid-2009, Ryan Dahl revolutionized its usage by introducing Node.js, enabling JavaScript to run outside of the browser.
 
-As mentioned at the beginning, the purpose of creating JavaScript was to improve the performance of web pages, which means that this language itself does not have very advanced tools for working outside the browser.
+While JavaScript shines in the browser, it lacks cohesive tools for Input/Output (I/O) operations that are commonplace in many leading programming languages. Node.js, although powerful, presents I/O functionalities in a fragmented manner that can clutter your code.
 
-In most of the world's leading languages, you have tools for working with IO (input and output) in your program, which allows you to easily create console programs. Of course, there are very powerful tools for this inside NodeJs modules, but the problem is that they are all divided into different sections and not all of them are inside the object, which makes your code isn't clean.
-The goal of the Softio project is to collect all the modules that NodeJs provides for working with the console in one place and give them to other users.
+**Enter Softio!** 🌟
 
-Our intention is to use all the potential of NodeJs so that you can easily create any console application in NodeJs. Without the need to import a module for every task in your application.
-Softio allows you to import just one module and do a lot of different things in your application, such as reading text from the input and even getting a number from the input, writing (printing) data to the console, etc.
+Our mission with Softio is to streamline console programming in Node.js by centralizing the various I/O modules into a single, elegant package. With Softio, you can enhance your console applications effortlessly—but that’s just the beginning!
 
-These also include a number of more advanced features. Such as changing the colors of text and backgrounds or even displaying information in the middle of a line or even defining events for the console such as the resize event so that when the user resizes the console window you can execute a function.
+## Key Features
 
-To read the complete and detailed documentation of Softio, [just refer to this link.](https://github.com/AryaFardmanesh/softio/blob/main/DOCS/api.md)
+- **Simplified I/O Handling:** Import a single module to manage various console operations, such as reading user input, writing to the console, and handling numbers with ease.
+- **Advanced Console Control:** Change text and background colors, center output, and even set event listeners for actions like console resizing!
+- **All-in-One Package:** Reduce the clutter of multiple imports and enhance code readability.
 
-# Get Started
+## Getting Started
 
-To get started, just run the following command in your app's terminal to install the Softio package in your app.
+Ready to dive in? Follow these simple steps to get started with Softio:
+
+1. **Install Softio via npm:**
 
 ```sh
 npm install softio
 ```
 
-After installing Softio, you can import it into your application and use it.
-Below is a sample code of how to use this package in the beginning:
+2. **Import and Use Softio in Your Application:**
+
+Here’s a quick sample to get you started:
 
 ```js
-const softio = require( 'softio' );
+const Console = require( 'softio' );
 
-void ( async function () {
-
-	const name = await softio.input( 'Enter your name: ' );
-	const age = await softio.readNumber( 'Enter your age: ' );
+( async function () {
+	const name = await Console.In.input( 'Enter your name: ' );
+	const age = await Console.In.readNumber( 'Enter your age: ' );
 
 	if ( age < 18 ) {
-		softio.write( `Sorry, your age is under 18 :(` );
+		Console.Out.write( 'Sorry, your age is under 18 :(' );
 		return;
 	}
 
-	softio.writeln( softio.center( `Welcome ${ name }.` ) );
-
+	Console.Out.writeln( Console.Utilities.center( `Welcome ${name}.` ) );
 } ) ();
 ```
 
-This is a very simple program. Run it and see the result.
-[Seeing Softio documentation](https://github.com/AryaFardmanesh/softio/blob/main/DOCS/api.md)
+Run this simple program to see Softio in action!
 
-# Licence
-Softio is licensed under the <a href="https://github.com/AryaFardmanesh/softio/blob/main/LICENSE">MIT</a>, allowing you to modify it safely.
+## Documentation
+
+For a comprehensive guide to all features and functionalities, please refer to our [official documentation](https://github.com/AryaFardmanesh/softio/blob/main/DOCS/api.md).
+
+## License
+
+Softio is licensed under the [MIT License](https://github.com/AryaFardmanesh/softio/blob/main/LICENSE), allowing you to modify and use it freely.
+
+## Contributing
+
+We welcome contributions from the community! If you’d like to help us improve Softio, please check out our [contributing guide]((https://github.com/AryaFardmanesh/softio/blob/main/DOCS/contribution.md)).
+
+---
+
+Thank you for checking out Softio! Let’s build amazing console applications together! 🎉

@@ -1,16 +1,15 @@
-// import output from './output';
-// import input from './input';
-// import attributes from './attributes';
-// import helper from './helper';
-// import events from './events';
+import { version } from './var/version';
+import Out from './output';
+import In from './input';
+import Attr from './attributes';
+import Events from './events';
+import Utilities from './utilities';
 
-// export default {
-// 	version: '@VERSION',
-// 	...output,
-// 	...input,
-// 	...attributes,
-// 	...helper,
-// 	...events
-// };
-
-export { };
+export {
+	version,
+	Out,
+	In,
+	Attr,
+	Events,
+	Utilities
+};

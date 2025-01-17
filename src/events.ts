@@ -1,16 +1,4 @@
-import typeCheck from "./utils/type-check";
-
-const enum eventTypes {
-	close 		= 'close'	,
-	error 		= 'error'	,
-	prefinish 	= 'prefinish'	,
-	finish 		= 'finish'	,
-	drain 		= 'drain'	,
-	data 		= 'data'	,
-	end 		= 'end'		,
-	readable 	= 'readable'	,
-	resize 		= 'resize'	,
-}
+import typeCheck from './utils/typecheck';
 
 // This interface is for defining _events objects.
 interface INodeEvents {
@@ -30,12 +18,12 @@ interface INodeEvents {
 	NodeJS documentation itself, so we have to
 	define it ourselves.
 
-	Why: Basically, we discovered the _events object from
+	Why: Actually, we discovered the _events object from
 	within the NodeJS source code and wrote this code by
 	studying and testing.
 	Basically, there is no specific documentation for this
 	object provided by NodeJS itself and there is no .d.ts
-	file for process.stdout._events mentioned in TypeScript.
+	file for 'process.stdout._events' mentioned in TypeScript.
 	So we have to define it ourselves.
 */
 declare const process: NodeJS.Process & {
@@ -44,12 +32,25 @@ declare const process: NodeJS.Process & {
 	}
 };
 
+
+declare type EventTypesT =
+	'close' 	|
+	'error' 	|
+	'prefinish' 	|
+	'finish' 	|
+	'drain' 	|
+	'data' 		|
+	'end' 		|
+	'readable' 	|
+	'resize'
+;
+
 const stdout = process.stdout;
 const orginalEvents: INodeEvents = { ...stdout._events };
 const events: INodeEvents = stdout._events;
 
-export default {
-	addEventListener( type: eventTypes, listener: Function ): void {
+export default class Events {
+	public static addEventListener( type: EventTypesT, listener: Function ): void {
 		typeCheck( 'addEventListener', 'string', type );
 		typeCheck( 'addEventListener', 'function', listener );
 
@@ -59,9 +60,9 @@ export default {
 				orginalEvents[ type ]();
 			}
 		};
-	},
+	}
 
-	removeEventListener( type: eventTypes ): void {
+	public static removeEventListener( type: EventTypesT ): void {
 		events[ type ] = orginalEvents[ type ];
-	},
-};
+	}
+}

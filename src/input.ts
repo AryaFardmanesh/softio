@@ -1,14 +1,11 @@
 import readline from 'node:readline/promises';
-import typeCheck from './utils/type-check';
+import typeCheck from './utils/typecheck';
+import { stdout } from './var/stdout';
+import { stdin } from './var/stdin';
 
-const stdin = process.stdin;
-const stdout = process.stdout;
-
-export default {
-	async input( message: string = '' ): Promise<string> {
-		if ( typeof message !== 'string' ) {
-			throw new TypeError( `The 'input' function only takes a string as a message.` );
-		}
+export default class In {
+	public static async input( message: string ): Promise<string> {
+		typeCheck( 'In.input', 'string', message );
 
 		const readLineStream: readline.Interface = readline.createInterface( {
 			output: stdout,
@@ -20,19 +17,19 @@ export default {
 		readLineStream.close();
 
 		return result;
-	},
+	}
 
-	async confirm( message: string = '' ): Promise<boolean> {
+	public static async confirm( message: string ): Promise<boolean> {
 		/*
 			@Warning: We must check the type of the input
 			message before doing anything because it may
 			cause an error.
 			The input message is checked once more when it
-			is given to the "input" function, but we cannot
-			rely on checking the "input" data type alone
+			is given to the 'input' function, but we cannot
+			rely on checking the 'input' data type alone
 			because if the input message is anything other
 			than a string, it will be affected by the
-			"message += ' (y/n) ';"	expression.
+			`message += ' (y/n) ';`	expression.
 
 			Consider the following examples:
 				message: <number>( 2 )
@@ -43,6 +40,7 @@ export default {
 			method.
 		*/
 		typeCheck( 'confirm', 'string', message );
+		/* .................................... */
 
 		message += ' (y/n) ';
 
@@ -56,10 +54,10 @@ export default {
 			default:
 				return false;
 		}
-	},
+	}
 
-	async readNumber( message: string = '' ): Promise<number> {
+	public static async readNumber( message: string ): Promise<number> {
 		const result = await this.input( message );
 		return Number( result );
-	},
-};
+	}
+}

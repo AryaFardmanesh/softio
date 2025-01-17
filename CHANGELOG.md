@@ -9,3 +9,8 @@ In this version, we implemented the basic methods for printing and getting data 
 # Version 1.9.0
 \+ General change in the application build system and export modules.<br />
 \+ Some optimizations in the build system.<br />
+
+# Version 1.9.9
+\+ Overall change in the structure of methods to static methods in the class.<br />
+\+ Change the project file structure (such as adding var/ directory)<br />
+\+ Fixed the issue of not replacing the version during the project build process.<br />

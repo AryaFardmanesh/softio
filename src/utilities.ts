@@ -1,9 +1,8 @@
-import typeCheck from "./utils/type-check";
+import typeCheck from './utils/typecheck';
+import { stdout } from './var/stdout';
 
-const stdout = process.stdout;
-
-export default {
-	center( message: string = '' ): string {
+export default class Utilities {
+	public static center( message: string ): string {
 		typeCheck( 'center', 'string', message );
 
 		const endSpace: number = ( stdout.columns / 2 ) - ( message.length / 2 );
@@ -16,9 +15,9 @@ export default {
 		centerMessage += message;
 
 		return centerMessage;
-	},
+	}
 
-	clear(): void {
+	public static clear(): void {
 		stdout.write( '\x1b[2J' );
 	}
-};
+}
