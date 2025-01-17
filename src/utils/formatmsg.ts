@@ -1,4 +1,4 @@
-import silentEcho from "./silent-echo";
+import silentEcho from "./silentecho";
 
 /**
  * @description This function reads the input message
