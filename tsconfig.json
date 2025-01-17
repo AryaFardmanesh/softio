@@ -1,22 +1,22 @@
 {
-    "compilerOptions": {
-        "target": "es2016",
-        "module": "commonjs",
-        "sourceMap": true,
-        "removeComments": true,
-        "newLine": "lf",
-        "noEmitOnError": true,
-        "allowJs": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "noImplicitAny": false,
-        "noImplicitThis": true,
-        "useUnknownInCatchVariables": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noImplicitOverride": true,
-        "skipLibCheck": true
-    }
+	"compilerOptions": {
+		"target": "es2016",
+		"module": "commonjs",
+		"sourceMap": true,
+		"removeComments": true,
+		"newLine": "lf",
+		"noEmitOnError": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"noImplicitAny": false,
+		"noImplicitThis": true,
+		"useUnknownInCatchVariables": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noImplicitOverride": true,
+		"skipLibCheck": true
+	}
 }
