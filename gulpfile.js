@@ -5,7 +5,7 @@ const webpack = require( 'webpack-stream' );
 const babel = require( 'gulp-babel' );
 const terser = require( 'gulp-terser' );
 const replace = require( 'gulp-replace' );
-const config = require( './build.config' );
+const config = require( './config' );
 const pkg = require( './package.json' );
 
 
