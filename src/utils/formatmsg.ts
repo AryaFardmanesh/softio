@@ -1,11 +1,11 @@
-import silentEcho from "./silentecho";
+import silentEcho from './silentecho';
 
 /**
  * @description This function reads the input message
  * and replaces the variables defined in the message
  * with the data in argv.
 **/
-export default function formatMessage( message: string, ...argv: unknown[] ): string {
+export default function formatMessage( message: string, argv: unknown[] ): string {
 	let formatMessage: string = '';
 	let argvCursor = 0;
 
