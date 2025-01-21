@@ -17,13 +17,13 @@ export default class Out {
 
 	public static printf( message: string, ...argv: unknown[] ): void {
 		typeCheck( 'printf', 'string', message );
-		message = formatMessage( message, ...argv );
+		message = formatMessage( message, argv );
 		stdout.write( message );
 	}
 
 	public static error( message: string, ...argv: unknown[] ): void {
 		typeCheck( 'error', 'string', message );
-		message = formatMessage( message, ...argv );
+		message = formatMessage( message, argv );
 		stderr.write( message );
 	}
 }

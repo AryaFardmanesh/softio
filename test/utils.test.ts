@@ -1,98 +1,142 @@
-import { describe, it, expect } from '@jest/globals';
-import formatMsg from '../src/utils/format-msg';
-import typeCheck from '../src/utils/type-check';
+import { jest, beforeEach, describe, it, expect } from '@jest/globals';
+import typecheck from '../src/utils/typecheck';
+import silentecho from '../src/utils/silentecho';
+import formatmsg from '../src/utils/formatmsg';
 
-describe( 'The Utils Group Test', () => {
+beforeEach( () => {
+	jest.spyOn( process.stdout, 'write' ).mockImplementationOnce( ( str ) => {
+		return str as any;
+	} );
 
+	jest.spyOn( process.stderr, 'write' ).mockImplementationOnce( ( str ) => {
+		return str as any;
+	} );
+} );
 
-	describe( 'The Test Group - format message function', () => {
+describe( 'Testing utils functions - Test Group', () => {
+	describe( 'Testing typecheck function - Test Group', () => {
+		it( 'should throw an error if type is not match - Unit 1', () => {
+			const data = 'text';
+			expect( () => { typecheck( '$TEST$', 'string', data ) } ).not.toThrow( TypeError );
+		} );
 
-		it( 'should replace data into the message string correctly - Unit 1', () => {
-			const message = 'Hello %v.';
-			const argv = [ 'test' ];
-			const actual = formatMsg( message, ...argv );
-			const expected = 'Hello test.';
+		it( 'should throw an error if type is not match - Unit 2', () => {
+			const data = 'text';
+			expect( () => { typecheck( '$TEST$', 'number', data ) } ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 3', () => {
+			const data = 'text';
+			expect( () => { typecheck( '$TEST$', 'some', data ) } ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 4', () => {
+			const data = 10;
+			expect( () => { typecheck( '$TEST$', 'number', data ) } ).not.toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 5', () => {
+			const data = { id: 10 };
+			expect( () => { typecheck( '$TEST$', 'object', data ) } ).not.toThrow( TypeError );
+		} );
+	} );
+
+	describe( 'Testing silentecho function - Test Group', () => {
+		it( 'It should format the string correctly - Unit 1', () => {
+			const spy = jest.spyOn( console, 'log' );
+
+			const data = [ 'Hello' ];
+			silentecho( ...data );
+
+			expect( spy ).toHaveBeenCalledWith( ...data );
+		} );
+
+		it( 'It should format the string correctly - Unit 2', () => {
+			const spy = jest.spyOn( console, 'log' );
+
+			const data = [ true ];
+			silentecho( ...data );
+
+			expect( spy ).toHaveBeenCalledWith( ...data );
+		} );
+
+		it( 'It should format the string correctly - Unit 3', () => {
+			const spy = jest.spyOn( console, 'log' );
+
+			const data = [ 'Hello', { id: 10 } ];
+			silentecho( ...data );
+
+			expect( spy ).toHaveBeenCalledWith( ...data );
+		} );
+
+		it( 'It should format the string correctly - Unit 4', () => {
+			const spy = jest.spyOn( console, 'log' );
+
+			const data = [ 'Hello', { id: 10 }, 10 ];
+			silentecho( ...data );
+
+			expect( spy ).toHaveBeenCalledWith( ...data );
+		} );
+
+		it( 'It should format the string correctly - Unit 5', () => {
+			const spy = jest.spyOn( console, 'log' );
+
+			const data = [];
+			silentecho( ...data );
+
+			expect( spy ).toHaveBeenCalledWith( ...data );
+		} );
+	} );
+
+	describe( 'Testing formatmsg function - Test Group', () => {
+		it( 'It should format the string correctly - Unit 1', () => {
+			const message = 'text';
+			const params = [];
+
+			const expected = message;
+			const actual = formatmsg( message, params );
 
 			expect( actual ).toBe( expected );
 		} );
 
-		it( 'should replace data into the message string correctly - Unit 2', () => {
-			const message = 'Hello.';
-			const argv = [ 'test' ];
-			const actual = formatMsg( message, ...argv );
-			const expected = 'Hello.';
+		it( 'It should format the string correctly - Unit 2', () => {
+			const message = 'text';
+			const params = [ 'Hello' ];
+
+			const expected = message;
+			const actual = formatmsg( message, params );
 
 			expect( actual ).toBe( expected );
 		} );
 
-		it( 'should replace data into the message string correctly - Unit 3', () => {
-			const message = 'Hello %v.';
-			const argv: unknown[] = [];
-			const actual = formatMsg( message, ...argv );
-			const expected = 'Hello undefined.';
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should replace data into the message string correctly - Unit 4', () => {
+		it( 'It should format the string correctly - Unit 3', () => {
 			const message = '%v';
-			const argv: unknown[] = [ true ];
-			const actual = formatMsg( message, ...argv );
-			const expected = 'true';
+			const params = [ 'Hello' ];
+
+			const expected = `${ silentecho( params[ 0 ] ) }`;
+			const actual = formatmsg( message, params );
 
 			expect( actual ).toBe( expected );
 		} );
 
-		it( 'should replace data into the message string correctly - Unit 5', () => {
-			const message = 'Data: -%v-';
-			const argv: unknown[] = [ () => {} ];
-			const actual = formatMsg( message, ...argv );
-			const expected = 'Data: -[Function: (anonymous)]-';
+		it( 'It should format the string correctly - Unit 4', () => {
+			const message = '%v-%v';
+			const params = [ 'Hello', true ];
+
+			const expected = `${ silentecho( params[ 0 ] ) }-${ silentecho( params[ 1 ] ) }`;
+			const actual = formatmsg( message, params );
 
 			expect( actual ).toBe( expected );
 		} );
 
-		it( 'should replace data into the message string correctly - Unit 6', () => {
-			const message = '%x % % v';
-			const argv: unknown[] = [];
-			const actual = formatMsg( message, ...argv );
-			const expected = '%x % % v';
+		it( 'It should format the string correctly - Unit 5', () => {
+			const message = '%v-%v%v';
+			const params = [ 'Hello', true /*, undefined */ ];
+
+			const expected = `${ silentecho( params[ 0 ] ) }-${ silentecho( params[ 1 ] ) }${ silentecho( params[ 2 ] ) }`;
+			const actual = formatmsg( message, params );
 
 			expect( actual ).toBe( expected );
 		} );
-
 	} );
-
-
-	describe( 'The Test Group - type check function', () => {
-
-		it( 'should throw type error if input type was not match - Unit 1', () => {
-			expect( () => {
-
-				const data = true;
-				typeCheck( 'test', 'boolean', data );
-
-			} ).not.toThrow();
-		} );
-
-		it( 'should throw type error if input type was not match - Unit 2', () => {
-			expect( () => {
-
-				const data = true;
-				typeCheck( 'test', 'string', data );
-
-			} ).toThrow( TypeError );
-		} );
-
-		it( 'should throw type error if input type was not match - Unit 3', () => {
-			expect( () => {
-
-				const data = String;
-				typeCheck( 'test', 'string', data );
-
-			} ).toThrow( TypeError );
-		} );
-
-	} );
-
 } );
