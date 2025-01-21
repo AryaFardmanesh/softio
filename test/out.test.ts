@@ -1,6 +1,16 @@
-import { jest, describe, it, expect } from '@jest/globals';
+import { jest, beforeEach, describe, it, expect } from '@jest/globals';
 import silentecho from '../src/utils/silentecho';
 import Out from '../src/output';
+
+beforeEach( () => {
+	jest.spyOn( process.stdout, 'write' ).mockImplementationOnce( ( str ) => {
+		return str as any;
+	} );
+
+	jest.spyOn( process.stderr, 'write' ).mockImplementationOnce( ( str ) => {
+		return str as any;
+	} );
+} );
 
 describe( 'Testing output methods - Test Group', () => {
 	describe( 'Testing .write method - Test Group', () => {
