@@ -14,3 +14,6 @@ In this version, we implemented the basic methods for printing and getting data 
 \+ Overall change in the structure of methods to static methods in the class.<br />
 \+ Change the project file structure (such as adding var/ directory)<br />
 \+ Fixed the issue of not replacing the version during the project build process.<br />
+
+# Version 2.0.0
+\+ We have updated the documentation.
