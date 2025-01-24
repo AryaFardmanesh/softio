@@ -1,278 +1,312 @@
-# Softio Documentation
-In this file we are going to explain the methods available in Softio and how to use them.
+# Softio Tutorials
 
-## Outputs Methods (Stdout, Stderr)
+This file provides a comprehensive overview of all the methods available in the Softio library, serving as both an educational and instructional guide to help you utilize the library effectively.
 
-### `write( ...message?: unknown[] ): void`
+## Installation
 
-This method is for displaying (printing) information to the console.
+### Using NPM
+To use this package, you need to install it first. Softio is currently available on NPM but not yet released on Yarn. Use the following command to install the package:
 
-Bugs:
-1. This method does not have the ability to print objects in the current version.
+```sh
+npm install --save softio
+```
 
----
+After installation, you can import it into your project as shown:
 
-### `writeln( ...message?: unknown[] ): void`
-
-This method is used to display information. The only difference between this method and the `write` method is that this method adds a newline at the end of your input message.
-
-Bugs:
-1. This method does not have the ability to print objects in the current version.
-
----
-
-### `printf( message?: string, ...argv?: unknown[] ): void`
-
-This method is implemented with the logic of the `printf` function in the C language. In this way, in the first input you give the message to the function as a string, you can declare variables in the text that you give as a message to the function, then in the next inputs this function sends these variables to the function and this function itself replaces them in your message and displays the result.
-
-Note: You can specify the position of each argument using `%v`.
-
-Example:
 ```js
-const name = 'Jhon';
-const role = 'admin';
+const Console = require('softio');
+```
 
-// Output: Hello Jhon. Your role is admin.
-softio.printf( 'Hello %v. Your role is %v.', name, role );
+### Installation for TypeScript
+If you plan to use this package in a TypeScript project, follow the same installation steps as above. When you install the package, the accompanying `.d.ts` file will be downloaded, enabling TypeScript to recognize the library’s types.
+
+## Introduction
+
+Softio organizes its functionality into static methods grouped within several classes, each dedicated to specific purposes:
+
+- **Out**: Methods for displaying information and printing data to the terminal screen.
+- **In**: Methods for reading input and collecting user data.
+- **Utilities**: Methods for auxiliary tasks such as clearing the screen or centering text.
+- **Attr**: Properties and methods for managing console properties like screen dimensions.
+- **Events**: Methods for handling console events, such as reacting to screen resizing.
+
+Each class and its methods are detailed in the sections below.
+
+## Classes and Methods
+
+### Out Methods
+
+The **Out** class contains methods for printing and formatting output in the console.
+
+#### Accessing Out Methods
+
+```js
+const Console = require('softio');
+Console.Out; // Access the Out class
+```
+
+Alternatively:
+
+```js
+const { Out } = require('softio');
+```
+
+#### Methods
+
+##### `static write(...message: any[]): void`
+Displays messages without adding a newline.
+
+- **Parameters**:
+  - `message`: The data to print. Multiple arguments are concatenated with a space.
+- **Returns**: None.
+- **Example**:
+
+```js
+Console.Out.write('Hello world!');
+Console.Out.write('Welcome');
+```
+
+##### `static writeln(...message: any[]): void`
+Displays messages and moves to the next line afterward.
+
+- **Parameters**:
+  - `message`: The data to print. Multiple arguments are concatenated with a space.
+- **Returns**: None.
+- **Example**:
+
+```js
+Console.Out.writeln('Hello world!');
+Console.Out.writeln('Welcome');
+```
+
+##### `static printf(message: string, ...argv: any[]): void`
+Formats and prints a message, similar to C's `printf` function.
+
+- **Parameters**:
+  - `message`: Format string (e.g., `"Hello %v"`).
+  - `argv`: Arguments for placeholders in the message.
+- **Returns**: None.
+- **Example**:
+
+```js
+Console.Out.printf('Hello %v\n', 'John');
+```
+
+##### `static error(message: string, ...argv: any[]): void`
+Prints an error message to STDERR.
+
+- **Parameters**:
+  - `message`: Format string.
+  - `argv`: Arguments for placeholders in the message.
+- **Returns**: None.
+- **Example**:
+
+```js
+Console.Out.error('Error: %v', 'Something went wrong');
 ```
 
 ---
 
-### `error( message?: string, ...argv?: unknown[] ): void`
+### In Methods
 
-This function is implemented exactly with the logic of the `printf` function, except that it prints the message as an error.
-More precisely, it writes the sent message to the operating system's `stderr`.
+The **In** class contains methods for handling user input.
 
-Example:
+#### Accessing In Methods
+
 ```js
-const name = 'Jhon';
-const role = 'admin';
+const Console = require('softio');
+Console.In; // Access the In class
+```
 
-// Output: Error: By user Jhon with admin role.
-softio.error( 'Error: By user %v with %v role.', name, role );
+Alternatively:
+
+```js
+const { In } = require('softio');
+```
+
+#### Methods
+
+##### `static input(message?: string): Promise<string>`
+Prompts the user for input.
+
+- **Parameters**:
+  - `message`: Optional prompt message.
+- **Returns**: The user input as a string.
+- **Example**:
+
+```js
+const name = await Console.In.input('Enter your name: ');
+```
+
+##### `static confirm(message?: string): Promise<boolean>`
+Prompts the user with a yes/no question and returns a boolean.
+
+- **Parameters**:
+  - `message`: The question to display.
+- **Returns**: `true` for affirmative responses, `false` otherwise.
+- **Example**:
+
+```js
+const result = await Console.In.confirm('Do you love pizza?');
+```
+
+##### `static readNumber(message?: string): Promise<number>`
+Prompts the user for numeric input.
+
+- **Parameters**:
+  - `message`: Optional prompt message.
+- **Returns**: The user input as a number (or `NaN` if invalid).
+- **Example**:
+
+```js
+const age = await Console.In.readNumber('How old are you? ');
 ```
 
 ---
 
-## Input Methods (Stdin)
+### Attr Methods
 
-### `input( message?: string ): Promise<string>`
+The **Attr** class provides methods and properties for managing console attributes.
 
-Using this method you can read text from the input. This method reads the input text until the user presses the Enter button and returns the text after pressing Enter.
+#### Accessing Attr Methods
 
-Example:
 ```js
-const name = softio.input( 'Enter your name: ' );
+const Console = require('softio');
+Console.Attr; // Access the Attr class
+```
+
+Alternatively:
+
+```js
+const { Attr } = require('softio');
+```
+
+#### Methods
+
+##### `static get title(): string`
+Gets the console title.
+
+- **Returns**: The title as a string.
+- **Example**:
+
+```js
+Console.Out.writeln(Console.Attr.title);
+```
+
+##### `static set title(value: string)`
+Sets the console title.
+
+- **Parameters**:
+  - `value`: The new title.
+- **Example**:
+
+```js
+Console.Attr.title = 'New Title';
+```
+
+##### `static get width(): number`
+Gets the console's width in characters.
+
+- **Returns**: The width as a number.
+- **Example**:
+
+```js
+Console.Out.writeln(Console.Attr.width);
+```
+
+##### `static get height(): number`
+Gets the console's height in rows.
+
+- **Returns**: The height as a number.
+- **Example**:
+
+```js
+Console.Out.writeln(Console.Attr.height);
 ```
 
 ---
 
-### `confirm( message?: string ): Promise<boolean>`
+### Events Methods
 
-This text asks the user for permission to do something and returns the result to you as a boolean.
+The **Events** class handles console events, such as resizing.
 
-If the user's input is the following words, the result of the function is `true`, otherwise it is always `false`.
+#### Accessing Events Methods
 
-***Note: The input to this function is not case-sensitive.***
-
-#### True input values:
-- `Y`
-- `YES`
-- `OK`
-
-Example:
 ```js
-// Input message: Do you want to exit program ? (y/n) 
-const result = softio.confirm( 'Do you want to exit program ?' );
+const Console = require('softio');
+Console.Events; // Access the Events class
+```
+
+Alternatively:
+
+```js
+const { Events } = require('softio');
+```
+
+#### Methods
+
+##### `static addEventListener(type: EventTypesT, listener: Function): void`
+Registers an event listener.
+
+- **Parameters**:
+  - `type`: The event type.
+  - `listener`: The callback function to execute when the event occurs.
+- **Example**:
+
+```js
+Console.Events.addEventListener('resize', () => {
+  Console.Out.writeln('Console resized!');
+});
+```
+
+##### `static removeEventListener(type: EventTypesT): void`
+Removes an event listener.
+
+- **Parameters**:
+  - `type`: The event type to remove.
+- **Example**:
+
+```js
+Console.Events.removeEventListener('resize');
 ```
 
 ---
 
-### `readNumber( message?: string ): Promise<number>`
+### Utilities Methods
 
-This method reads a number from the input and returns it.
+The **Utilities** class provides general-purpose methods for console management.
 
-This function can read signed and unsigned numbers, as well as decimal and integer numbers from the input.
-
-***Exception: If the input cannot be converted to a number, the result of this function is `NaN`.***
-
-Example:
-```js
-// Input message: Enter your age: 
-const age = softio.readNumber( 'Enter your age: ' );
-```
-
----
-
-## Helper Methods
-
-### `center( message: string ): string`
-
-The method center align the input text. By adding enough space to the beginning of the input text to center it on the page.
-
-Example:
-```js
-softio.write(
-	softio.center( 'Welcome.' )
-);
-
-/*
-Terminal window:
-|----------------------------------------|
-|                Welcome.                |
-|----------------------------------------|
-*/
-```
-
-***Exception***:
-- This method uses mathematical calculations to center your text relative to the length and width of the terminal screen. So if you print centered text on a line that already contains text, that text will no longer be centered.
-
-For example:
-```js
-softio.write( 'Hello world!' );
-softio.write(
-	softio.center( 'Welcome.' )
-);
-
-/*
-Terminal window:
-|----------------------------------------|
-|Hello world!                Welcome.    |
-|----------------------------------------|
-*/
-```
-
-But it's work when use this:
+#### Accessing Utilities Methods
 
 ```js
-// Create new line after your message.
-softio.writeln( 'Hello world!' );
-softio.write(
-	softio.center( 'Welcome.' )
-);
-
-/*
-Terminal window:
-|----------------------------------------|
-|Hello world!                            |
-|                Welcome.                |
-|----------------------------------------|
-*/
+const Console = require('softio');
+Console.Utilities; // Access the Utilities class
 ```
 
----
+Alternatively:
 
-### `clear(): void`
-
-This method clears the user's terminal screen.
-
-For example:
 ```js
-softio.write( 'Hello world!' );
-softio.clear();
-
-/*
-Terminal window:
-|----------------------------------------|
-|                                        |
-|----------------------------------------|
-*/
+const { Utilities } = require('softio');
 ```
 
----
+#### Methods
 
-## Attributes Methods
+##### `static center(message: string): string`
+Centers a string by padding it with spaces.
 
-### `assessor title( string ): string`
+- **Parameters**:
+  - `message`: The text to center.
+- **Example**:
 
-This is an assessor that allows you to read the page title and set it.
-
-For example:
 ```js
-// Get and print terminal title.
-softio.writeln( softio.title );
-
-// Set terminal title as 'some title'.
-softio.title = 'some title';
+Console.Out.writeln(Console.Utilities.center('Welcome'));
 ```
 
----
+##### `static clear(): void`
+Clears the console screen.
 
-### `get width(): number`
+- **Example**:
 
-This property returns the current screen width of the user's terminal.
-
-For example:
 ```js
-softio.writeln(
-	softio.width
-);
-```
----
-
-### `get height(): number`
-
-This property returns the current screen height of the user's terminal.
-
-For example:
-```js
-softio.writeln(
-	softio.height
-);
-```
-
----
-
-## Events Methods
-
-### `declare enum eventTypes`
-
-```ts
-declare enum eventTypes {
-	close 		= 'close'	,
-	error 		= 'error'	,
-	prefinish 	= 'prefinish'	,
-	finish 		= 'finish'	,
-	drain 		= 'drain'	,
-	data 		= 'data'	,
-	end 		= 'end'		,
-	readable 	= 'readable'	,
-	resize 		= 'resize'	,
-}
-```
-
-### `addEventListener( type: eventTypes, listener: Function ): void`
-
-This method registers the input function as an event in the terminal and calls that function when that event occurs.
-
-**Note:** The event names are taken from the NodeJS documentation itself and their functionality is all related to NodeJS itself, in essence this method is just an interface and does not do anything special.
-Of course, it should be said that the NodeJS documentation does not refer to its website, because the definition of events is not mentioned in the NodeJS documentation itself. Rather, we have obtained them ourselves by studying the source code and trial and error.
-
-**Note:** Some events are defined by NodeJS itself, so Softio does not remove those default events, but puts them in the new event you register so that the default function is called after your function to avoid possible problems.
-
-For example:
-```js
-// Get and print terminal title.
-softio.addEventListener( 'resize', () => {
-	softio.writeln( 'Window resized!' );
-} );
-```
-
----
-
-### `removeEventListener( type: eventTypes,  ): void`
-
-This method deletes an event that has already been set.
-
-**Note:** This method does not delete default functions.
-
-For example:
-```js
-// Get and print terminal title.
-softio.addEventListener( 'resize', () => {
-	softio.writeln( 'Window resized!' );
-} );
-
-// The above event (resize) is canceled.
-softio.removeEventListener( 'resize' );
+Console.Utilities.clear();
 ```
