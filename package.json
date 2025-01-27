@@ -25,11 +25,7 @@
 		"terminal",
 		"stdio"
 	],
-	"author": {
-		"name": "Arya Fardmanesh",
-		"email": "AryaFardmanesh.1383@gmail.com",
-		"url": "https://github.com/AryaFardmanesh/"
-	},
+	"author": "Softio Contributors",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/AryaFardmanesh/softio"
