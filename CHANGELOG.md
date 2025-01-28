@@ -17,3 +17,7 @@ In this version, we implemented the basic methods for printing and getting data 
 
 # Version 2.0.0
 \+ We have updated the documentation.
+
+# Version 2.1.0
+\+ Add: real time tests for all methods.
+\+ Checking the stability of all methods.
