@@ -1,4 +1,5 @@
 import readline from 'node:readline/promises';
+import readlineSync from 'node:readline';
 import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { stdin } from './var/stdin';
@@ -15,6 +16,31 @@ export default class In {
 		const result: string = await readLineStream.question( message );
 
 		readLineStream.close();
+
+		return result;
+	}
+
+	public static async password( message: string = '', char: string = '' ): Promise<string> {
+		typeCheck( 'In.password', 'string', message );
+		typeCheck( 'In.password', 'string', char );
+
+		const readLineStream = readlineSync.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+			terminal: true,
+		}) as readlineSync.Interface & { _writeToOutput: ( str: string ) => void };
+
+		const result = await new Promise<string>( ( resolve ) => {
+			readLineStream.question( message, ( input: string ) => {
+				stdout.write( '\n' );
+				readLineStream.close();
+				resolve( input );
+			} );
+
+			readLineStream._writeToOutput = function ( _str: string ) {
+				stdout.write( char );
+			};
+		} );
 
 		return result;
 	}
