@@ -1,10 +1,11 @@
 import readline from 'node:readline/promises';
+import readlineSync from 'node:readline';
 import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { stdin } from './var/stdin';
 
 export default class In {
-	public static async input( message: string ): Promise<string> {
+	public static async input( message: string = '' ): Promise<string> {
 		typeCheck( 'In.input', 'string', message );
 
 		const readLineStream: readline.Interface = readline.createInterface( {
@@ -19,7 +20,32 @@ export default class In {
 		return result;
 	}
 
-	public static async confirm( message: string ): Promise<boolean> {
+	public static async password( message: string = '', char: string = '' ): Promise<string> {
+		typeCheck( 'In.password', 'string', message );
+		typeCheck( 'In.password', 'string', char );
+
+		const readLineStream = readlineSync.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+			terminal: true,
+		}) as readlineSync.Interface & { _writeToOutput: ( str: string ) => void };
+
+		const result = await new Promise<string>( ( resolve ) => {
+			readLineStream.question( message, ( input: string ) => {
+				stdout.write( '\n' );
+				readLineStream.close();
+				resolve( input );
+			} );
+
+			readLineStream._writeToOutput = function ( _str: string ) {
+				stdout.write( char );
+			};
+		} );
+
+		return result;
+	}
+
+	public static async confirm( message: string = '' ): Promise<boolean> {
 		/*
 			@Warning: We must check the type of the input
 			message before doing anything because it may
@@ -56,7 +82,7 @@ export default class In {
 		}
 	}
 
-	public static async readNumber( message: string ): Promise<number> {
+	public static async readNumber( message: string = '' ): Promise<number> {
 		const result = await this.input( message );
 		return Number( result );
 	}

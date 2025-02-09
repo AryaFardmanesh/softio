@@ -42,6 +42,12 @@ export declare class In {
 	public static input( message?: string ): Promise<string>;
 
 	/**
+	 * @description This method is for capturing passwords
+	 * or important data.
+	**/
+	public static password( message: string, char: string ): Promise<string>
+
+	/**
 	 * @description Used to obtain user consent.
 	**/
 	public static confirm( message?: string ): Promise<boolean>;
