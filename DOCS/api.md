@@ -138,6 +138,19 @@ Prompts the user for input.
 const name = await Console.In.input('Enter your name: ');
 ```
 
+##### `static password( message?: string, char?: string ): Promise<string>`
+It receives data from the user, similar to the ".input" method, except that the data the user enters is not displayed in the console. (It works like Linux systems when they want to receive your password)
+
+- **Parameters**:
+  - `message`: Optional prompt message.
+  - `char`: Show alternative characters.
+- **Returns**: The user input as a string.
+- **Example**:
+
+```js
+const pass = await Console.In.password('Enter your password: ');
+```
+
 ##### `static confirm(message?: string): Promise<boolean>`
 Prompts the user with a yes/no question and returns a boolean.
 
