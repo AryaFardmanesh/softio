@@ -42,8 +42,8 @@ export declare class In {
 	public static input( message?: string ): Promise<string>;
 
 	/**
-	 * @description This method is used to get data from
-	 * the input as a secret data.
+	 * @description This method is for capturing passwords
+	 * or important data.
 	**/
 	public static password( message: string, char: string ): Promise<string>
 
