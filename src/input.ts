@@ -4,7 +4,7 @@ import { stdout } from './var/stdout';
 import { stdin } from './var/stdin';
 
 export default class In {
-	public static async input( message: string ): Promise<string> {
+	public static async input( message: string = '' ): Promise<string> {
 		typeCheck( 'In.input', 'string', message );
 
 		const readLineStream: readline.Interface = readline.createInterface( {
@@ -19,7 +19,7 @@ export default class In {
 		return result;
 	}
 
-	public static async confirm( message: string ): Promise<boolean> {
+	public static async confirm( message: string = '' ): Promise<boolean> {
 		/*
 			@Warning: We must check the type of the input
 			message before doing anything because it may
@@ -56,7 +56,7 @@ export default class In {
 		}
 	}
 
-	public static async readNumber( message: string ): Promise<number> {
+	public static async readNumber( message: string = '' ): Promise<number> {
 		const result = await this.input( message );
 		return Number( result );
 	}
