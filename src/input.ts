@@ -25,8 +25,8 @@ export default class In {
 		typeCheck( 'In.password', 'string', char );
 
 		const readLineStream = readlineSync.createInterface({
-			input: process.stdin,
-			output: process.stdout,
+			input: stdin,
+			output: stdout,
 			terminal: true,
 		}) as readlineSync.Interface & { _writeToOutput: ( str: string ) => void };
 
