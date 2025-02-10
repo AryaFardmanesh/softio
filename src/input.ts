@@ -24,11 +24,11 @@ export default class In {
 		typeCheck( 'In.password', 'string', message );
 		typeCheck( 'In.password', 'string', char );
 
-		const readLineStream = readlineSync.createInterface({
-			input: process.stdin,
-			output: process.stdout,
+		const readLineStream = readlineSync.createInterface( {
+			input: stdin,
+			output: stdout,
 			terminal: true,
-		}) as readlineSync.Interface & { _writeToOutput: ( str: string ) => void };
+		} ) as readlineSync.Interface & { _writeToOutput: ( str: string ) => void };
 
 		const result = await new Promise<string>( ( resolve ) => {
 			readLineStream.question( message, ( input: string ) => {
