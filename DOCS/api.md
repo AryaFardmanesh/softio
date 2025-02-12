@@ -126,7 +126,7 @@ const { In } = require('softio');
 
 #### Methods
 
-##### `static input(message?: string): Promise<string>`
+##### `static input(message?: string): string`
 Prompts the user for input.
 
 - **Parameters**:
@@ -135,10 +135,10 @@ Prompts the user for input.
 - **Example**:
 
 ```js
-const name = await Console.In.input('Enter your name: ');
+const name = Console.In.input('Enter your name: ');
 ```
 
-##### `static password( message?: string, char?: string ): Promise<string>`
+##### `static password( message?: string, char?: string ): string`
 It receives data from the user, similar to the ".input" method, except that the data the user enters is not displayed in the console. (It works like Linux systems when they want to receive your password)
 
 - **Parameters**:
@@ -148,10 +148,10 @@ It receives data from the user, similar to the ".input" method, except that the 
 - **Example**:
 
 ```js
-const pass = await Console.In.password('Enter your password: ');
+const pass = Console.In.password('Enter your password: ');
 ```
 
-##### `static confirm(message?: string): Promise<boolean>`
+##### `static confirm(message?: string): boolean`
 Prompts the user with a yes/no question and returns a boolean.
 
 - **Parameters**:
@@ -160,10 +160,10 @@ Prompts the user with a yes/no question and returns a boolean.
 - **Example**:
 
 ```js
-const result = await Console.In.confirm('Do you love pizza?');
+const result = Console.In.confirm('Do you love pizza?');
 ```
 
-##### `static readNumber(message?: string): Promise<number>`
+##### `static readNumber(message?: string): number`
 Prompts the user for numeric input.
 
 - **Parameters**:
@@ -172,7 +172,7 @@ Prompts the user for numeric input.
 - **Example**:
 
 ```js
-const age = await Console.In.readNumber('How old are you? ');
+const age = Console.In.readNumber('How old are you? ');
 ```
 
 ---
