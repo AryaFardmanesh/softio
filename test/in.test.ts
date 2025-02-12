@@ -1,19 +1,15 @@
 import { jest, beforeEach, describe, it, expect } from '@jest/globals';
-import readline from 'node:readline/promises';
+import readlineSync from 'readline-sync';
 import In from '../src/input';
 
-jest.mock( 'node:readline/promises' );
+jest.mock( 'readline-sync' );
 
-const questionMock = jest.fn();
-const closeMock = jest.fn();
+let spyQuestion;
+let userInput = '';
 
 beforeEach( () => {
-	questionMock.mockClear();
-	closeMock.mockClear();
-
-	( readline.createInterface as jest.Mock ).mockReturnValue( {
-		question: questionMock,
-		close: closeMock,
+	spyQuestion = jest.spyOn( readlineSync, 'question' ).mockImplementationOnce( ( _query: string ) => {
+		return userInput;
 	} );
 } );
 
@@ -23,407 +19,398 @@ function makeConfirmText( message: string ): string {
 
 describe( 'Testing input methods - Test Group', () => {
 	describe( 'Testing .input method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', async () => {
+		it( 'should read data from input correctly - Unit 1', () => {
+			userInput = '';
 			const message = '';
-			const userInput = '';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 2', async () => {
 			const message = 'Enter your name: ';
-			const userInput = 'John Doe';
+			userInput = 'John Doe';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 3', async () => {
 			const message = 'Enter something here... ';
-			const userInput = 'Hello world!';
+			userInput = 'Hello world!';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 4', async () => {
 			const message = 'Enter something here... ';
-			const userInput = '20';
+			userInput = '20';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 5', async () => {
 			const message = 'Hello';
-			const userInput = 'Hello';
+			userInput = 'Hello';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 6', async () => {
 			const message = 'Enter your text: ';
-			const userInput = '     ';
+			userInput = '     ';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 7', async () => {
 			const message = '...';
-			const userInput = '!';
+			userInput = '!';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 8', async () => {
 			const message = 'Enter something here... ';
-			const userInput = '    Hello world      ';
+			userInput = '    Hello world      ';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 9', async () => {
 			const message = 'Enter something here... ';
-			const userInput = 'dsadsad sa fjsa   Hello world     312903 219dadksj dkaj i ';
+			userInput = 'dsadsad sa fjsa   Hello world     312903 219dadksj dkaj i ';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.input( message );
 
-			const result = await In.input( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( userInput );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should throw an error if the message is not a string - Unit 10', async () => {
-			await expect( In.input( 123 as any ) ).rejects.toThrow( TypeError );
-			await expect( In.input( 1.3 as any ) ).rejects.toThrow( TypeError );
-			await expect( In.input( true as any ) ).rejects.toThrow( TypeError );
-			await expect( In.input( null as any ) ).rejects.toThrow( TypeError );
+		it( 'should throw an error if the message is not a string - Unit 10', () => {
+			expect( () => In.input( 123 as any ) ).toThrow( TypeError );
+			expect( () => In.input( 1.3 as any ) ).toThrow( TypeError );
+			expect( () => In.input( true as any ) ).toThrow( TypeError );
+			expect( () => In.input( null as any ) ).toThrow( TypeError );
+		} );
+	} );
+
+	describe( 'Testing .password method - Test Group', () => {
+		it( 'should read data from input correctly - Unit 1', () => {
+			userInput = '';
+			const message = '';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 2', () => {
+			const message = 'Enter your name: ';
+			userInput = 'John Doe';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 3', () => {
+			const message = 'Enter something here... ';
+			userInput = 'Hello world!';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 4', () => {
+			const message = 'Enter something here... ';
+			userInput = '20';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 5', () => {
+			const message = 'Hello';
+			userInput = 'Hello';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 6', () => {
+			const message = 'Enter your text: ';
+			userInput = '     ';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 7', () => {
+			const message = '...';
+			userInput = '!';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 8', () => {
+			const message = 'Enter something here... ';
+			userInput = '    Hello world      ';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should read data from input correctly - Unit 9', () => {
+			const message = 'Enter something here... ';
+			userInput = 'dsadsad sa fjsa   Hello world     312903 219dadksj dkaj i ';
+
+			const result = In.password( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( userInput );
+		} );
+
+		it( 'should throw an error if the message is not a string - Unit 10', () => {
+			expect( () => In.password( 123 as any ) ).toThrow( TypeError );
+			expect( () => In.password( 1.3 as any ) ).toThrow( TypeError );
+			expect( () => In.password( true as any ) ).toThrow( TypeError );
+			expect( () => In.password( null as any ) ).toThrow( TypeError );
 		} );
 	} );
 
 	describe( 'Testing .confirm method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', async () => {
+		it( 'should read data from input correctly - Unit 1', () => {
 			const message = 'Are you agree';
-			const userInput = 'no';
+			userInput = 'no';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( false );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 2', async () => {
 			const message = 'Are you agree';
-			const userInput = 'n';
+			userInput = 'n';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( false );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 3', async () => {
 			const message = 'Are you agree';
-			const userInput = 'yes';
+			userInput = 'yes';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( true );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 4', async () => {
 			const message = 'Are you agree';
-			const userInput = 'y';
+			userInput = 'y';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( true );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 5', async () => {
 			const message = 'Are you agree';
-			const userInput = 'NO';
+			userInput = 'NO';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( false );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 6', async () => {
 			const message = 'Are you agree';
-			const userInput = 'No';
+			userInput = 'No';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( false );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 7', async () => {
 			const message = 'Are you agree';
-			const userInput = 'YES';
+			userInput = 'YES';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( true );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 8', async () => {
 			const message = 'Are you agree';
-			const userInput = 'Yes';
+			userInput = 'Yes';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( true );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
 		it( 'should read data from input correctly - Unit 9', async () => {
 			const message = 'Are you agree';
-			const userInput = 'Y';
+			userInput = 'Y';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.confirm( message );
 
-			const result = await In.confirm( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
 			expect( result ).toBe( true );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should throw an error if the message is not a string - Unit 10', async () => {
-			await expect( In.confirm( 123 as any ) ).rejects.toThrow( TypeError );
-			await expect( In.confirm( 1.3 as any ) ).rejects.toThrow( TypeError );
-			await expect( In.confirm( true as any ) ).rejects.toThrow( TypeError );
-			await expect( In.confirm( null as any ) ).rejects.toThrow( TypeError );
+		it( 'should throw an error if the message is not a string - Unit 10', () => {
+			expect( () => In.confirm( 123 as any ) ).toThrow( TypeError );
+			expect( () => In.confirm( 1.3 as any ) ).toThrow( TypeError );
+			expect( () => In.confirm( true as any ) ).toThrow( TypeError );
+			expect( () => In.confirm( null as any ) ).toThrow( TypeError );
 		} );
 	} );
 
 	describe( 'Testing .readNumber method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', async () => {
+		it( 'should read data from input correctly - Unit 1', () => {
 			const message = 'Enter your age: ';
-			const userInput = '21';
+			userInput = '21';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 2', async () => {
+		it( 'should read data from input correctly - Unit 2', () => {
 			const message = 'Enter your name: ';
-			const userInput = '0';
+			userInput = '0';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 3', async () => {
+		it( 'should read data from input correctly - Unit 3', () => {
 			const message = 'Enter your name: ';
-			const userInput = '';
+			userInput = '';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 4', async () => {
+		it( 'should read data from input correctly - Unit 4', () => {
 			const message = 'Enter your name: ';
-			const userInput = 'Hello';
+			userInput = 'Hello';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 5', async () => {
+		it( 'should read data from input correctly - Unit 5', () => {
 			const message = 'Enter your name: ';
-			const userInput = '  +10  ';
+			userInput = '  +10  ';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 6', async () => {
+		it( 'should read data from input correctly - Unit 6', () => {
 			const message = 'Enter your name: ';
-			const userInput = '-10';
+			userInput = '-10';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 7', async () => {
+		it( 'should read data from input correctly - Unit 7', () => {
 			const message = 'Enter your name: ';
-			const userInput = '+2.5';
+			userInput = '+2.5';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 8', async () => {
+		it( 'should read data from input correctly - Unit 8', () => {
 			const message = 'Enter your name: ';
-			const userInput = '-12.515';
+			userInput = '-12.515';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should read data from input correctly - Unit 9', async () => {
+		it( 'should read data from input correctly - Unit 9', () => {
 			const message = 'Enter your name: ';
-			const userInput = '0x50';
+			userInput = '0x50';
 
-			// Mock the question method to simulate user input
-			questionMock.mockResolvedValue( userInput as never );
+			const result = In.readNumber( message );
 
-			const result = await In.readNumber( message );
-
-			expect( questionMock ).toHaveBeenCalledWith( message );
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
 			expect( result ).toBe( Number( userInput ) );
-			expect( closeMock ).toHaveBeenCalled();
 		} );
 
-		it( 'should throw an error if the message is not a string - Unit 10', async () => {
-			await expect( In.readNumber( 123 as any ) ).rejects.toThrow( TypeError );
-			await expect( In.readNumber( 1.3 as any ) ).rejects.toThrow( TypeError );
-			await expect( In.readNumber( true as any ) ).rejects.toThrow( TypeError );
-			await expect( In.readNumber( null as any ) ).rejects.toThrow( TypeError );
+		it( 'should throw an error if the message is not a string - Unit 10', () => {
+			expect( () => In.readNumber( 123 as any ) ).toThrow( TypeError );
+			expect( () => In.readNumber( 1.3 as any ) ).toThrow( TypeError );
+			expect( () => In.readNumber( true as any ) ).toThrow( TypeError );
+			expect( () => In.readNumber( null as any ) ).toThrow( TypeError );
 		} );
 	} );
 } );
