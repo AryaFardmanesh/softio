@@ -39,24 +39,24 @@ export declare class In {
 	 * @description This method is used to get data from
 	 * the input.
 	**/
-	public static input( message?: string ): Promise<string>;
+	public static input( message?: string ): string;
 
 	/**
 	 * @description This method is for capturing passwords
 	 * or important data.
 	**/
-	public static password( message: string, char: string ): Promise<string>
+	public static password( message: string, char: string ): string
 
 	/**
 	 * @description Used to obtain user consent.
 	**/
-	public static confirm( message?: string ): Promise<boolean>;
+	public static confirm( message?: string ): boolean;
 
 	/**
 	 * @description It is used to get a number from the
 	 * input.
 	**/
-	public static readNumber( message?: string ): Promise<number>;
+	public static readNumber( message?: string ): number;
 }
 
 /**
