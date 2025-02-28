@@ -24,7 +24,7 @@ export type ANSI_Background_T = ANSI_Color_T;
 
 export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 	if ( typeof color === 'number' ) {
-		return makeANSI( [ color ] );
+		return makeANSI( [ '38', '5', color ] );
 	}
 
 	switch ( color ) {
@@ -67,7 +67,7 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 
 export function convertTextBackgroundToANSI( color: ANSI_Background_T | number ): string {
 	if ( typeof color === 'number' ) {
-		return makeANSI( [ color ] );
+		return makeANSI( [ 48, 5, color ] );
 	}
 
 	switch ( color ) {
@@ -142,13 +142,14 @@ export function convertHexToRGB( hex: string ): [ number, number, number ] {
 
 	if ( hex.length === 3 ) {
 		for ( let i = 0; i < 3; i++ ) {
-			const section = '0x' + hex[ i ];
+			const section = '0x' + ( hex[ i ] + hex[ i ] );
 			rgb[ i ] = Number( section );
 		}
 	}else if ( hex.length === 6 ) {
-		for ( let i = 0; i < 3; i += 2 ) {
+		let index = 0;
+		for ( let i = 0; i < 6; i += 2 ) {
 			const section = '0x' + ( hex[ i ] + hex[ i + 1 ] );
-			rgb[ i ] = Number( section );
+			rgb[ index++ ] = Number( section );
 		}
 	}
 
