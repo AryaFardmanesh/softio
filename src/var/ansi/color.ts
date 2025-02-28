@@ -107,3 +107,50 @@ export function convertTextBackgroundToANSI( color: ANSI_Background_T | number )
 			return makeANSI( [ '49' ] );
 	}
 }
+
+export function isValidHex( hex: string ): boolean {
+	if ( hex.startsWith( '#' ) ) {
+		hex = hex.slice( 1 );
+	}
+
+	if ( hex.length !== 6 && hex.length !== 3 ) {
+		return false;
+	}
+
+	hex = hex.toUpperCase();
+	for ( let i = 0; i < hex.length; i++ ) {
+		const ascii = hex.charCodeAt( i );
+
+		if ( ascii >= 48 /* 0 */ && ascii <= 57 /* 9 */ ) {
+			continue;
+		}else if ( ascii >= 65 /* A */ && ascii <= 70 /* F */ ) {
+			continue;
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
+export function convertHexToRGB( hex: string ): [ number, number, number ] {
+	if ( hex.startsWith( '#' ) ) {
+		hex = hex.slice( 1 );
+	}
+
+	let rgb: [ number, number, number ] = [ 255, 255, 255 ];
+
+	if ( hex.length === 3 ) {
+		for ( let i = 0; i < 3; i++ ) {
+			const section = '0x' + hex[ i ];
+			rgb[ i ] = Number( section );
+		}
+	}else if ( hex.length === 6 ) {
+		for ( let i = 0; i < 3; i += 2 ) {
+			const section = '0x' + ( hex[ i ] + hex[ i + 1 ] );
+			rgb[ i ] = Number( section );
+		}
+	}
+
+	return rgb;
+}
