@@ -54,4 +54,8 @@ export default class Attr {
 	public static background( color: ANSI_Background_T | number ): void {
 		stdout.write( convertTextBackgroundToANSI( color ) );
 	}
+
+	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void {
+		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
+	}
 }
