@@ -18,6 +18,10 @@ import {
 	convertTextCursorMoveToANSI,
 	convertTextCursorStyleToANSI,
 } from './var/ansi/cursor';
+import {
+	ANSI_Erase_T,
+	convertTextEraseToANSI
+} from './var/ansi/erase';
 
 export default class Attr {
 	public static get title(): string {
@@ -110,5 +114,9 @@ export default class Attr {
 
 	public static cursorStyle( style: ANSI_Cursor_Style_T ): void {
 		stdout.write( convertTextCursorStyleToANSI( style ) );
+	}
+
+	public static erase( mode: ANSI_Erase_T ): void {
+		stdout.write( convertTextEraseToANSI( mode ) );
 	}
 }
