@@ -75,4 +75,8 @@ export default class Attr {
 	public static style( style: ANSI_Style_T ): void {
 		stdout.write( convertTextStyleToANSI( style ) );
 	}
+
+	public static move( x: number | string, y: number | string ): void {
+		stdout.write( makeANSI( [ x, y ], 'f' ) );
+	}
 }
