@@ -95,4 +95,14 @@ export default class Attr {
 	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number | string = 1 ): void {
 		stdout.write( convertTextCursorMoveToANSI( arrow, value ) );
 	}
+
+	public static cursorSave( mode: 'DEC' | 'SCO' = 'DEC' ): void {
+		const code = ( mode === 'DEC' ) ? '7' : 's';
+		stdout.write( makeANSI( [ code ], '' ) );
+	}
+	
+	public static cursorRestore( mode: 'DEC' | 'SCO' = 'DEC' ): void {
+		const code = ( mode === 'DEC' ) ? '8' : 'u';
+		stdout.write( makeANSI( [ code ], '' ) );
+	}
 }
