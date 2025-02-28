@@ -1,5 +1,9 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
+import {
+	ANSI_Color_T,
+	convertTextColorToANSI,
+} from './var/ansi/color';
 
 export default class Attr {
 	public static get title(): string {
@@ -24,5 +28,9 @@ export default class Attr {
 
 	public static reset(): void {
 		stdout.write( makeANSI( [ '0' ] ) );
+	}
+
+	public static color( color: ANSI_Color_T | number ): void {
+		stdout.write( convertTextColorToANSI( color ) );
 	}
 }
