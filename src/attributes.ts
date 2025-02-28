@@ -33,4 +33,8 @@ export default class Attr {
 	public static color( color: ANSI_Color_T | number ): void {
 		stdout.write( convertTextColorToANSI( color ) );
 	}
+
+	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void {
+		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
+	}
 }
