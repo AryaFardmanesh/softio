@@ -2,7 +2,9 @@ import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
 import {
 	ANSI_Color_T,
+	convertHexToRGB,
 	convertTextColorToANSI,
+	isValidHex,
 } from './var/ansi/color';
 
 export default class Attr {
@@ -36,5 +38,14 @@ export default class Attr {
 
 	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void {
 		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
+	}
+
+	public static colorHex( hex: string ): void {
+		if ( !isValidHex( hex ) ) {
+			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
+		}
+	
+		const rgb = convertHexToRGB( hex );
+		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
 	}
 }
