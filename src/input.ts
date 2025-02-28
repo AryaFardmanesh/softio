@@ -1,25 +1,19 @@
-import readline from 'node:readline/promises';
+import readlineSync from 'readline-sync';
 import typeCheck from './utils/typecheck';
-import { stdout } from './var/stdout';
-import { stdin } from './var/stdin';
 
 export default class In {
-	public static async input( message: string ): Promise<string> {
+	public static input( message: string = '' ): string {
 		typeCheck( 'In.input', 'string', message );
-
-		const readLineStream: readline.Interface = readline.createInterface( {
-			output: stdout,
-			input: stdin
-		} );
-
-		const result: string = await readLineStream.question( message );
-
-		readLineStream.close();
-
-		return result;
+		return readlineSync.question( message );
 	}
 
-	public static async confirm( message: string ): Promise<boolean> {
+	public static password( message: string = '', char: string = '' ): string {
+		typeCheck( 'In.password', 'string', message );
+		typeCheck( 'In.password', 'string', char );
+		return readlineSync.question( message, { hideEchoBack: true, mask: char } );
+	}
+
+	public static confirm( message: string = '' ): boolean {
 		/*
 			@Warning: We must check the type of the input
 			message before doing anything because it may
@@ -44,7 +38,7 @@ export default class In {
 
 		message += ' (y/n) ';
 
-		const result = ( await this.input( message ) ).trim().toUpperCase();
+		const result = this.input( message ).trim().toUpperCase();
 
 		switch ( result ) {
 			case 'Y':
@@ -56,8 +50,8 @@ export default class In {
 		}
 	}
 
-	public static async readNumber( message: string ): Promise<number> {
-		const result = await this.input( message );
+	public static readNumber( message: string = '' ): number {
+		const result = this.input( message );
 		return Number( result );
 	}
 }

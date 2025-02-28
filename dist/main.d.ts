@@ -39,19 +39,85 @@ export declare class In {
 	 * @description This method is used to get data from
 	 * the input.
 	**/
-	public static input( message?: string ): Promise<string>;
+	public static input( message?: string ): string;
+
+	/**
+	 * @description This method is for capturing passwords
+	 * or important data.
+	**/
+	public static password( message: string, char: string ): string
 
 	/**
 	 * @description Used to obtain user consent.
 	**/
-	public static confirm( message?: string ): Promise<boolean>;
+	public static confirm( message?: string ): boolean;
 
 	/**
 	 * @description It is used to get a number from the
 	 * input.
 	**/
-	public static readNumber( message?: string ): Promise<number>;
+	public static readNumber( message?: string ): number;
 }
+
+export declare type ANSI_Color_T =
+	'black'			|
+	'red'			|
+	'green'			|
+	'yellow'		|
+	'blue'			|
+	'magenta'		|
+	'cyan'			|
+	'white'			|
+	'bright-black'		|
+	'bright-red'		|
+	'bright-green'		|
+	'bright-yellow'		|
+	'bright-blue'		|
+	'bright-magenta'	|
+	'bright-cyan'		|
+	'bright-white'		|
+	'default'
+;
+
+export declare type ANSI_Background_T = ANSI_Color_T;
+
+export declare type ANSI_Style_T =
+	'bold'		|
+	'dim'		|
+	'italic'	|
+	'underline'	|
+	'blinking'	|
+	'reverse'	|
+	'hidden'	|
+	'strikethrough'
+;
+
+export declare type ANSI_Cursor_Movement_T =
+	'up'		|
+	'down'		|
+	'right'		|
+	'left'		|
+	'next'		|
+	'previous'	|
+	'go-up'
+;
+
+export declare type ANSI_Cursor_Style_T =
+	'invisible'	|
+	'visible'
+;
+
+export declare type ANSI_Erase_T =
+	'in-display'			|
+	'cursor-until-end'		|
+	'cursor-to-beginning'		|
+	'entire'			|
+	'saved-lines'			|
+	'in-line'			|
+	'cursor-until-end-line'		|
+	'start-line-until-cursor'	|
+	'entire-line'
+;
 
 /**
  * @description This class is for attributes methods.
@@ -82,9 +148,94 @@ export declare class Attr {
 	 * height)
 	**/
 	public static get height(): number;
+
+	/**
+	 * @description It's to reset the console graphical
+	 * features.
+	**/
+	public static reset(): void;
+
+	/**
+	 * @description To set the text color.
+	**/
+	public static color( color: ANSI_Color_T | number ): void;
+
+	/**
+	 * @description To set the text color as RGB.
+	**/
+	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void;
+
+	/**
+	 * @description To set the text color as hex.
+	**/
+	public static colorHex( hex: string ): void;
+
+	/**
+	 * @description To set the background color.
+	**/
+	public static background( color: ANSI_Background_T | number ): void;
+
+	/**
+	 * @description To set the background color as RGB.
+	**/
+	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void;
+
+	/**
+	 * @description To set the background hex.
+	**/
+	public static backgroundHex( hex: string ): void;
+
+	/**
+	 * @description To set the text style.
+	**/
+	public static style( style: ANSI_Style_T ): void;
+
+	/**
+	 * @description This method used for moving the cursor
+	 * position in console.
+	**/
+	public static move( x: number | string, y: number | string ): void;
+
+	/**
+	 * @description This method used for moving the cursor
+	 * column in console.
+	**/
+	public static moveCol( x: number | string ): void;
+
+	/**
+	 * @description This method move the cursor position in
+	 * (x=0, y=0) in console.
+	**/
+	public static moveHome(): void;
+
+	/**
+	 * @description This method is used to move the cursor
+	 * in different directions.
+	**/
+	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value?: number | string ): void;
+
+	/**
+	 * @description This method save the cursor position.
+	**/
+	public static cursorSave( mode?: 'DEC' | 'SCO' ): void;
+
+	/**
+	 * @description This method restore the cursor position.
+	**/
+	public static cursorRestore( mode?: 'DEC' | 'SCO' ): void;
+
+	/**
+	 * @description This method used for change cursor icon.
+	**/
+	public static cursorStyle( style: ANSI_Cursor_Style_T ): void;
+
+	/**
+	 * @description This method used for clear the console.
+	**/
+	public static erase( mode: ANSI_Erase_T ): void;
 }
 
-declare type EventTypesT =
+export declare type EventTypesT =
 	'close' 	|
 	'error' 	|
 	'prefinish' 	|

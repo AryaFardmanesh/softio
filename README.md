@@ -39,17 +39,15 @@ Here’s a quick sample to get you started:
 ```js
 const Console = require( 'softio' );
 
-( async function () {
-	const name = await Console.In.input( 'Enter your name: ' );
-	const age = await Console.In.readNumber( 'Enter your age: ' );
+const name = Console.In.input( 'Enter your name: ' );
+const age = Console.In.readNumber( 'Enter your age: ' );
 
-	if ( age < 18 ) {
-		Console.Out.write( 'Sorry, your age is under 18 :(' );
-		return;
-	}
+if ( age < 18 ) {
+	Console.Out.write( 'Sorry, your age is under 18 :(' );
+	return;
+}
 
-	Console.Out.writeln( Console.Utilities.center( `Welcome ${name}.` ) );
-} ) ();
+Console.Out.writeln( Console.Utilities.center( `Welcome ${name}.` ) );
 ```
 
 Run this simple program to see Softio in action!

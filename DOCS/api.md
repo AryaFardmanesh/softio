@@ -126,7 +126,7 @@ const { In } = require('softio');
 
 #### Methods
 
-##### `static input(message?: string): Promise<string>`
+##### `static input(message?: string): string`
 Prompts the user for input.
 
 - **Parameters**:
@@ -135,10 +135,23 @@ Prompts the user for input.
 - **Example**:
 
 ```js
-const name = await Console.In.input('Enter your name: ');
+const name = Console.In.input('Enter your name: ');
 ```
 
-##### `static confirm(message?: string): Promise<boolean>`
+##### `static password( message?: string, char?: string ): string`
+It receives data from the user, similar to the ".input" method, except that the data the user enters is not displayed in the console. (It works like Linux systems when they want to receive your password)
+
+- **Parameters**:
+  - `message`: Optional prompt message.
+  - `char`: Show alternative characters.
+- **Returns**: The user input as a string.
+- **Example**:
+
+```js
+const pass = Console.In.password('Enter your password: ');
+```
+
+##### `static confirm(message?: string): boolean`
 Prompts the user with a yes/no question and returns a boolean.
 
 - **Parameters**:
@@ -147,10 +160,10 @@ Prompts the user with a yes/no question and returns a boolean.
 - **Example**:
 
 ```js
-const result = await Console.In.confirm('Do you love pizza?');
+const result = Console.In.confirm('Do you love pizza?');
 ```
 
-##### `static readNumber(message?: string): Promise<number>`
+##### `static readNumber(message?: string): number`
 Prompts the user for numeric input.
 
 - **Parameters**:
@@ -159,7 +172,7 @@ Prompts the user for numeric input.
 - **Example**:
 
 ```js
-const age = await Console.In.readNumber('How old are you? ');
+const age = Console.In.readNumber('How old are you? ');
 ```
 
 ---
@@ -222,6 +235,158 @@ Gets the console's height in rows.
 
 ```js
 Console.Out.writeln(Console.Attr.height);
+```
+
+##### `public static reset(): void`
+Reset all modes (styles and colors)
+
+- **Example**:
+
+```js
+Console.Attr.reset();
+```
+
+##### `public static color( color: ANSI_Color_T | number ): void`
+It is used to change the color of the text. You can use the built-in colors or you can give it a number from 0 to 255.
+To see the number of colors, visit this [link](https://user-images.githubusercontent.com/995050/47952855-ecb12480-df75-11e8-89d4-ac26c50e80b9.png).
+
+- **Example**:
+
+```js
+Console.Attr.color('magenta');
+// Or
+Console.Attr.color(45);
+```
+
+##### `public static colorRGB( red: string | number, green: string | number, blue: string | number ): void`
+This method changes the text color according to the RGB code.
+
+- **Example**:
+
+```js
+Console.Attr.colorRGB(155, 150, 98);
+```
+
+##### `public static colorHex( hex: string ): void`
+This method changes the text color according to the hex code.
+
+- **Example**:
+
+```js
+Console.Attr.colorHex('#F8CE0A');
+```
+
+##### `public static background( color: ANSI_Background_T | number ): void`
+It is used to change the background color. You can use the built-in colors or you can give it a number from 0 to 255.
+To see the number of colors, visit this [link](https://user-images.githubusercontent.com/995050/47952855-ecb12480-df75-11e8-89d4-ac26c50e80b9.png).
+
+- **Example**:
+
+```js
+Console.Attr.background('white');
+// Or
+Console.Attr.background(117);
+```
+
+##### `public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void`
+This method changes the background color according to the RGB code.
+
+- **Example**:
+
+```js
+Console.Attr.backgroundRGB(17, 170, 90);
+```
+
+##### `public static backgroundHex( hex: string ): void`
+This method changes the background color according to the hex code.
+
+- **Example**:
+
+```js
+Console.Attr.backgroundHex('#FFFFFF');
+```
+
+##### `public static style( style: ANSI_Style_T ): void`
+This method changes the text style.
+
+- **Example**:
+
+```js
+Console.Attr.style('bold');
+```
+
+##### `public static move( x: number | string, y: number | string ): void`
+This method changes the cursor position relative to x and y.
+
+- **Example**:
+
+```js
+Console.Attr.move(50, 150);
+```
+
+##### `public static moveCol( x: number | string ): void`
+This method changes the cursor position on the x-axis.
+
+- **Example**:
+
+```js
+Console.Attr.moveCol(50);
+```
+
+##### `public static moveHome(): void`
+This method changes the cursor position to 0, 0.
+
+- **Example**:
+
+```js
+Console.Attr.moveHome();
+```
+
+##### `public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number | string = 1 ): void`
+This method moves the cursor in different directions.
+
+- **Example**:
+
+```js
+// Move the cursor up 2 lines.
+Console.Attr.cursorWalk('up', 2);
+```
+
+##### `public static cursorSave( mode: 'DEC' | 'SCO' = 'DEC' ): void`
+This method stores the cursor position.
+
+- **Example**:
+
+```js
+Console.Attr.cursorSave();
+```
+
+##### `public static cursorRestore( mode: 'DEC' | 'SCO' = 'DEC' ): void`
+This method retrieves the saved location.
+
+- **Example**:
+
+```js
+Console.Attr.cursorRestore();
+```
+
+##### `public static cursorStyle( style: ANSI_Cursor_Style_T ): void`
+This method changes the cursor style.
+
+- **Example**:
+
+```js
+Console.Attr.cursorStyle('invisible');
+```
+
+##### `public static erase( mode: ANSI_Erase_T ): void`
+This method clears the console.
+
+- **Example**:
+
+```js
+// From the cursor position to the end of the same line.
+Console.Attr.erase('cursor-until-end-line');
 ```
 
 ---
