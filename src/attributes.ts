@@ -12,6 +12,10 @@ import {
 	ANSI_Style_T,
 	convertTextStyleToANSI
 } from './var/ansi/style';
+import {
+	ANSI_Cursor_Movement_T,
+	convertTextCursorMoveToANSI,
+} from './var/ansi/cursor';
 
 export default class Attr {
 	public static get title(): string {
@@ -86,5 +90,9 @@ export default class Attr {
 
 	public static moveHome(): void {
 		stdout.write( makeANSI( [], 'H' ) );
+	}
+
+	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number | string = 1 ): void {
+		stdout.write( convertTextCursorMoveToANSI( arrow, value ) );
 	}
 }
