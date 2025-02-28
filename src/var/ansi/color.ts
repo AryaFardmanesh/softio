@@ -24,7 +24,7 @@ export type ANSI_Background_T = ANSI_Color_T;
 
 export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 	if ( typeof color === 'number' ) {
-		return makeANSI( [ color ] );
+		return makeANSI( [ '38', '5', color ] );
 	}
 
 	switch ( color ) {
