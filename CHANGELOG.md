@@ -16,8 +16,12 @@ In this version, we implemented the basic methods for printing and getting data 
 \+ Fixed the issue of not replacing the version during the project build process.<br />
 
 # Version 2.0.0
-\+ We have updated the documentation.
+\+ We have updated the documentation.<br />
 
 # Version 2.1.0
-\+ Add: real time tests for all methods.
-\+ Checking the stability of all methods.
+\+ Add: real time tests for all methods.<br />
+\+ Checking the stability of all methods.<br />
+
+# Version 2.9.0
+\- Remove: Promise of input methods.<br />
+\+ Add: Methods for changing console graphics.<br />
