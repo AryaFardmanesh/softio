@@ -106,7 +106,7 @@ export default class Attr {
 		const code = ( mode === 'DEC' ) ? '7' : 's';
 		stdout.write( makeANSI( [ code ], '' ) );
 	}
-	
+
 	public static cursorRestore( mode: 'DEC' | 'SCO' = 'DEC' ): void {
 		const code = ( mode === 'DEC' ) ? '8' : 'u';
 		stdout.write( makeANSI( [ code ], '' ) );
