@@ -14,7 +14,9 @@ import {
 } from './var/ansi/style';
 import {
 	ANSI_Cursor_Movement_T,
+	ANSI_Cursor_Style_T,
 	convertTextCursorMoveToANSI,
+	convertTextCursorStyleToANSI,
 } from './var/ansi/cursor';
 
 export default class Attr {
@@ -104,5 +106,9 @@ export default class Attr {
 	public static cursorRestore( mode: 'DEC' | 'SCO' = 'DEC' ): void {
 		const code = ( mode === 'DEC' ) ? '8' : 'u';
 		stdout.write( makeANSI( [ code ], '' ) );
+	}
+
+	public static cursorStyle( style: ANSI_Cursor_Style_T ): void {
+		stdout.write( convertTextCursorStyleToANSI( style ) );
 	}
 }
