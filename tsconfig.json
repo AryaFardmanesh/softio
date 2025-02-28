@@ -17,12 +17,9 @@
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
 		"noImplicitOverride": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
 	},
-	"exclude": [
-		"./babel.config.js",
-		"./config.js",
-		"./dist/main.js",
-		"./gulpfile.js"
+	"include": [
+		"src/**/*.ts"
 	]
 }
