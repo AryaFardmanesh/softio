@@ -1,4 +1,5 @@
 import { stdout } from './var/stdout';
+import { makeANSI } from './var/ansi/base';
 
 export default class Attr {
 	public static get title(): string {
@@ -19,5 +20,9 @@ export default class Attr {
 
 	public static get height(): number {
 		return stdout.rows;
+	}
+
+	public static reset(): void {
+		stdout.write( makeANSI( [ '0' ] ) );
 	}
 }
