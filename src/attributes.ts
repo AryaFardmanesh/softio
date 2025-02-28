@@ -8,6 +8,10 @@ import {
 	convertTextColorToANSI,
 	isValidHex,
 } from './var/ansi/color';
+import {
+	ANSI_Style_T,
+	convertTextStyleToANSI
+} from './var/ansi/style';
 
 export default class Attr {
 	public static get title(): string {
@@ -66,5 +70,9 @@ export default class Attr {
 	
 		const rgb = convertHexToRGB( hex );
 		stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+	}
+
+	public static style( style: ANSI_Style_T ): void {
+		stdout.write( convertTextStyleToANSI( style ) );
 	}
 }
