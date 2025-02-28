@@ -1,8 +1,10 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
 import {
+	ANSI_Background_T,
 	ANSI_Color_T,
 	convertHexToRGB,
+	convertTextBackgroundToANSI,
 	convertTextColorToANSI,
 	isValidHex,
 } from './var/ansi/color';
@@ -47,5 +49,9 @@ export default class Attr {
 	
 		const rgb = convertHexToRGB( hex );
 		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+	}
+
+	public static background( color: ANSI_Background_T | number ): void {
+		stdout.write( convertTextBackgroundToANSI( color ) );
 	}
 }
