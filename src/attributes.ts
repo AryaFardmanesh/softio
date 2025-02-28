@@ -83,4 +83,8 @@ export default class Attr {
 	public static moveCol( x: number | string ): void {
 		stdout.write( makeANSI( [ x, 'G' ], '' ) );
 	}
+
+	public static moveHome(): void {
+		stdout.write( makeANSI( [], 'H' ) );
+	}
 }
