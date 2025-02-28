@@ -58,4 +58,13 @@ export default class Attr {
 	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void {
 		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
 	}
+
+	public static backgroundHex( hex: string ): void {
+		if ( !isValidHex( hex ) ) {
+			throw new TypeError( `Attr.backgroundHex: '${ hex }' is not valid Hex value.` );
+		}
+	
+		const rgb = convertHexToRGB( hex );
+		stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+	}
 }
