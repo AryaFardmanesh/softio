@@ -142,13 +142,14 @@ export function convertHexToRGB( hex: string ): [ number, number, number ] {
 
 	if ( hex.length === 3 ) {
 		for ( let i = 0; i < 3; i++ ) {
-			const section = '0x' + hex[ i ];
+			const section = '0x' + ( hex[ i ] + hex[ i ] );
 			rgb[ i ] = Number( section );
 		}
 	}else if ( hex.length === 6 ) {
-		for ( let i = 0; i < 3; i += 2 ) {
+		let index = 0;
+		for ( let i = 0; i < 6; i += 2 ) {
 			const section = '0x' + ( hex[ i ] + hex[ i + 1 ] );
-			rgb[ i ] = Number( section );
+			rgb[ index++ ] = Number( section );
 		}
 	}
 
