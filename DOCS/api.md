@@ -334,7 +334,7 @@ Console.Attr.moveCol(50);
 ```
 
 ##### `public static moveHome(): void`
-This method changes the cursor position to 0, 0.
+This method changes the cursor position to 1, 1.
 
 - **Example**:
 
