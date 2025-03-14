@@ -24,4 +24,12 @@ In this version, we implemented the basic methods for printing and getting data 
 
 # Version 2.9.0
 \- Remove: Promise of input methods.<br />
+
+# Version 3.0.0
 \+ Add: Methods for changing console graphics.<br />
+\+ Add: Methods for moving cursor in console.<br />
+\+ Add: Methods for clear console.<br />
+
+# Version 3.1.0
+\+ Change: the structure of events.<br />
+\+ Stability in the version.<br />
