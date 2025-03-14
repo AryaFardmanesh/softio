@@ -39,6 +39,7 @@
 		"@babel/preset-env": "^7.26.0",
 		"@babel/preset-typescript": "^7.26.0",
 		"@jest/globals": "^29.7.0",
+		"@types/readline-sync": "^1.4.8",
 		"gulp": "^5.0.0",
 		"gulp-babel": "^8.0.0",
 		"gulp-clean": "^0.4.0",
@@ -51,7 +52,6 @@
 		"webpack-stream": "^7.0.0"
 	},
 	"dependencies": {
-		"@types/readline-sync": "^1.4.8",
 		"readline-sync": "^1.4.10"
 	}
 }
