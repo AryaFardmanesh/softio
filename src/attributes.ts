@@ -102,8 +102,8 @@ export default class Attr {
 		stdout.write( convertTextCursorMoveToANSI( arrow, value ) );
 	}
 
-	public static cursorSave( mode: 'DEC' | 'SCO' = 'DEC' ): void {
-		const code = ( mode === 'DEC' ) ? '7' : 's';
+	public static cursorSave( mode: 'DEC' | 'SCO' = 'SCO' ): void {
+		const code = ( mode === 'SCO' ) ? 's' : '7';
 		stdout.write( makeANSI( [ code ], '' ) );
 	}
 
