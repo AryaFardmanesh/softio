@@ -8,7 +8,8 @@ export type ANSI_Style_T =
 	'blinking'	|
 	'reverse'	|
 	'hidden'	|
-	'strikethrough'
+	'strikethrough' |
+	'default'
 ;
 
 export function convertTextStyleToANSI( style: ANSI_Style_T ): string {
