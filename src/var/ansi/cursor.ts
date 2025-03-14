@@ -39,10 +39,10 @@ export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, valu
 export function convertTextCursorStyleToANSI( style: ANSI_Cursor_Style_T ): string {
 	switch ( style ) {
 		case 'invisible':
-			return makeANSI( [ '25l' ], '', '?' );
+			return makeANSI( [ '25' ], 'l', '?' );
 		case 'visible':
-			return makeANSI( [ '25h' ], '', '?' );
+			return makeANSI( [ '25' ], 'h', '?' );
 		default:
-			return makeANSI( [ '25h' ], '', '?' );
+			return makeANSI( [ '25' ], 'h', '?' );
 	}
 }
