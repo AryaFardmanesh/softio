@@ -1,21 +1,8 @@
-const { Events, In } = require( './module' );
+const { Events } = require( './module' );
 
-function winResize() {
+Events.addEventListener( 'resize', () => {
 	console.log( `Window was resized! - col=${ process.stdout.columns } and row=${ process.stdout.rows }` );
-}
+} );
 
-Events.addEventListener( 'resize', winResize );
-
-console.log( 'Resize the terminal window.' );
-
-void ( async function () {
-
-	await In.input( 'Skip ? ' );
-
-	Events.removeEventListener( 'resize' );
-
-	console.log( 'The resize event was removed.' );
-
-	await In.input( 'Exit ? ' );
-
-} )();
+// Just to keep the program running
+setInterval( () => {}, 1000 );
