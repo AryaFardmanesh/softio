@@ -237,14 +237,6 @@ export declare class Attr {
 }
 
 export declare type EventTypesT =
-	'close' 	|
-	'error' 	|
-	'prefinish' 	|
-	'finish' 	|
-	'drain' 	|
-	'data' 		|
-	'end' 		|
-	'readable' 	|
 	'resize'
 ;
 
