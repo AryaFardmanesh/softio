@@ -39,6 +39,31 @@ describe( 'Testing utils functions - Test Group', () => {
 			const data = { id: 10 };
 			expect( () => { typecheck( '$TEST$', 'object', data ) } ).not.toThrow( TypeError );
 		} );
+
+		it( 'should throw an error if type is not match - Unit 6', () => {
+			const data = 'text';
+			expect( () => { typecheck( '$TEST$', [ 'string' ], data ) } ).not.toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 7', () => {
+			const data = 'text';
+			expect( () => { typecheck( '$TEST$', [ 'number', 'string' ], data ) } ).not.toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 8', () => {
+			const data = 'text';
+			expect( () => { typecheck( '$TEST$', [ 'string', 'number' ], data ) } ).not.toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 9', () => {
+			const data = () => {};
+			expect( () => { typecheck( '$TEST$', [ 'number', 'function' ], data ) } ).not.toThrow( TypeError );
+		} );
+
+		it( 'should throw an error if type is not match - Unit 10', () => {
+			const data = { id: 10 };
+			expect( () => { typecheck( '$TEST$', [ 'number', 'string' ], data ) } ).toThrow( TypeError );
+		} );
 	} );
 
 	describe( 'Testing silentecho function - Test Group', () => {
