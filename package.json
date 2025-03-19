@@ -1,6 +1,6 @@
 {
 	"name": "softio",
-	"version": "3.1.3",
+	"version": "3.1.4",
 	"description": "The NodeJs library for write/read from terminal.",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
