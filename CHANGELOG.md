@@ -33,3 +33,7 @@ In this version, we implemented the basic methods for printing and getting data 
 # Version 3.1.0
 \+ Change: the structure of events.<br />
 \+ Stability in the version.<br />
+
+# Version 3.2.10
+\+ Adde: 'shot' method.<br />
+\+ Update: The main.d.ts file was organized.<br />
