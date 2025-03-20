@@ -1,5 +1,13 @@
 const { Out } = require( './module' );
 
+const print = Out.shot( Out.write, {
+	color: 'blue',
+	background: 'red',
+	style: 'underline',
+} );
+
+print( 'The text color is blue and the background is red and style is underline.' );
+
 Out.write( 'This is a .write method.' );
 Out.write( ' Hello world!' );
 Out.write( '', {

@@ -1,7 +1,10 @@
 import { jest, beforeEach, describe, it, expect } from '@jest/globals';
+import colorConvertor from '../src/utils/colorconvertor';
 import typecheck from '../src/utils/typecheck';
 import silentecho from '../src/utils/silentecho';
 import formatmsg from '../src/utils/formatmsg';
+import { convertHexToRGB, convertTextBackgroundToANSI, convertTextColorToANSI } from '../src/var/ansi/color';
+import { makeANSI } from '../src/var/ansi/base';
 
 beforeEach( () => {
 	jest.spyOn( process.stdout, 'write' ).mockImplementationOnce( ( str ) => {
@@ -14,6 +17,88 @@ beforeEach( () => {
 } );
 
 describe( 'Testing utils functions - Test Group', () => {
+	describe( 'Testing colorconvertor function - Test Group', () => {
+		it( 'should convert color to ansi code correctly - Unit 1', () => {
+			const color = 'blue';
+			const actual = colorConvertor( '$TEST$', 'color', convertTextColorToANSI, color );
+			const expected = convertTextColorToANSI( color );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 2', () => {
+			const color = 'red';
+			const actual = colorConvertor( '$TEST$', 'bg', convertTextBackgroundToANSI, color );
+			const expected = convertTextBackgroundToANSI( color );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 3', () => {
+			const color = '#89FC9E';
+			const rgbBase = convertHexToRGB( color );
+
+			const actual = colorConvertor( '$TEST$', 'color', convertTextColorToANSI, color );
+			const expected = makeANSI( [ '38', '2', rgbBase[ 0 ], rgbBase[ 1 ], rgbBase[ 2 ] ] );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 4', () => {
+			const color = '#89FC9E';
+			const rgbBase = convertHexToRGB( color );
+
+			const actual = colorConvertor( '$TEST$', 'bg', convertTextBackgroundToANSI, color );
+			const expected = makeANSI( [ '48', '2', rgbBase[ 0 ], rgbBase[ 1 ], rgbBase[ 2 ] ] );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 5', () => {
+			const color = 156;
+			const actual = colorConvertor( '$TEST$', 'color', convertTextColorToANSI, color );
+			const expected = convertTextColorToANSI( color );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 6', () => {
+			const color = 156;
+			const actual = colorConvertor( '$TEST$', 'bg', convertTextBackgroundToANSI, color );
+			const expected = convertTextBackgroundToANSI( color );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 7', () => {
+			const color: [ number, number, number ] = [ 190, 200, 50 ];
+			const actual = colorConvertor( '$TEST$', 'color', convertTextColorToANSI, color );
+			const expected = makeANSI( [ '38', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 8', () => {
+			const color: [ number, number, number ] = [ 190, 200, 50 ];
+			const actual = colorConvertor( '$TEST$', 'bg', convertTextBackgroundToANSI, color );
+			const expected = makeANSI( [ '48', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] );
+
+			expect( actual ).toBe( expected );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 9', () => {
+			expect( () => {
+				colorConvertor( '$TEST$', 'bg', convertTextBackgroundToANSI, 256 );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi code correctly - Unit 10', () => {
+			expect( () => {
+				colorConvertor( '$TEST$', 'bg', convertTextBackgroundToANSI, [ 0, 10, 300 ] );
+			} ).toThrow( TypeError );
+		} );
+	} );
+
 	describe( 'Testing typecheck function - Test Group', () => {
 		it( 'should throw an error if type is not match - Unit 1', () => {
 			const data = 'text';

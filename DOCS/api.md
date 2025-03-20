@@ -105,6 +105,28 @@ Prints an error message to STDERR.
 Console.Out.error('Error: %v', 'Something went wrong');
 ```
 
+##### `static shot<T extends Function>( func: T, style: ShotStyleT ): T`
+The method creates a new function that has the properties mentioned in the second parameter. You can use it to create a custom function. You can give it the 'write' method and set the text color to blue in the properties section. This method then creates a new function that, when called, displays the input data in blue.
+
+**Note**: This method preserves the function arguments you gave it when creating a new function.
+**Note**: You can customize all output functions, even methods inside the `console` object or functions like `printf`, or directly the `process.stdout.write` method.
+
+- **Parameters**:
+  - `func`: The function you want to customize.
+  - `style`: Styles you want to change and adjust.
+- **Returns**: A new function similar to the one you gave it.
+- **Example**:
+
+```js
+const print = Console.Out.shot(Console.Out.write, {
+	color: 'blue',
+	background: 'red',
+	style: 'underline'
+});
+
+print('The text color is blue and the background is red and style is underline.');
+```
+
 ---
 
 ### In Methods

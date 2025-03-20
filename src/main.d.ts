@@ -1,64 +1,11 @@
-/**
- * @description Installed package version.
-*/
-export declare const version: string;
+/*************************************************
+ * @file SoftIO Type File
+ * @author SoftIO Contributors
+ * @url https://github.com/AryaFardmanesh/softio
+ * @license MIT
+*************************************************/
 
-/**
- * @description This class is for output methods.
-*/
-export declare class Out {
-	/**
-	 * @description Used to print data to the console.
-	**/
-	public static write( ...message: unknown[] ): void;
-
-	/**
-	 * @description Used to print data to the console.
-	 * It also creates a newline at the end of the message.
-	**/
-	public static writeln( ...message: unknown[] ): void;
-
-	/**
-	 * @description It is used to display and print data
-	 * in C style.
-	**/
-	public static printf( message: string, ...argv: unknown[] ): void;
-
-	/**
-	 * @description It is used to print error messages on
-	 * the console. It works similarly to the "printf" method.
-	**/
-	public static error( message: string, ...argv: unknown[] ): void;
-}
-
-/**
- * @description This class is for input methods.
-*/
-export declare class In {
-	/**
-	 * @description This method is used to get data from
-	 * the input.
-	**/
-	public static input( message?: string ): string;
-
-	/**
-	 * @description This method is for capturing passwords
-	 * or important data.
-	**/
-	public static password( message: string, char: string ): string
-
-	/**
-	 * @description Used to obtain user consent.
-	**/
-	public static confirm( message?: string ): boolean;
-
-	/**
-	 * @description It is used to get a number from the
-	 * input.
-	**/
-	public static readNumber( message?: string ): number;
-}
-
+// ==================== Types ====================
 export declare type ANSI_Color_T =
 	'black'			|
 	'red'			|
@@ -120,9 +67,87 @@ export declare type ANSI_Erase_T =
 	'entire-line'
 ;
 
+type ShotStyleT = {
+	color?: ANSI_Color_T | number | [number, number, number] | string,
+	background?: ANSI_Background_T | number | [number, number, number] | string,
+	style?: ANSI_Style_T,
+};
+
+export declare type EventTypesT =
+	'resize'
+;
+// ==================== Types ====================
+
+/**
+ * @description Installed package version.
+**/
+export declare const version: string;
+
+/**
+ * @description This class is for output methods.
+**/
+export declare class Out {
+	/**
+	 * @description Used to print data to the console.
+	**/
+	public static write( ...message: unknown[] ): void;
+
+	/**
+	 * @description Used to print data to the console.
+	 * It also creates a newline at the end of the message.
+	**/
+	public static writeln( ...message: unknown[] ): void;
+
+	/**
+	 * @description It is used to display and print data
+	 * in C style.
+	**/
+	public static printf( message: string, ...argv: unknown[] ): void;
+
+	/**
+	 * @description It is used to print error messages on
+	 * the console. It works similarly to the "printf" method.
+	**/
+	public static error( message: string, ...argv: unknown[] ): void;
+
+	/**
+	 * @description This method is used to create a customized
+	 * output function.
+	**/
+	public static shot<T extends Function>( func: T, style: ShotStyleT ): T;
+}
+
+/**
+ * @description This class is for input methods.
+**/
+export declare class In {
+	/**
+	 * @description This method is used to get data from
+	 * the input.
+	**/
+	public static input( message?: string ): string;
+
+	/**
+	 * @description This method is for capturing passwords
+	 * or important data.
+	**/
+	public static password( message: string, char: string ): string
+
+	/**
+	 * @description Used to obtain user consent.
+	**/
+	public static confirm( message?: string ): boolean;
+
+	/**
+	 * @description It is used to get a number from the
+	 * input.
+	**/
+	public static readNumber( message?: string ): number;
+}
+
 /**
  * @description This class is for attributes methods.
-*/
+**/
 export declare class Attr {
 	/**
 	 * @description This property returns the title of
@@ -236,13 +261,9 @@ export declare class Attr {
 	public static erase( mode: ANSI_Erase_T ): void;
 }
 
-export declare type EventTypesT =
-	'resize'
-;
-
 /**
  * @description This class is for event-related methods.
-*/
+**/
 export declare class Events {
 	/**
 	 * @description Sets a new event.
@@ -257,7 +278,7 @@ export declare class Events {
 
 /**
  * @description This class is for utilities methods.
-*/
+**/
 export declare class Utilities {
 	/**
 	 * @description It centeralize the message in the middle
