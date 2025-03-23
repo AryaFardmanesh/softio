@@ -12,6 +12,10 @@ import {
 	ANSI_Style_T,
 	convertTextStyleToANSI
 } from './var/ansi/style';
+import {
+	ANSI_Erase_T,
+	convertTextEraseToANSI
+} from './var/ansi/erase';
 
 export default class Utilities {
 	public static center( message: string ): string {
@@ -50,5 +54,9 @@ export default class Utilities {
 	public static fontStyle( style: ANSI_Style_T ): string {
 		typeCheck( 'fontStyle', 'string', style );
 		return convertTextStyleToANSI( style );
+	}
+
+	public static erase( mode: ANSI_Erase_T ): string {
+		return convertTextEraseToANSI( mode );
 	}
 }
