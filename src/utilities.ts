@@ -55,8 +55,4 @@ export default class Utilities {
 		typeCheck( 'fontStyle', 'string', style );
 		return convertTextStyleToANSI( style );
 	}
-
-	public static erase( mode: ANSI_Erase_T ): string {
-		return convertTextEraseToANSI( mode );
-	}
 }
