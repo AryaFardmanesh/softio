@@ -1,5 +1,6 @@
 import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
+import { makeANSI } from './var/ansi/base';
 
 export default class Utilities {
 	public static center( message: string ): string {
@@ -19,5 +20,9 @@ export default class Utilities {
 
 	public static clear(): void {
 		stdout.write( '\x1b[2J' );
+	}
+
+	public static reset(): string {
+		return makeANSI( [ '0' ] );
 	}
 }
