@@ -290,4 +290,9 @@ export declare class Utilities {
 	 * @description Clears the console screen.
 	**/
 	public static clear(): void;
+
+	/**
+	 * @description Used to restore graphics modes to default.
+	**/
+	public static reset(): string;
 }
