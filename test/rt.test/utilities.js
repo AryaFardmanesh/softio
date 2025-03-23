@@ -8,3 +8,15 @@ Utilities.clear();
 
 const txt = Utilities.center( 'Hello world!' );
 console.log( txt );
+
+console.log(
+	`${
+		Utilities.color( 'blue' )
+	}${
+		Utilities.background( 'white' )
+	}${
+		Utilities.fontStyle( 'strikethrough' )
+	}Hello world!${
+		Utilities.reset()
+	}`
+);
