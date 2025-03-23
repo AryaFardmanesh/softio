@@ -37,7 +37,7 @@ export default function colorConvertor( name: string, mode: 'color' | 'bg', conv
 
 		colorAnsi = makeANSI( [ ansiRgb, '2', color[ 0 ], color[ 1 ], color[ 2 ] ] );
 	}else {
-		throw new TypeError( `Invalid value for the 'shot' method. Expected values ​​for color are string, number, and triplet of numbers (for RGB).` );
+		throw new TypeError( `Invalid value for the 'shot' method. Expected values for color are string, number, and triplet of numbers (for RGB).` );
 	}
 
 	return colorAnsi;
