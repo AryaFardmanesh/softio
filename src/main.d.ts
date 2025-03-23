@@ -295,4 +295,9 @@ export declare class Utilities {
 	 * @description Used to restore graphics modes to default.
 	**/
 	public static reset(): string;
+
+	/**
+	 * @description Used to change the color of the console text.
+	**/
+	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string;
 }
