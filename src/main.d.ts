@@ -306,4 +306,9 @@ export declare class Utilities {
 	 * texts.
 	**/
 	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string;
+
+	/**
+	 * @description It is used to change the style of texts.
+	**/
+	public static fontStyle( style: ANSI_Style_T ): string;
 }
