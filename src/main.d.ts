@@ -300,4 +300,10 @@ export declare class Utilities {
 	 * @description Used to change the color of the console text.
 	**/
 	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string;
+
+	/**
+	 * @description Used to change the background color of console
+	 * texts.
+	**/
+	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string;
 }
