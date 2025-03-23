@@ -290,4 +290,25 @@ export declare class Utilities {
 	 * @description Clears the console screen.
 	**/
 	public static clear(): void;
+
+	/**
+	 * @description Used to restore graphics modes to default.
+	**/
+	public static reset(): string;
+
+	/**
+	 * @description Used to change the color of the console text.
+	**/
+	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string;
+
+	/**
+	 * @description Used to change the background color of console
+	 * texts.
+	**/
+	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string;
+
+	/**
+	 * @description It is used to change the style of texts.
+	**/
+	public static fontStyle( style: ANSI_Style_T ): string;
 }
