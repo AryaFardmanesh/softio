@@ -12,10 +12,6 @@ import {
 	ANSI_Style_T,
 	convertTextStyleToANSI
 } from './var/ansi/style';
-import {
-	ANSI_Erase_T,
-	convertTextEraseToANSI
-} from './var/ansi/erase';
 
 export default class Utilities {
 	public static center( message: string ): string {
