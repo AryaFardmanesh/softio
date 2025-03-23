@@ -497,3 +497,45 @@ Clears the console screen.
 ```js
 Console.Utilities.clear();
 ```
+
+##### `static reset(): string`
+Returns an ANSI code that when printed will reset all graphics modes to default.
+
+- **Example**:
+
+```js
+Console.write(Console.Utilities.reset());
+```
+
+##### `static color( color: ANSI_Color_T | number | [number, number, number] | string ): string`
+Returns an ANSI code that changes the text color when you print it.
+
+- **Example**:
+
+```js
+const red = Console.Utilities.color('blue');
+const reset = Console.Utilities.reset();
+Console.write(`${red}Hello world!${reset}`);
+```
+
+##### `static background( color: ANSI_Background_T | number | [number, number, number] | string ): string`
+Returns an ANSI code that changes the background when you print it.
+
+- **Example**:
+
+```js
+const red = Console.Utilities.background('#FC8E98');
+const reset = Console.Utilities.reset();
+Console.write(`${red}Hello world!${reset}`);
+```
+
+##### `static fontStyle( style: ANSI_Style_T ): string`
+Returns an ANSI code that will change the style of the text when you print it.
+
+- **Example**:
+
+```js
+const red = Console.Utilities.fontStyle('underline');
+const reset = Console.Utilities.reset();
+Console.write(`${red}Hello world!${reset}`);
+```
