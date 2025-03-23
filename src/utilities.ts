@@ -1,6 +1,11 @@
 import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
+import colorConvertor from './utils/colorconvertor';
+import {
+	ANSI_Color_T,
+	convertTextColorToANSI
+} from './var/ansi/color';
 
 export default class Utilities {
 	public static center( message: string ): string {
@@ -24,5 +29,10 @@ export default class Utilities {
 
 	public static reset(): string {
 		return makeANSI( [ '0' ] );
+	}
+
+	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string {
+		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
+		return colorConvertor( 'color', 'color', convertTextColorToANSI, color );
 	}
 }
