@@ -44,6 +44,7 @@ const age = Console.In.readNumber( 'Enter your age: ' );
 
 if ( age < 18 ) {
 	Console.Out.write( 'Sorry, your age is under 18 :(' );
+	process.exit();
 }
 
 Console.Out.writeln( Console.Utilities.center( `Welcome ${name}.` ) );
