@@ -3,6 +3,8 @@ import { makeANSI } from './var/ansi/base';
 import {
 	ANSI_Background_T,
 	ANSI_Color_T,
+	BgColorParam_T,
+	ColorParam_T,
 	convertHexToRGB,
 	convertTextBackgroundToANSI,
 	convertTextColorToANSI,
@@ -48,14 +50,33 @@ export default class Attr {
 		stdout.write( makeANSI( [ '0' ] ) );
 	}
 
-	public static color( color: ANSI_Color_T | number ): void {
-		stdout.write( convertTextColorToANSI( color ) );
+	public static color( color: ColorParam_T ): void {
+		// Check RGB color
+		if ( Array.isArray( color ) ) {
+			stdout.write( makeANSI( [ '38', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] ) );
+			return;
+		}
+
+		// Check Hex color
+		if ( typeof color == 'string' && isValidHex( color ) ) {
+			const rgb = convertHexToRGB( color );
+			stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+			return;
+		}
+
+		stdout.write( convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void {
 		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static colorHex( hex: string ): void {
 		if ( !isValidHex( hex ) ) {
 			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
@@ -65,14 +86,33 @@ export default class Attr {
 		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
 	}
 
-	public static background( color: ANSI_Background_T | number ): void {
-		stdout.write( convertTextBackgroundToANSI( color ) );
+	public static background( color: BgColorParam_T ): void {
+		// Check RGB color
+		if ( Array.isArray( color ) ) {
+			stdout.write( makeANSI( [ '48', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] ) );
+			return;
+		}
+
+		// Check Hex color
+		if ( typeof color == 'string' && isValidHex( color ) ) {
+			const rgb = convertHexToRGB( color );
+			stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+			return;
+		}
+
+		stdout.write( convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void {
 		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static backgroundHex( hex: string ): void {
 		if ( !isValidHex( hex ) ) {
 			throw new TypeError( `Attr.backgroundHex: '${ hex }' is not valid Hex value.` );

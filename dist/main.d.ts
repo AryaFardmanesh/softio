@@ -28,6 +28,10 @@ export declare type ANSI_Color_T =
 
 export declare type ANSI_Background_T = ANSI_Color_T;
 
+export type ColorParam_T = ANSI_Color_T | string | number | [ number, number, number ];
+
+export type BgColorParam_T = ANSI_Background_T | string | number | [ number, number, number ];
+
 export declare type ANSI_Style_T =
 	'bold'		|
 	'dim'		|
@@ -184,14 +188,16 @@ export declare class Attr {
 	/**
 	 * @description To set the text color.
 	**/
-	public static color( color: ANSI_Color_T | number ): void;
+	public static color( color: ColorParam_T ): void;
 
 	/**
+	 * @deprecated
 	 * @description To set the text color as RGB.
 	**/
 	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void;
 
 	/**
+	 * @deprecated
 	 * @description To set the text color as hex.
 	**/
 	public static colorHex( hex: string ): void;
@@ -199,14 +205,16 @@ export declare class Attr {
 	/**
 	 * @description To set the background color.
 	**/
-	public static background( color: ANSI_Background_T | number ): void;
+	public static background( color: BgColorParam_T ): void;
 
 	/**
+	 * @deprecated
 	 * @description To set the background color as RGB.
 	**/
 	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void;
 
 	/**
+	 * @deprecated
 	 * @description To set the background hex.
 	**/
 	public static backgroundHex( hex: string ): void;
@@ -277,9 +285,9 @@ export declare class Events {
 }
 
 /**
- * @description This class is for utilities methods.
+ * @description This class is for utils methods.
 **/
-export declare class Utilities {
+export declare class Utils {
 	/**
 	 * @description It centeralize the message in the middle
 	 * of the console screen and returns it.
