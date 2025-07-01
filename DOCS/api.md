@@ -459,21 +459,21 @@ Console.Events.removeEventListener('resize');
 
 ---
 
-### Utilities Methods
+### Utils Methods
 
-The **Utilities** class provides general-purpose methods for console management.
+The **Utils** class provides general-purpose methods for console management.
 
-#### Accessing Utilities Methods
+#### Accessing Utils Methods
 
 ```js
 const Console = require('softio');
-Console.Utilities; // Access the Utilities class
+Console.Utils; // Access the Utils class
 ```
 
 Alternatively:
 
 ```js
-const { Utilities } = require('softio');
+const { Utils } = require('softio');
 ```
 
 #### Methods
@@ -486,7 +486,7 @@ Centers a string by padding it with spaces.
 - **Example**:
 
 ```js
-Console.Out.writeln(Console.Utilities.center('Welcome'));
+Console.Out.writeln(Console.Utils.center('Welcome'));
 ```
 
 ##### `static clear(): void`
@@ -495,7 +495,7 @@ Clears the console screen.
 - **Example**:
 
 ```js
-Console.Utilities.clear();
+Console.Utils.clear();
 ```
 
 ##### `static reset(): string`
@@ -504,7 +504,7 @@ Returns an ANSI code that when printed will reset all graphics modes to default.
 - **Example**:
 
 ```js
-Console.write(Console.Utilities.reset());
+Console.write(Console.Utils.reset());
 ```
 
 ##### `static color( color: ANSI_Color_T | number | [number, number, number] | string ): string`
@@ -513,8 +513,8 @@ Returns an ANSI code that changes the text color when you print it.
 - **Example**:
 
 ```js
-const red = Console.Utilities.color('blue');
-const reset = Console.Utilities.reset();
+const red = Console.Utils.color('blue');
+const reset = Console.Utils.reset();
 Console.write(`${red}Hello world!${reset}`);
 ```
 
@@ -524,8 +524,8 @@ Returns an ANSI code that changes the background when you print it.
 - **Example**:
 
 ```js
-const red = Console.Utilities.background('#FC8E98');
-const reset = Console.Utilities.reset();
+const red = Console.Utils.background('#FC8E98');
+const reset = Console.Utils.reset();
 Console.write(`${red}Hello world!${reset}`);
 ```
 
@@ -535,7 +535,7 @@ Returns an ANSI code that will change the style of the text when you print it.
 - **Example**:
 
 ```js
-const red = Console.Utilities.fontStyle('underline');
-const reset = Console.Utilities.reset();
+const red = Console.Utils.fontStyle('underline');
+const reset = Console.Utils.reset();
 Console.write(`${red}Hello world!${reset}`);
 ```

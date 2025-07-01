@@ -3,7 +3,7 @@ import Out from './output';
 import In from './input';
 import Attr from './attributes';
 import Events from './events';
-import Utilities from './utilities';
+import Utils from './utilities';
 
 export {
 	version,
@@ -11,5 +11,5 @@ export {
 	In,
 	Attr,
 	Events,
-	Utilities
+	Utils
 };

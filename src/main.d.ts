@@ -277,9 +277,9 @@ export declare class Events {
 }
 
 /**
- * @description This class is for utilities methods.
+ * @description This class is for utils methods.
 **/
-export declare class Utilities {
+export declare class Utils {
 	/**
 	 * @description It centeralize the message in the middle
 	 * of the console screen and returns it.

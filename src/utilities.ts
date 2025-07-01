@@ -13,7 +13,7 @@ import {
 	convertTextStyleToANSI
 } from './var/ansi/style';
 
-export default class Utilities {
+export default class Utils {
 	public static center( message: string ): string {
 		typeCheck( 'center', 'string', message );
 
