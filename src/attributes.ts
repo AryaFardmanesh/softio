@@ -67,10 +67,16 @@ export default class Attr {
 		stdout.write( convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void {
 		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static colorHex( hex: string ): void {
 		if ( !isValidHex( hex ) ) {
 			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
@@ -97,10 +103,16 @@ export default class Attr {
 		stdout.write( convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void {
 		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
 	}
 
+	/**
+	 * @deprecated
+	**/
 	public static backgroundHex( hex: string ): void {
 		if ( !isValidHex( hex ) ) {
 			throw new TypeError( `Attr.backgroundHex: '${ hex }' is not valid Hex value.` );
