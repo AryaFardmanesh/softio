@@ -275,13 +275,19 @@ To see the number of colors, visit this [link](https://user-images.githubusercon
 - **Example**:
 
 ```js
-Console.Attr.color('magenta');
+Console.Attr.color('red');
+// Or
+Console.Attr.color('#999');
+// Or
+Console.Attr.color([10, 20, 180]);
 // Or
 Console.Attr.color(45);
 ```
 
 ##### `public static colorRGB( red: string | number, green: string | number, blue: string | number ): void`
 This method changes the text color according to the RGB code.
+
+**Note:** This method is deprecated in version `3.10.0`.
 
 - **Example**:
 
@@ -291,6 +297,8 @@ Console.Attr.colorRGB(155, 150, 98);
 
 ##### `public static colorHex( hex: string ): void`
 This method changes the text color according to the hex code.
+
+**Note:** This method is deprecated in version `3.10.0`.
 
 - **Example**:
 
@@ -307,11 +315,17 @@ To see the number of colors, visit this [link](https://user-images.githubusercon
 ```js
 Console.Attr.background('white');
 // Or
+Console.Attr.background('#fff');
+// Or
+Console.Attr.background([110, 70, 80]);
+// Or
 Console.Attr.background(117);
 ```
 
 ##### `public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void`
 This method changes the background color according to the RGB code.
+
+**Note:** This method is deprecated in version `3.10.0`.
 
 - **Example**:
 
@@ -321,6 +335,8 @@ Console.Attr.backgroundRGB(17, 170, 90);
 
 ##### `public static backgroundHex( hex: string ): void`
 This method changes the background color according to the hex code.
+
+**Note:** This method is deprecated in version `3.10.0`.
 
 - **Example**:
 
