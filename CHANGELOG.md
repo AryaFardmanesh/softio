@@ -40,3 +40,7 @@ In this version, we implemented the basic methods for printing and getting data 
 
 # Version 3.8.11
 \+ Rename: We renamed the Utilities class to Utils.<br />
+
+# Version 3.10.0
+\+ Add: The color and background methods in the Attr class support Hex and RGB.<br />
+\+ Deprecated: The colorRGB, colorHex, backgroundRGB, and backgroundHex methods are deprecated.<br />
