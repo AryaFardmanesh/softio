@@ -47,7 +47,7 @@ if ( age < 18 ) {
 	process.exit();
 }
 
-Console.Out.writeln( Console.Utilities.center( `Welcome ${name}.` ) );
+Console.Out.writeln( Console.Utils.center( `Welcome ${name}.` ) );
 ```
 
 Run this simple program to see Softio in action!
