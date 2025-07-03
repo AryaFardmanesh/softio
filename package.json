@@ -28,7 +28,7 @@
 	"author": "Softio Contributors",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/AryaFardmanesh/softio"
+		"url": "git+https://github.com/AryaFardmanesh/softio.git"
 	},
 	"bugs": {
 		"url": "https://github.com/AryaFardmanesh/softio/issues"
