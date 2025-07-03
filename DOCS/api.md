@@ -5,10 +5,12 @@ This file provides a comprehensive overview of all the methods available in the 
 ## Installation
 
 ### Using NPM
-To use this package, you need to install it first. Softio is currently available on NPM but not yet released on Yarn. Use the following command to install the package:
+To use this package, you need to install it first. Softio is currently available on NPM and Yarn. Use the following command to install the package:
 
 ```sh
-npm install --save softio
+npm install softio
+# Or
+yarn add softio
 ```
 
 After installation, you can import it into your project as shown:
