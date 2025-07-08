@@ -2,7 +2,6 @@ const gulp = require( 'gulp' );
 const clean = require( 'gulp-clean' );
 const typescript = require( 'gulp-typescript' );
 const webpack = require( 'webpack-stream' );
-const babel = require( 'gulp-babel' );
 const replace = require( 'gulp-replace' );
 const txtInsert = require('gulp-append-prepend');
 const config = require( './config' );
