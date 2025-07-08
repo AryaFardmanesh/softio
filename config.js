@@ -1,4 +1,5 @@
 const path = require( 'node:path' );
+const nodeExternals = require( 'webpack-node-externals' );
 const tsconfig = require( './tsconfig.json' );
 
 const babelConfig = {
@@ -15,7 +16,10 @@ const webpackConfig = {
 	},
 	optimization: {
 		minimize: false,
-	}
+	},
+	externals: [
+		nodeExternals()
+	]
 };
 
 module.exports = {
