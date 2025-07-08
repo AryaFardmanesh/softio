@@ -39,6 +39,8 @@ gulp.task( 'build', () => {
 gulp.task( 'attach:declare', () => {
 	return (
 		gulp.src( './src/**/*.d.ts' )
+			.pipe( writeHeader( config.copyright ) )
+			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
 } );
