@@ -6,10 +6,6 @@ const babelConfig = {
 	presets: [ '@babel/env' ]
 };
 
-const terserConfig = {
-	// The terser config document https://github.com/terser/terser#minify-options
-};
-
 const webpackConfig = {
 	// The webpack configuration document https://webpack.js.org/configuration/
 	mode: 'production',
