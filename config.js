@@ -2,11 +2,6 @@ const path = require( 'node:path' );
 const nodeExternals = require( 'webpack-node-externals' );
 const tsconfig = require( './tsconfig.json' );
 
-const babelConfig = {
-	// The terser config document https://babeljs.io/docs/configuration
-	presets: [ '@babel/env' ]
-};
-
 const webpackConfig = {
 	// The webpack configuration document https://webpack.js.org/configuration/
 	mode: 'production',
