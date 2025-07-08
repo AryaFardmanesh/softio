@@ -44,3 +44,7 @@ In this version, we implemented the basic methods for printing and getting data 
 # Version 3.10.0
 \+ Add: The color and background methods in the Attr class support Hex and RGB.<br />
 \+ Deprecated: The colorRGB, colorHex, backgroundRGB, and backgroundHex methods are deprecated.<br />
+
+# Version 3.11.8
+\+ Remove: the output minification.<br />
+\+ Add: Copyright text to header of output files.<br />

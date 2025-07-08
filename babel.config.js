@@ -1,3 +1,4 @@
+// This babel config used for Jest.
 module.exports = {
 	presets: [
 		[

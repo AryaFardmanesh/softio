@@ -1,3 +1,5 @@
+/*! Softio v3.10.1 Copyright (c) 2025 Arya Fardmanesh and contributors */
+
 /*************************************************
  * @file SoftIO Type File
  * @author SoftIO Contributors

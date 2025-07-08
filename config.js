@@ -1,14 +1,6 @@
 const path = require( 'node:path' );
+const nodeExternals = require( 'webpack-node-externals' );
 const tsconfig = require( './tsconfig.json' );
-
-const babelConfig = {
-	// The terser config document https://babeljs.io/docs/configuration
-	presets: [ '@babel/env' ]
-};
-
-const terserConfig = {
-	// The terser config document https://github.com/terser/terser#minify-options
-};
 
 const webpackConfig = {
 	// The webpack configuration document https://webpack.js.org/configuration/
@@ -16,12 +8,17 @@ const webpackConfig = {
 	target: 'node',
 	output: {
 		libraryTarget: 'commonjs2'
-	}
+	},
+	optimization: {
+		minimize: false,
+	},
+	externals: [
+		nodeExternals()
+	]
 };
 
 module.exports = {
-	babel: babelConfig,
-	terser: terserConfig,
 	webpack: webpackConfig,
-	tsconfig: tsconfig.compilerOptions
+	tsconfig: tsconfig.compilerOptions,
+	copyright: `/*! Softio v@VERSION Copyright (c) ${ ( new Date() ).getFullYear() } Arya Fardmanesh and contributors */\n\n`
 };
