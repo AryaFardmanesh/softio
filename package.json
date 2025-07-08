@@ -48,6 +48,7 @@
 		"jest": "^29.7.0",
 		"ts-jest": "^29.2.5",
 		"typescript": "^5.7.2",
+		"webpack-node-externals": "^3.0.0",
 		"webpack-stream": "^7.0.0"
 	},
 	"dependencies": {
