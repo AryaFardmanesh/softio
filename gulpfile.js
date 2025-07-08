@@ -4,6 +4,7 @@ const typescript = require( 'gulp-typescript' );
 const webpack = require( 'webpack-stream' );
 const babel = require( 'gulp-babel' );
 const replace = require( 'gulp-replace' );
+const txtInsert = require('gulp-append-prepend');
 const config = require( './config' );
 const pkg = require( './package.json' );
 
@@ -30,6 +31,7 @@ gulp.task( 'build', () => {
 	return (
 		gulp.src( './dist/main.js' )
 			.pipe( webpack( config.webpack ) )
+			.pipe( txtInsert.prependFile() )
 			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
