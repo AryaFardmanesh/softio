@@ -3,7 +3,6 @@ const clean = require( 'gulp-clean' );
 const typescript = require( 'gulp-typescript' );
 const webpack = require( 'webpack-stream' );
 const babel = require( 'gulp-babel' );
-const terser = require( 'gulp-terser' );
 const replace = require( 'gulp-replace' );
 const config = require( './config' );
 const pkg = require( './package.json' );
@@ -32,7 +31,6 @@ gulp.task( 'build', () => {
 		gulp.src( './dist/main.js' )
 			.pipe( webpack( config.webpack ) )
 			.pipe( babel( config.babel ) )
-			.pipe( terser( config.terser ) )
 			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
