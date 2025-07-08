@@ -12,6 +12,9 @@ const webpackConfig = {
 	target: 'node',
 	output: {
 		libraryTarget: 'commonjs2'
+	},
+	optimization: {
+		minimize: false,
 	}
 };
 
