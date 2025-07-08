@@ -17,7 +17,6 @@ const webpackConfig = {
 
 module.exports = {
 	babel: babelConfig,
-	terser: terserConfig,
 	webpack: webpackConfig,
 	tsconfig: tsconfig.compilerOptions
 };
