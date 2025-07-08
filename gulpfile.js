@@ -30,7 +30,6 @@ gulp.task( 'build', () => {
 	return (
 		gulp.src( './dist/main.js' )
 			.pipe( webpack( config.webpack ) )
-			.pipe( babel( config.babel ) )
 			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
