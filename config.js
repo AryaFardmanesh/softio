@@ -18,7 +18,6 @@ const webpackConfig = {
 };
 
 module.exports = {
-	babel: babelConfig,
 	webpack: webpackConfig,
 	tsconfig: tsconfig.compilerOptions,
 	copyright: `/*! Softio v@VERSION Copyright (c) ${ ( new Date() ).getFullYear() } Arya Fardmanesh and contributors */\n`
