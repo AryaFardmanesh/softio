@@ -12,6 +12,7 @@ import {
 	ANSI_Style_T,
 	convertTextStyleToANSI
 } from './var/ansi/style';
+import silentEcho from './utils/silentecho';
 
 export default class Utils {
 	public static center( message: string ): string {
@@ -50,5 +51,9 @@ export default class Utils {
 	public static fontStyle( style: ANSI_Style_T ): string {
 		typeCheck( 'fontStyle', 'string', style );
 		return convertTextStyleToANSI( style );
+	}
+
+	public static prettier( data: unknown ): string {
+		return silentEcho( data );
 	}
 }
