@@ -53,7 +53,7 @@ export default class Utils {
 		return convertTextStyleToANSI( style );
 	}
 
-	public static prettier( data: unknown ): string {
-		return silentEcho( data );
+	public static prettier( ..._data: unknown[] ): string {
+		return silentEcho( ...arguments );
 	}
 }
