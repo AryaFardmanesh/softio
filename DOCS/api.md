@@ -557,3 +557,16 @@ const red = Console.Utils.fontStyle('underline');
 const reset = Console.Utils.reset();
 Console.write(`${red}Hello world!${reset}`);
 ```
+
+##### `static prettier( ..._data: unknown[] ): string`
+This function is responsible for converting input data of any type into a displayable string. Using this method, you can directly convert the data into a form that can be displayed in the console.
+
+- **Example**:
+
+```js
+const data1 = Console.Utils.prettier(['Hello', 10, true]);
+
+process.stdout.write(data1);
+process.stdout.write(data2);
+process.stdout.write(data3);
+```
