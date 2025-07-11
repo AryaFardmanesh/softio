@@ -48,3 +48,6 @@ In this version, we implemented the basic methods for printing and getting data 
 # Version 3.11.8
 \+ Remove: the output minification.<br />
 \+ Add: Copyright text to header of output files.<br />
+
+# Version 3.12.8
+\+ Add: Adding prettier method function in Utils class.<br />
