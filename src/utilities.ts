@@ -2,15 +2,13 @@ import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
 import colorConvertor from './utils/colorconvertor';
+import {convertTextStyleToANSI } from './var/ansi/style';
+import silentEcho from './utils/silentecho';
 import {
 	ANSI_Background_T,
-	ANSI_Color_T
+	ANSI_Color_T,
+	ANSI_Style_T
 } from './main.d';
-import {
-	ANSI_Style_T,
-	convertTextStyleToANSI
-} from './var/ansi/style';
-import silentEcho from './utils/silentecho';
 
 export default class Utils {
 	public static center( message: string ): string {
