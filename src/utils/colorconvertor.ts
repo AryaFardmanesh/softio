@@ -15,13 +15,22 @@ import {
 export default function colorConvertor( name: string, mode: 'color' | 'bg', color: ColorParam_T | BgColorParam_T ): string {
 	const ansiRgbPrefix = ( mode === 'color' ) ? '38' : '48';
 
-	// Check RGB color
 	if ( Array.isArray( color ) ) {
+		for ( const part of color ) {
+			if ( Number( part ) > 255 ) {
+				throw new TypeError( `The RGB value for the '.${ name }' function must be between 0 and 255.` );
+			}
+		}
+
 		return makeANSI( [ ansiRgbPrefix, '2', color[ 0 ] || '0', color[ 1 ] || '0', color[ 2 ] || '0' ] );
 	}else if ( typeof color == 'string' && isValidHex( color ) ) {
 		const rgb = convertHexToRGB( color );
 		return makeANSI( [ ansiRgbPrefix, '2', rgb[ 0 ] || '0', rgb[ 1 ] || '0', rgb[ 2 ] || '0' ] );
 	}else if ( typeof color == 'string' || typeof color == 'number' ) {
+		if ( typeof color == 'number' && ( color > 255 || color < 0 ) ) {
+			throw new TypeError( `The color value for the '.${ name }' function must be between 0 and 255.` );
+		}
+
 		return ( mode == 'color' ) ?
 		convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) :
 		convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) );
