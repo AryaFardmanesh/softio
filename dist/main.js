@@ -1,4 +1,4 @@
-/*! Softio v3.10.1 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.12.10 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -277,6 +277,7 @@ const base_1 = __webpack_require__(273);
 const colorconvertor_1 = __importDefault(__webpack_require__(433));
 const color_1 = __webpack_require__(285);
 const style_1 = __webpack_require__(491);
+const silentecho_1 = __importDefault(__webpack_require__(710));
 class Utils {
     static center(message) {
         (0, typecheck_1.default)('center', 'string', message);
@@ -305,6 +306,9 @@ class Utils {
     static fontStyle(style) {
         (0, typecheck_1.default)('fontStyle', 'string', style);
         return (0, style_1.convertTextStyleToANSI)(style);
+    }
+    static prettier(..._data) {
+        return (0, silentecho_1.default)(...arguments);
     }
 }
 exports["default"] = Utils;
@@ -716,7 +720,7 @@ exports.stdout = process.stdout;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.version = void 0;
-exports.version = '3.10.1';
+exports.version = '3.12.10';
 
 
 /***/ }),
