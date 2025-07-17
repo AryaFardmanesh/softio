@@ -4,9 +4,7 @@ import { makeANSI } from './var/ansi/base';
 import colorConvertor from './utils/colorconvertor';
 import {
 	ANSI_Background_T,
-	ANSI_Color_T,
-	convertTextBackgroundToANSI,
-	convertTextColorToANSI
+	ANSI_Color_T
 } from './var/ansi/color';
 import {
 	ANSI_Style_T,
