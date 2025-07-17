@@ -1,11 +1,11 @@
 import {
+	ANSI_Color_T,
+	ANSI_Background_T,
 	ColorParam_T,
 	BgColorParam_T
 } from '../main.d';
 import { makeANSI } from '../var/ansi/base';
 import {
-	ANSI_Color_T,
-	ANSI_Background_T,
 	isValidHex,
 	convertHexToRGB,
 	convertTextColorToANSI,
