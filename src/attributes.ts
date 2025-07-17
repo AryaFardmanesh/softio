@@ -2,7 +2,9 @@ import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
 import {
 	BgColorParam_T,
-	ColorParam_T,
+	ColorParam_T
+} from './main.d'
+import {
 	convertHexToRGB,
 	isValidHex
 } from './var/ansi/color';
