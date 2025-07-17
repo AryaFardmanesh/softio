@@ -1,20 +1,25 @@
-/*! Softio v3.12.11 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.30.11 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 885:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const stdout_1 = __webpack_require__(389);
 const base_1 = __webpack_require__(273);
-const color_1 = __webpack_require__(285);
 const style_1 = __webpack_require__(491);
-const cursor_1 = __webpack_require__(890);
 const erase_1 = __webpack_require__(676);
+const colorconvertor_1 = __importDefault(__webpack_require__(433));
+const typecheck_1 = __importDefault(__webpack_require__(828));
+const cursor_1 = __webpack_require__(890);
+const color_1 = __webpack_require__(285);
 class Attr {
     static get title() {
         return process.title;
@@ -35,16 +40,8 @@ class Attr {
         stdout_1.stdout.write((0, base_1.makeANSI)(['0']));
     }
     static color(color) {
-        if (Array.isArray(color)) {
-            stdout_1.stdout.write((0, base_1.makeANSI)(['38', '2', color[0], color[1], color[2]]));
-            return;
-        }
-        if (typeof color == 'string' && (0, color_1.isValidHex)(color)) {
-            const rgb = (0, color_1.convertHexToRGB)(color);
-            stdout_1.stdout.write((0, base_1.makeANSI)(['38', '2', rgb[0], rgb[1], rgb[2]]));
-            return;
-        }
-        stdout_1.stdout.write((0, color_1.convertTextColorToANSI)(color));
+        (0, typecheck_1.default)('color', ['string', 'number', 'object'], color);
+        stdout_1.stdout.write((0, colorconvertor_1.default)('color', 'color', color));
     }
     static colorRGB(red, green, blue) {
         stdout_1.stdout.write((0, base_1.makeANSI)(['38', '2', red, green, blue]));
@@ -57,16 +54,8 @@ class Attr {
         stdout_1.stdout.write((0, base_1.makeANSI)(['38', '2', rgb[0], rgb[1], rgb[2]]));
     }
     static background(color) {
-        if (Array.isArray(color)) {
-            stdout_1.stdout.write((0, base_1.makeANSI)(['48', '2', color[0], color[1], color[2]]));
-            return;
-        }
-        if (typeof color == 'string' && (0, color_1.isValidHex)(color)) {
-            const rgb = (0, color_1.convertHexToRGB)(color);
-            stdout_1.stdout.write((0, base_1.makeANSI)(['48', '2', rgb[0], rgb[1], rgb[2]]));
-            return;
-        }
-        stdout_1.stdout.write((0, color_1.convertTextBackgroundToANSI)(color));
+        (0, typecheck_1.default)('background', ['string', 'number', 'object'], color);
+        stdout_1.stdout.write((0, colorconvertor_1.default)('background', 'bg', color));
     }
     static backgroundRGB(red, green, blue) {
         stdout_1.stdout.write((0, base_1.makeANSI)(['48', '2', red, green, blue]));
@@ -225,7 +214,6 @@ const stdout_1 = __webpack_require__(389);
 const stderr_1 = __webpack_require__(402);
 const base_1 = __webpack_require__(273);
 const colorconvertor_1 = __importDefault(__webpack_require__(433));
-const color_1 = __webpack_require__(285);
 const style_1 = __webpack_require__(491);
 class Out {
     static write(...message) {
@@ -248,8 +236,8 @@ class Out {
     }
     static shot(func, style) {
         return ((...data) => {
-            const color = (style.color) ? (0, colorconvertor_1.default)('shot', 'color', color_1.convertTextColorToANSI, style.color) : '';
-            const bg = (style.background) ? (0, colorconvertor_1.default)('shot', 'bg', color_1.convertTextBackgroundToANSI, style.background) : '';
+            const color = (style.color) ? (0, colorconvertor_1.default)('shot', 'color', style.color) : '';
+            const bg = (style.background) ? (0, colorconvertor_1.default)('shot', 'bg', style.background) : '';
             const fstyle = (style.style) ? (0, style_1.convertTextStyleToANSI)(style.style) : '';
             stdout_1.stdout.write(color + bg + fstyle);
             const result = func(...data);
@@ -275,7 +263,6 @@ const typecheck_1 = __importDefault(__webpack_require__(828));
 const stdout_1 = __webpack_require__(389);
 const base_1 = __webpack_require__(273);
 const colorconvertor_1 = __importDefault(__webpack_require__(433));
-const color_1 = __webpack_require__(285);
 const style_1 = __webpack_require__(491);
 const silentecho_1 = __importDefault(__webpack_require__(710));
 class Utils {
@@ -297,11 +284,11 @@ class Utils {
     }
     static color(color) {
         (0, typecheck_1.default)('color', ['string', 'number', 'object'], color);
-        return (0, colorconvertor_1.default)('color', 'color', color_1.convertTextColorToANSI, color);
+        return (0, colorconvertor_1.default)('color', 'color', color);
     }
     static background(color) {
         (0, typecheck_1.default)('color', ['string', 'number', 'object'], color);
-        return (0, colorconvertor_1.default)('background', 'bg', color_1.convertTextBackgroundToANSI, color);
+        return (0, colorconvertor_1.default)('background', 'bg', color);
     }
     static fontStyle(style) {
         (0, typecheck_1.default)('fontStyle', 'string', style);
@@ -324,37 +311,21 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = colorConvertor;
 const base_1 = __webpack_require__(273);
 const color_1 = __webpack_require__(285);
-function colorConvertor(name, mode, convertor, color) {
-    const ansiRgb = (mode === 'color') ? '38' : '48';
-    let colorAnsi = '';
-    if (typeof color === 'string') {
-        if ((0, color_1.isValidHex)(color)) {
-            const rgb = (0, color_1.convertHexToRGB)(color);
-            colorAnsi = (0, base_1.makeANSI)([ansiRgb, '2', rgb[0], rgb[1], rgb[2]]);
-        }
-        else {
-            colorAnsi = convertor(color);
-        }
+function colorConvertor(name, mode, color) {
+    const ansiRgbPrefix = (mode === 'color') ? '38' : '48';
+    if (Array.isArray(color)) {
+        return (0, base_1.makeANSI)([ansiRgbPrefix, '2', color[0] || '0', color[1] || '0', color[2] || '0']);
     }
-    else if (typeof color === 'number') {
-        if (color < 0 || color > 255) {
-            throw new TypeError(`Invalid value for method '${name}'. Number must be between 0 and 255.`);
-        }
-        colorAnsi = convertor(color);
+    else if (typeof color == 'string' && (0, color_1.isValidHex)(color)) {
+        const rgb = (0, color_1.convertHexToRGB)(color);
+        return (0, base_1.makeANSI)([ansiRgbPrefix, '2', rgb[0] || '0', rgb[1] || '0', rgb[2] || '0']);
     }
-    else if (Array.isArray(color) && color.length >= 3) {
-        for (let i = 0; i < 3; i++) {
-            const num = Number(color[i]);
-            if (num < 0 || num > 255) {
-                throw new TypeError(`Invalid value for '${name}' method. RGB values must be between 0 and 255.`);
-            }
-        }
-        colorAnsi = (0, base_1.makeANSI)([ansiRgb, '2', color[0], color[1], color[2]]);
+    else if (typeof color == 'string' || typeof color == 'number') {
+        return (mode == 'color') ?
+            (0, color_1.convertTextColorToANSI)(color) :
+            (0, color_1.convertTextBackgroundToANSI)(color);
     }
-    else {
-        throw new TypeError(`Invalid value for the 'colorConvertor' method. Expected values for color are string, number, and triplet of numbers (for RGB).`);
-    }
-    return colorAnsi;
+    throw new TypeError(`The input value for the '.${name}' function is incorrect.`);
 }
 
 
@@ -720,7 +691,7 @@ exports.stdout = process.stdout;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.version = void 0;
-exports.version = '3.12.11';
+exports.version = '3.30.11';
 
 
 /***/ }),
