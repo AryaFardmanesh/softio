@@ -31,9 +31,15 @@ export default function colorConvertor( name: string, mode: 'color' | 'bg', colo
 			throw new TypeError( `The color value for the '.${ name }' function must be between 0 and 255.` );
 		}
 
-		return ( mode == 'color' ) ?
+		const result = ( mode == 'color' ) ?
 		convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) :
 		convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) );
+
+		if ( result == makeANSI( [ '39' ] ) ) {
+			throw new Error( `The color passed to the '.${ name }' function is invalid.` );
+		}
+
+		return result;
 	}
 
 	throw new TypeError( `The input value for the '.${ name }' function is incorrect.` );
