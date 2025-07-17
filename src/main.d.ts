@@ -28,9 +28,9 @@ export declare type ANSI_Color_T =
 
 export declare type ANSI_Background_T = ANSI_Color_T;
 
-export type ColorParam_T = ANSI_Color_T | string | number | [ number, number, number ];
+export type ColorParam_T = ANSI_Color_T | (string & {} ) | number | [ number, number, number ];
 
-export type BgColorParam_T = ANSI_Background_T | string | number | [ number, number, number ];
+export type BgColorParam_T = ANSI_Background_T | (string & {} ) | number | [ number, number, number ];
 
 export declare type ANSI_Style_T =
 	'bold'		|
