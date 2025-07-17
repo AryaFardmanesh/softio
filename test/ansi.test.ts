@@ -123,8 +123,39 @@ describe( 'Testing ANSI methods - Test Group', () => {
 
 			expect( actual ).toBe( expected );
 		} );
+
+		it( 'should make the correct ansi code - Unit 16', () => {
+			expect( () => {
+				makeANSI( true as unknown as string[] );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should make the correct ansi code - Unit 17', () => {
+			expect( () => {
+				makeANSI( {} as unknown as string[] );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should make the correct ansi code - Unit 18', () => {
+			expect( () => {
+				makeANSI( [ [] ] as unknown as string[] );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should make the correct ansi code - Unit 19', () => {
+			expect( () => {
+				makeANSI( [ [ true ] ] as unknown as string[] );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should make the correct ansi code - Unit 20', () => {
+			expect( () => {
+				makeANSI( [ null ] as unknown as string[] );
+			} ).toThrow( TypeError );
+		} );
 	} );
 
+	// ... NEED REFACTORING ...
 	describe( 'Testing color conversion functions to ANSI - Test Group', () => {
 		it( 'should convert color to ansi correctly - Unit 1', () => {
 			const actual = convertTextColorToANSI( 'black' );
