@@ -1,3 +1,6 @@
+# Version 3.30.11
+\+ Optimize: Imported all the types from main.d.ts.<br />
+
 # Version 3.12.8
 \+ Add: Adding prettier method function in Utils class.<br />
 
