@@ -5,7 +5,7 @@ import colorConvertor from './utils/colorconvertor';
 import {
 	ANSI_Background_T,
 	ANSI_Color_T
-} from './var/ansi/color';
+} from './main.d';
 import {
 	ANSI_Style_T,
 	convertTextStyleToANSI
