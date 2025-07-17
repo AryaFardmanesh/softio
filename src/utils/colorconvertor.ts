@@ -15,9 +15,9 @@ import {
 export default function colorConvertor( name: string, mode: 'color' | 'bg', color: ColorParam_T | BgColorParam_T ): string {
 	const ansiRgbPrefix = ( mode === 'color' ) ? '38' : '48';
 
-	if ( Array.isArray( color ) ) {
+	if ( Array.isArray( color ) && color.length == 3 ) {
 		for ( const part of color ) {
-			if ( Number( part ) > 255 ) {
+			if ( typeof part != 'number' || part > 255 ) {
 				throw new TypeError( `The RGB value for the '.${ name }' function must be between 0 and 255.` );
 			}
 		}
