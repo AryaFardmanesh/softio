@@ -1,30 +1,8 @@
 import { makeANSI } from './base';
-
-export type ANSI_Color_T =
-	'black'			|
-	'red'			|
-	'green'			|
-	'yellow'		|
-	'blue'			|
-	'magenta'		|
-	'cyan'			|
-	'white'			|
-	'bright-black'		|
-	'bright-red'		|
-	'bright-green'		|
-	'bright-yellow'		|
-	'bright-blue'		|
-	'bright-magenta'	|
-	'bright-cyan'		|
-	'bright-white'		|
-	'default'
-;
-
-export type ANSI_Background_T = ANSI_Color_T;
-
-export type ColorParam_T = ANSI_Color_T | ( string & {} ) | number | [ number, number, number ];
-
-export type BgColorParam_T = ANSI_Background_T | ( string & {} ) | number | [ number, number, number ];
+import {
+	ANSI_Color_T,
+	ANSI_Background_T
+} from '../../main.d';
 
 export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 	if ( typeof color === 'number' ) {
