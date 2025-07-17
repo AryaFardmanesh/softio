@@ -1,19 +1,8 @@
 import { makeANSI } from './base';
-
-export type ANSI_Cursor_Movement_T =
-	'up'		|
-	'down'		|
-	'right'		|
-	'left'		|
-	'next'		|
-	'previous'	|
-	'go-up'
-;
-
-export type ANSI_Cursor_Style_T =
-	'invisible'	|
-	'visible'
-;
+import {
+	ANSI_Cursor_Movement_T,
+	ANSI_Cursor_Style_T
+} from '../../main.d';
 
 export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number | string ): string {
 	switch ( style ) {

@@ -2,17 +2,13 @@ import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
 import colorConvertor from './utils/colorconvertor';
+import {convertTextStyleToANSI } from './var/ansi/style';
+import silentEcho from './utils/silentecho';
 import {
 	ANSI_Background_T,
 	ANSI_Color_T,
-	convertTextBackgroundToANSI,
-	convertTextColorToANSI
-} from './var/ansi/color';
-import {
-	ANSI_Style_T,
-	convertTextStyleToANSI
-} from './var/ansi/style';
-import silentEcho from './utils/silentecho';
+	ANSI_Style_T
+} from './main.d';
 
 export default class Utils {
 	public static center( message: string ): string {
@@ -40,12 +36,12 @@ export default class Utils {
 
 	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string {
 		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
-		return colorConvertor( 'color', 'color', convertTextColorToANSI, color );
+		return colorConvertor( 'color', 'color', color );
 	}
 
 	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string {
 		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
-		return colorConvertor( 'background', 'bg', convertTextBackgroundToANSI, color );
+		return colorConvertor( 'background', 'bg', color );
 	}
 
 	public static fontStyle( style: ANSI_Style_T ): string {

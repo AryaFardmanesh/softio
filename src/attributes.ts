@@ -1,29 +1,25 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
+import { convertTextStyleToANSI } from './var/ansi/style';
+import { convertTextEraseToANSI } from './var/ansi/erase';
+import colorConvertor from './utils/colorconvertor';
+import typeCheck from './utils/typecheck';
 import {
-	ANSI_Background_T,
-	ANSI_Color_T,
-	BgColorParam_T,
-	ColorParam_T,
+	convertTextCursorMoveToANSI,
+	convertTextCursorStyleToANSI
+} from './var/ansi/cursor';
+import {
 	convertHexToRGB,
-	convertTextBackgroundToANSI,
-	convertTextColorToANSI,
-	isValidHex,
+	isValidHex
 } from './var/ansi/color';
-import {
-	ANSI_Style_T,
-	convertTextStyleToANSI
-} from './var/ansi/style';
 import {
 	ANSI_Cursor_Movement_T,
 	ANSI_Cursor_Style_T,
-	convertTextCursorMoveToANSI,
-	convertTextCursorStyleToANSI,
-} from './var/ansi/cursor';
-import {
-	ANSI_Erase_T,
-	convertTextEraseToANSI
-} from './var/ansi/erase';
+	BgColorParam_T,
+	ANSI_Style_T,
+	ColorParam_T,
+	ANSI_Erase_T
+} from './main.d';
 
 export default class Attr {
 	public static get title(): string {
@@ -51,20 +47,8 @@ export default class Attr {
 	}
 
 	public static color( color: ColorParam_T ): void {
-		// Check RGB color
-		if ( Array.isArray( color ) ) {
-			stdout.write( makeANSI( [ '38', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] ) );
-			return;
-		}
-
-		// Check Hex color
-		if ( typeof color == 'string' && isValidHex( color ) ) {
-			const rgb = convertHexToRGB( color );
-			stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
-			return;
-		}
-
-		stdout.write( convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) );
+		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
+		stdout.write( colorConvertor( 'color', 'color', color ) );
 	}
 
 	/**
@@ -87,20 +71,8 @@ export default class Attr {
 	}
 
 	public static background( color: BgColorParam_T ): void {
-		// Check RGB color
-		if ( Array.isArray( color ) ) {
-			stdout.write( makeANSI( [ '48', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] ) );
-			return;
-		}
-
-		// Check Hex color
-		if ( typeof color == 'string' && isValidHex( color ) ) {
-			const rgb = convertHexToRGB( color );
-			stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
-			return;
-		}
-
-		stdout.write( convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) ) );
+		typeCheck( 'background', [ 'string', 'number', 'object' ], color );
+		stdout.write( colorConvertor( 'background', 'bg', color ) );
 	}
 
 	/**

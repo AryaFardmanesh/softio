@@ -1,44 +1,31 @@
-import { makeANSI } from '../var/ansi/base';
 import {
 	ANSI_Color_T,
 	ANSI_Background_T,
+	ColorParam_T,
+	BgColorParam_T
+} from '../main.d';
+import { makeANSI } from '../var/ansi/base';
+import {
 	isValidHex,
-	convertHexToRGB
+	convertHexToRGB,
+	convertTextColorToANSI,
+	convertTextBackgroundToANSI
 } from '../var/ansi/color';
 
-type ColorParamT = ANSI_Color_T | ANSI_Background_T | string | number | [number, number, number];
-type ConvertorT = ( color: ANSI_Color_T | ANSI_Background_T | number ) => string;
+export default function colorConvertor( name: string, mode: 'color' | 'bg', color: ColorParam_T | BgColorParam_T ): string {
+	const ansiRgbPrefix = ( mode === 'color' ) ? '38' : '48';
 
-export default function colorConvertor( name: string, mode: 'color' | 'bg', convertor: ConvertorT, color: ColorParamT ): string {
-	const ansiRgb = ( mode === 'color' ) ? '38' : '48';
-	let colorAnsi: string = '';
-
-	if ( typeof color === 'string' ) {
-		if ( isValidHex( color ) ) {
-			const rgb = convertHexToRGB( color );
-			colorAnsi = makeANSI( [ ansiRgb, '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] );
-		}else {
-			colorAnsi = convertor( <ANSI_Color_T>color );
-		}
-	}else if ( typeof color === 'number' ) {
-		if ( color < 0 || color > 255 ) {
-			throw new TypeError( `Invalid value for method '${ name }'. Number must be between 0 and 255.` );
-		}
-
-		colorAnsi = convertor( color );
-	}else if ( Array.isArray( color ) && color.length >= 3 ) {
-		for ( let i = 0; i < 3; i++ ) {
-			const num = Number( color[ i ] );
-
-			if ( num < 0 || num > 255 ) {
-				throw new TypeError( `Invalid value for '${ name }' method. RGB values must be between 0 and 255.` );
-			}
-		}
-
-		colorAnsi = makeANSI( [ ansiRgb, '2', color[ 0 ], color[ 1 ], color[ 2 ] ] );
-	}else {
-		throw new TypeError( `Invalid value for the 'colorConvertor' method. Expected values for color are string, number, and triplet of numbers (for RGB).` );
+	// Check RGB color
+	if ( Array.isArray( color ) ) {
+		return makeANSI( [ ansiRgbPrefix, '2', color[ 0 ] || '0', color[ 1 ] || '0', color[ 2 ] || '0' ] );
+	}else if ( typeof color == 'string' && isValidHex( color ) ) {
+		const rgb = convertHexToRGB( color );
+		return makeANSI( [ ansiRgbPrefix, '2', rgb[ 0 ] || '0', rgb[ 1 ] || '0', rgb[ 2 ] || '0' ] );
+	}else if ( typeof color == 'string' || typeof color == 'number' ) {
+		return ( mode == 'color' ) ?
+		convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) :
+		convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) );
 	}
 
-	return colorAnsi;
+	throw new TypeError( `The input value for the '.${ name }' function is incorrect.` );
 }
