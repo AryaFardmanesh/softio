@@ -35,8 +35,8 @@ export default function colorConvertor( name: string, mode: 'color' | 'bg', colo
 		convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) :
 		convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) );
 
-		if ( result == makeANSI( [ '39' ] ) ) {
-			throw new Error( `The color passed to the '.${ name }' function is invalid.` );
+		if ( result == makeANSI( [ '39' ] ) || result == makeANSI( [ '49' ] ) ) {
+			throw new TypeError( `The color passed to the '.${ name }' function is invalid.` );
 		}
 
 		return result;
