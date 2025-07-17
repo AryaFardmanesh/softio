@@ -1,4 +1,4 @@
-/*! Softio v3.10.1 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.12.10 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /*************************************************
  * @file SoftIO Type File
@@ -30,9 +30,9 @@ export declare type ANSI_Color_T =
 
 export declare type ANSI_Background_T = ANSI_Color_T;
 
-export type ColorParam_T = ANSI_Color_T | string | number | [ number, number, number ];
+export type ColorParam_T = ANSI_Color_T | (string & {} ) | number | [ number, number, number ];
 
-export type BgColorParam_T = ANSI_Background_T | string | number | [ number, number, number ];
+export type BgColorParam_T = ANSI_Background_T | (string & {} ) | number | [ number, number, number ];
 
 export declare type ANSI_Style_T =
 	'bold'		|
