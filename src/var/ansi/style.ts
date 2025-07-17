@@ -1,16 +1,5 @@
 import { makeANSI } from './base';
-
-export type ANSI_Style_T =
-	'bold'		|
-	'dim'		|
-	'italic'	|
-	'underline'	|
-	'blinking'	|
-	'reverse'	|
-	'hidden'	|
-	'strikethrough' |
-	'default'
-;
+import { ANSI_Style_T } from '../../main.d';
 
 export function convertTextStyleToANSI( style: ANSI_Style_T ): string {
 	switch ( style ) {
