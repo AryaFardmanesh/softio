@@ -9,7 +9,7 @@ import { convertTextStyleToANSI } from './var/ansi/style';
 import {
 	ShotStyleT,
 	ANSI_Style_T
-} from './main.d'
+} from './main.d';
 
 export default class Out {
 	public static write( ...message: unknown[] ): void {
