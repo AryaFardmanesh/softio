@@ -49,7 +49,7 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 
 export function convertTextBackgroundToANSI( color: ANSI_Background_T | number ): string {
 	if ( typeof color === 'number' ) {
-		return makeANSI( [ 48, 5, color ] );
+		return makeANSI( [ '48', '5', color ] );
 	}
 
 	switch ( color ) {
