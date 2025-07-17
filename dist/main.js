@@ -1,4 +1,4 @@
-/*! Softio v3.12.10 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.12.11 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -720,7 +720,7 @@ exports.stdout = process.stdout;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.version = void 0;
-exports.version = '3.12.10';
+exports.version = '3.12.11';
 
 
 /***/ }),
