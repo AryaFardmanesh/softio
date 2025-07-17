@@ -4,12 +4,12 @@ import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { stderr } from './var/stderr';
 import { makeANSI } from './var/ansi/base';
-import { ShotStyleT } from './main.d'
 import colorConvertor from './utils/colorconvertor';
+import { convertTextStyleToANSI } from './var/ansi/style';
 import {
-	ANSI_Style_T,
-	convertTextStyleToANSI
-} from './var/ansi/style';
+	ShotStyleT,
+	ANSI_Style_T
+} from './main.d'
 
 export default class Out {
 	public static write( ...message: unknown[] ): void {
