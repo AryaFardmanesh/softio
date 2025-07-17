@@ -1,29 +1,25 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
+import { convertTextStyleToANSI } from './var/ansi/style';
+import { convertTextEraseToANSI } from './var/ansi/erase';
+import colorConvertor from './utils/colorconvertor';
+import typeCheck from './utils/typecheck';
 import {
-	BgColorParam_T,
-	ColorParam_T
-} from './main.d'
+	convertTextCursorMoveToANSI,
+	convertTextCursorStyleToANSI
+} from './var/ansi/cursor';
 import {
 	convertHexToRGB,
 	isValidHex
 } from './var/ansi/color';
 import {
-	ANSI_Style_T,
-	convertTextStyleToANSI
-} from './var/ansi/style';
-import {
 	ANSI_Cursor_Movement_T,
 	ANSI_Cursor_Style_T,
-	convertTextCursorMoveToANSI,
-	convertTextCursorStyleToANSI
-} from './var/ansi/cursor';
-import {
-	ANSI_Erase_T,
-	convertTextEraseToANSI
-} from './var/ansi/erase';
-import colorConvertor from './utils/colorconvertor';
-import typeCheck from './utils/typecheck';
+	BgColorParam_T,
+	ANSI_Style_T,
+	ColorParam_T,
+	ANSI_Erase_T
+} from './main.d';
 
 export default class Attr {
 	public static get title(): string {
