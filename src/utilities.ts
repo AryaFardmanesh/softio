@@ -40,12 +40,12 @@ export default class Utils {
 
 	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string {
 		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
-		return colorConvertor( 'color', 'color', convertTextColorToANSI, color );
+		return colorConvertor( 'color', 'color', color );
 	}
 
 	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string {
 		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
-		return colorConvertor( 'background', 'bg', convertTextBackgroundToANSI, color );
+		return colorConvertor( 'background', 'bg', color );
 	}
 
 	public static fontStyle( style: ANSI_Style_T ): string {
