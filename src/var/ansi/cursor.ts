@@ -20,8 +20,10 @@ export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, valu
 			return makeANSI( [ value, 'F' ], '' );
 		case 'go-up':
 			return makeANSI( [ 'M' ], '' );
-		default:
+		case 'home':
 			return makeANSI( [ 'H' ], '' );
+		default:
+			throw new TypeError( `The cursor movement '${ style }' is invalid style.` );
 	}
 }
 
