@@ -51,7 +51,8 @@ export declare type ANSI_Cursor_Movement_T =
 	'left'		|
 	'next'		|
 	'previous'	|
-	'go-up'
+	'go-up'		|
+	'home'
 ;
 
 export declare type ANSI_Cursor_Style_T =
