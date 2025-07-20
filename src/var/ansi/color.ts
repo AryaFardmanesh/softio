@@ -53,6 +53,10 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 
 export function convertTextBackgroundToANSI( color: ANSI_Background_T | number ): string {
 	if ( typeof color === 'number' ) {
+		if ( color > 255 || color < 0 ) {
+			throw new TypeError( `You have selected the number ${ color } for the background color, while the background color code should be between 0 and 255.` );
+		}
+
 		return makeANSI( [ '48', '5', color ] );
 	}
 
@@ -90,7 +94,7 @@ export function convertTextBackgroundToANSI( color: ANSI_Background_T | number )
 		case 'bright-white':
 			return makeANSI( [ '107' ] );
 		default:
-			return makeANSI( [ '49' ] );
+			throw new TypeError( `The color name '${ color }' is invalid for a background color.` );
 	}
 }
 
