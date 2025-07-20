@@ -6,6 +6,10 @@ import {
 
 export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 	if ( typeof color === 'number' ) {
+		if ( color > 255 || color < 0 ) {
+			throw new TypeError( `You have selected the number ${ color } for the text color, while the text color code should be between 0 and 255.` );
+		}
+
 		return makeANSI( [ '38', '5', color ] );
 	}
 
