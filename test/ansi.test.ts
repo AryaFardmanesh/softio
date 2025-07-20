@@ -155,80 +155,143 @@ describe( 'Testing ANSI methods - Test Group', () => {
 		} );
 	} );
 
-	// ... NEED REFACTORING ...
-	describe( 'Testing color conversion functions to ANSI - Test Group', () => {
+	describe( 'Testing text color conversion functions to ANSI - Test Group', () => {
 		it( 'should convert color to ansi correctly - Unit 1', () => {
 			const actual = convertTextColorToANSI( 'black' );
-			const expected = makeANSI( [ 30 ] );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[30m' );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 2', () => {
-			const actual = convertTextColorToANSI( 'bright-black' );
-			const expected = makeANSI( [ 90 ] );
+			const actual = convertTextColorToANSI( 'white' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[37m' );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 3', () => {
-			const actual = convertTextColorToANSI( 19 );
-			const expected = makeANSI( [ 38, 5, 19 ] );
+			const actual = convertTextColorToANSI( 10 );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[38;5;10m' );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 4', () => {
-			const actual = convertTextColorToANSI( 'cyan' );
-			const expected = makeANSI( [ 36 ] );
+			const actual = convertTextColorToANSI( 58 );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[38;5;58m' );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 5', () => {
-			const actual = convertTextColorToANSI( <'black'>'none' );
-			const expected = makeANSI( [ 39 ] );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextColorToANSI( 'test' as 'black' );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 6', () => {
-			const actual = convertTextBackgroundToANSI( 'black' );
-			const expected = makeANSI( [ 40 ] );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextColorToANSI( 'blac' as 'black' );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 7', () => {
-			const actual = convertTextBackgroundToANSI( 'bright-black' );
-			const expected = makeANSI( [ 100 ] );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextColorToANSI( 'lack' as 'black' );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 8', () => {
-			const actual = convertTextBackgroundToANSI( 19 );
-			const expected = makeANSI( [ 48, 5, 19 ] );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextColorToANSI( 'Black' as 'black' );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 9', () => {
-			const actual = convertTextBackgroundToANSI( 'cyan' );
-			const expected = makeANSI( [ 46 ] );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextColorToANSI( 256 );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert color to ansi correctly - Unit 10', () => {
-			const actual = convertTextBackgroundToANSI( <'black'>'none' );
-			const expected = makeANSI( [ 49 ] );
+			expect( () => {
+				convertTextColorToANSI( -10 );
+			} ).toThrow( TypeError );
+		} );
 
-			expect( actual ).toBe( expected );
+		it( 'should convert color to ansi correctly - Unit 11', () => {
+			expect( () => {
+				convertTextColorToANSI( 11n as unknown as number );
+			} ).toThrow( TypeError );
 		} );
 	} );
 
-	describe( 'Testing hex color conversion functions to ANSI - Test Group', () => {
+	describe( 'Testing background color conversion functions to ANSI - Test Group', () => {
+		it( 'should convert color to ansi correctly - Unit 1', () => {
+			const actual = convertTextBackgroundToANSI( 'black' );
+
+			expect( actual ).toBe( '\x1B[40m' );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 2', () => {
+			const actual = convertTextBackgroundToANSI( 'white' );
+
+			expect( actual ).toBe( '\x1B[47m' );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 3', () => {
+			const actual = convertTextBackgroundToANSI( 10 );
+
+			expect( actual ).toBe( '\x1B[48;5;10m' );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 4', () => {
+			const actual = convertTextBackgroundToANSI( 58 );
+
+			expect( actual ).toBe( '\x1B[48;5;58m' );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 5', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( 'test' as 'black' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 6', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( 'blac' as 'black' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 7', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( 'lack' as 'black' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 8', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( 'Black' as 'black' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 9', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( 256 );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 10', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( -10 );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert color to ansi correctly - Unit 11', () => {
+			expect( () => {
+				convertTextBackgroundToANSI( 11n as unknown as number );
+			} ).toThrow( TypeError );
+		} );
+	} );
+
+	describe( 'Testing hex color conversion functions - Test Group', () => {
 		it( 'should validation the hex code correctly - Unit 1', () => {
 			expect( isValidHex( '#FFFFFF' ) ).toBe( true );
 		} );
@@ -238,321 +301,367 @@ describe( 'Testing ANSI methods - Test Group', () => {
 		} );
 
 		it( 'should validation the hex code correctly - Unit 3', () => {
-			expect( isValidHex( '#FFF' ) ).toBe( true );
+			expect( isValidHex( '#ffffff' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 4', () => {
-			expect( isValidHex( 'FFF' ) ).toBe( true );
+			expect( isValidHex( 'ffffff' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 5', () => {
-			expect( isValidHex( '#01ABef' ) ).toBe( true );
+			expect( isValidHex( '#751D1D' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 6', () => {
-			expect( isValidHex( '#FFFFFFF' ) ).toBe( false );
+			expect( isValidHex( '751D1D' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 7', () => {
-			expect( isValidHex( 'FFFFFFF' ) ).toBe( false );
+			expect( isValidHex( '#751d1d' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 8', () => {
-			expect( isValidHex( '#FF' ) ).toBe( false );
+			expect( isValidHex( '751d1d' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 9', () => {
-			expect( isValidHex( 'FF' ) ).toBe( false );
+			expect( isValidHex( '#FFF' ) ).toBe( true );
 		} );
 
 		it( 'should validation the hex code correctly - Unit 10', () => {
-			expect( isValidHex( '#01ABef0' ) ).toBe( false );
+			expect( isValidHex( 'FFF' ) ).toBe( true );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 11', () => {
-			const actual = convertHexToRGB( '#FFFFFF' );
-			const expected = [ 255, 255, 255 ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 11', () => {
+			expect( isValidHex( '#f8e' ) ).toBe( true );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 12', () => {
-			const actual = convertHexToRGB( 'FFFFFF' );
-			const expected = [ 255, 255, 255 ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 12', () => {
+			expect( isValidHex( 'f8e' ) ).toBe( true );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 13', () => {
-			const actual = convertHexToRGB( '#000000' );
-			const expected = [ 0, 0, 0 ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 13', () => {
+			expect( isValidHex( '#f8' ) ).toBe( false );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 14', () => {
-			const actual = convertHexToRGB( '#0000000' );
-			const expected = [ 255, 255, 255 ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 14', () => {
+			expect( isValidHex( 'f8' ) ).toBe( false );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 15', () => {
-			const actual = convertHexToRGB( '#0FA' );
-			const expected = [ 0, 255, 170 ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 15', () => {
+			expect( isValidHex( '#f88d' ) ).toBe( false );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 16', () => {
-			const actual = convertHexToRGB( '#0FZ' );
-			const expected = [ 0, 255, NaN ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 16', () => {
+			expect( isValidHex( 'f88d' ) ).toBe( false );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 17', () => {
-			const actual = convertHexToRGB( '0FZ' );
-			const expected = [ 0, 255, NaN ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 17', () => {
+			expect( isValidHex( '#ffg' ) ).toBe( false );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 18', () => {
-			const actual = convertHexToRGB( '0F8' );
-			const expected = [ 0, 255, 136 ];
+		it( 'should validation the hex code correctly - Unit 18', () => {
+			expect( isValidHex( '#ffo' ) ).toBe( false );
+		} );
+	} );
 
-			expect( actual ).toEqual( expected );
+	describe( 'Testing hex color conversion to RGB functions - Test Group', () => {
+		it( 'should validation the hex code correctly - Unit 1', () => {
+			expect( convertHexToRGB( '#FFFFFF' ) ).toEqual( [ 255, 255, 255 ] );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 19', () => {
-			const actual = convertHexToRGB( 'aaa' );
-			const expected = [ 170, 170, 170 ];
-
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 2', () => {
+			expect( convertHexToRGB( 'FFFFFF' ) ).toEqual( [ 255, 255, 255 ] );
 		} );
 
-		it( 'should convert HEX color to RGB ansi correctly - Unit 20', () => {
-			const actual = convertHexToRGB( 'fc8ea9' );
-			const expected = [ 252, 142, 169 ];
+		it( 'should validation the hex code correctly - Unit 3', () => {
+			expect( convertHexToRGB( '#FFF' ) ).toEqual( [ 255, 255, 255 ] );
+		} );
 
-			expect( actual ).toEqual( expected );
+		it( 'should validation the hex code correctly - Unit 4', () => {
+			expect( convertHexToRGB( 'fff' ) ).toEqual( [ 255, 255, 255 ] );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 5', () => {
+			expect( convertHexToRGB( '#AAAAAA' ) ).toEqual( [ 170, 170, 170 ] );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 6', () => {
+			expect( convertHexToRGB( 'AAAAAA' ) ).toEqual( [ 170, 170, 170 ] );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 7', () => {
+			expect( convertHexToRGB( '#aaa' ) ).toEqual( [ 170, 170, 170 ] );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 8', () => {
+			expect( convertHexToRGB( 'aaa' ) ).toEqual( [ 170, 170, 170 ] );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 9', () => {
+			expect( () => {
+				convertHexToRGB( 10 as unknown as string );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 10', () => {
+			expect( () => {
+				convertHexToRGB( true as unknown as string );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 11', () => {
+			expect( () => {
+				convertHexToRGB( '' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 12', () => {
+			expect( () => {
+				convertHexToRGB( 'hello' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 13', () => {
+			expect( () => {
+				convertHexToRGB( '#helloo' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 14', () => {
+			expect( () => {
+				convertHexToRGB( '#FFG' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 15', () => {
+			expect( () => {
+				convertHexToRGB( 'FFG' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should validation the hex code correctly - Unit 16', () => {
+			expect( () => {
+				convertHexToRGB( '0000' );
+			} ).toThrow( TypeError );
 		} );
 	} );
 
 	describe( 'Testing style conversion functions to ANSI - Test Group', () => {
-		it( 'should convert style to ansi code correctly - Unit 1', () => {
-			const actual = convertTextStyleToANSI( 'bold' );
-			const expected = makeANSI( [ 1 ] );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert style to ansi code correctly - Unit 2', () => {
+		it( 'should convert style to ansi correctly - Unit 1', () => {
 			const actual = convertTextStyleToANSI( 'dim' );
-			const expected = makeANSI( [ 2 ] );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[2m' );
 		} );
 
-		it( 'should convert style to ansi code correctly - Unit 3', () => {
-			const actual = convertTextStyleToANSI( 'italic' );
-			const expected = makeANSI( [ 3 ] );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert style to ansi code correctly - Unit 4', () => {
-			const actual = convertTextStyleToANSI( 'underline' );
-			const expected = makeANSI( [ 4 ] );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert style to ansi code correctly - Unit 5', () => {
-			const actual = convertTextStyleToANSI( 'blinking' );
-			const expected = makeANSI( [ 5 ] );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert style to ansi code correctly - Unit 6', () => {
-			const actual = convertTextStyleToANSI( 'reverse' );
-			const expected = makeANSI( [ 7 ] );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert style to ansi code correctly - Unit 7', () => {
-			const actual = convertTextStyleToANSI( 'hidden' );
-			const expected = makeANSI( [ 8 ] );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert style to ansi code correctly - Unit 8', () => {
+		it( 'should convert style to ansi correctly - Unit 2', () => {
 			const actual = convertTextStyleToANSI( 'strikethrough' );
-			const expected = makeANSI( [ 9 ] );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[9m' );
 		} );
 
-		it( 'should convert style to ansi code correctly - Unit 9', () => {
-			const actual = convertTextStyleToANSI( <'bold'>'Bold' );
-			const expected = makeANSI( [ 0 ] );
+		it( 'should convert style to ansi correctly - Unit 3', () => {
+			const actual = convertTextStyleToANSI( 'bold' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[1m' );
 		} );
 
-		it( 'should convert style to ansi code correctly - Unit 10', () => {
-			const actual = convertTextStyleToANSI( <'bold'>'none' );
-			const expected = makeANSI( [ 0 ] );
+		it( 'should convert style to ansi correctly - Unit 4', () => {
+			const actual = convertTextStyleToANSI( 'reverse' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[7m' );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 5', () => {
+			expect( () => {
+				convertTextStyleToANSI( 'test' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 6', () => {
+			expect( () => {
+				convertTextStyleToANSI( 'bol' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 7', () => {
+			expect( () => {
+				convertTextStyleToANSI( 'old' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 8', () => {
+			expect( () => {
+				convertTextStyleToANSI( 'Bold' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 9', () => {
+			expect( () => {
+				convertTextStyleToANSI( 256 as unknown as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 10', () => {
+			expect( () => {
+				convertTextStyleToANSI( -10 as unknown as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 11', () => {
+			expect( () => {
+				convertTextStyleToANSI( 11n as unknown as 'bold' );
+			} ).toThrow( TypeError );
 		} );
 	} );
 
-	describe( 'Testing cursor conversion functions to ANSI - Test Group', () => {
+	describe( 'Testing cursor movement conversion functions to ANSI - Test Group', () => {
 		it( 'should convert cursor code to ansi code correctly - Unit 1', () => {
 			const actual = convertTextCursorMoveToANSI( 'up', 0 );
-			const expected = makeANSI( [ 0, 'A' ], '' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[0;A' );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 2', () => {
-			const actual = convertTextCursorMoveToANSI( 'down', 0 );
-			const expected = makeANSI( [ 0, 'B' ], '' );
+			const actual = convertTextCursorMoveToANSI( 'right', 10 );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[10;C' );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 3', () => {
-			const actual = convertTextCursorMoveToANSI( 'next', 0 );
-			const expected = makeANSI( [ 0, 'E' ], '' );
+			const actual = convertTextCursorMoveToANSI( 'home', 0 );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[H' );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 4', () => {
-			const actual = convertTextCursorMoveToANSI( 'previous', 10 );
-			const expected = makeANSI( [ 10, 'F' ], '' );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextCursorMoveToANSI( 'test' as 'home', 0 );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 5', () => {
-			const actual = convertTextCursorMoveToANSI( 'go-up', 0 );
-			const expected = makeANSI( [ 'M' ], '' );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextCursorMoveToANSI( 'Home' as 'home', 0 );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 6', () => {
-			const actual = convertTextCursorMoveToANSI( <'up'>'other', 100 );
-			const expected = makeANSI( [ 'H' ], '' );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextCursorMoveToANSI( null as unknown as 'home', 0 );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 7', () => {
-			const actual = convertTextCursorMoveToANSI( <'up'>'none', -100 );
-			const expected = makeANSI( [ 'H' ], '' );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextCursorMoveToANSI( 'home', true as unknown as number );
+			} ).toThrow( TypeError );
 		} );
 
 		it( 'should convert cursor code to ansi code correctly - Unit 8', () => {
-			const actual = convertTextCursorStyleToANSI( 'invisible' );
-			const expected = makeANSI( [ '25l' ], '', '?' );
-
-			expect( actual ).toBe( expected );
+			expect( () => {
+				convertTextCursorMoveToANSI( 'home', 10n as unknown as number );
+			} ).toThrow( TypeError );
 		} );
+	} );
 
-		it( 'should convert cursor code to ansi code correctly - Unit 9', () => {
+	describe( 'Testing cursor style conversion functions to ANSI - Test Group', () => {
+		it( 'should convert cursor code to ansi code correctly - Unit 1', () => {
 			const actual = convertTextCursorStyleToANSI( 'visible' );
-			const expected = makeANSI( [ '25h' ], '', '?' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[?25h' );
 		} );
 
-		it( 'should convert cursor code to ansi code correctly - Unit 10', () => {
-			const actual = convertTextCursorStyleToANSI( <'invisible'>'none' );
-			const expected = makeANSI( [ '25h' ], '', '?' );
+		it( 'should convert cursor code to ansi code correctly - Unit 2', () => {
+			const actual = convertTextCursorStyleToANSI( 'invisible' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[?25l' );
+		} );
+
+		it( 'should convert cursor code to ansi code correctly - Unit 3', () => {
+			expect( () => {
+				convertTextCursorStyleToANSI( 'test' as 'visible' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert cursor code to ansi code correctly - Unit 4', () => {
+			expect( () => {
+				convertTextCursorStyleToANSI( 'Visible' as 'visible' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert cursor code to ansi code correctly - Unit 5', () => {
+			expect( () => {
+				convertTextCursorStyleToANSI( null as unknown as 'visible' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert cursor code to ansi code correctly - Unit 6', () => {
+			expect( () => {
+				convertTextCursorStyleToANSI( true as unknown as 'visible' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert cursor code to ansi code correctly - Unit 7', () => {
+			expect( () => {
+				convertTextCursorStyleToANSI( 10n as unknown as 'visible' );
+			} ).toThrow( TypeError );
 		} );
 	} );
 
 	describe( 'Testing erase conversion functions to ANSI - Test Group', () => {
-		it( 'should convert erase code to ansi code correctly - Unit 1', () => {
-			const actual = convertTextEraseToANSI( 'in-display' );
-			const expected = makeANSI( [ 'J' ], '' );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert erase code to ansi code correctly - Unit 2', () => {
-			const actual = convertTextEraseToANSI( 'cursor-until-end' );
-			const expected = makeANSI( [ '0J' ], '' );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert erase code to ansi code correctly - Unit 3', () => {
-			const actual = convertTextEraseToANSI( 'cursor-to-beginning' );
-			const expected = makeANSI( [ '1J' ], '' );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert erase code to ansi code correctly - Unit 4', () => {
+		it( 'should convert erase code to ansi correctly - Unit 1', () => {
 			const actual = convertTextEraseToANSI( 'entire' );
-			const expected = makeANSI( [ '2J' ], '' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[2J' );
 		} );
 
-		it( 'should convert erase code to ansi code correctly - Unit 5', () => {
-			const actual = convertTextEraseToANSI( 'saved-lines' );
-			const expected = makeANSI( [ '3J' ], '' );
+		it( 'should convert erase code to ansi correctly - Unit 2', () => {
+			const actual = convertTextEraseToANSI( 'in-display' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[J' );
 		} );
 
-		it( 'should convert erase code to ansi code correctly - Unit 6', () => {
-			const actual = convertTextEraseToANSI( 'in-line' );
-			const expected = makeANSI( [ 'K' ], '' );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert erase code to ansi code correctly - Unit 7', () => {
-			const actual = convertTextEraseToANSI( 'cursor-until-end-line' );
-			const expected = makeANSI( [ '0K' ], '' );
-
-			expect( actual ).toBe( expected );
-		} );
-
-		it( 'should convert erase code to ansi code correctly - Unit 8', () => {
+		it( 'should convert erase code to ansi correctly - Unit 3', () => {
 			const actual = convertTextEraseToANSI( 'start-line-until-cursor' );
-			const expected = makeANSI( [ '1K' ], '' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[1K' );
 		} );
 
-		it( 'should convert erase code to ansi code correctly - Unit 9', () => {
+		it( 'should convert erase code to ansi correctly - Unit 4', () => {
 			const actual = convertTextEraseToANSI( 'entire-line' );
-			const expected = makeANSI( [ '2K' ], '' );
 
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( '\x1B[2K' );
 		} );
 
-		it( 'should convert erase code to ansi code correctly - Unit 10', () => {
-			const actual = convertTextEraseToANSI( <'in-display'>'none' );
-			const expected = makeANSI( [ '2J' ], '' );
+		it( 'should convert erase code to ansi correctly - Unit 5', () => {
+			expect( () => {
+				convertTextEraseToANSI( 'test' as 'entire' );
+			} ).toThrow( TypeError );
+		} );
 
-			expect( actual ).toBe( expected );
+		it( 'should convert erase code to ansi correctly - Unit 6', () => {
+			expect( () => {
+				convertTextEraseToANSI( 'entir' as 'entire' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert erase code to ansi correctly - Unit 7', () => {
+			expect( () => {
+				convertTextEraseToANSI( 'ntire' as 'entire' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert erase code to ansi correctly - Unit 8', () => {
+			expect( () => {
+				convertTextEraseToANSI( 'Entire' as 'entire' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert erase code to ansi correctly - Unit 9', () => {
+			expect( () => {
+				convertTextEraseToANSI( 8 as unknown as 'entire' );
+			} ).toThrow( TypeError );
 		} );
 	} );
 } );
