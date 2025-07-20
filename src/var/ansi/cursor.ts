@@ -29,7 +29,7 @@ export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, valu
 		case 'home':
 			return makeANSI( [ 'H' ], '' );
 		default:
-			throw new TypeError( `The cursor movement '${ style }' is invalid style.` );
+			throw new TypeError( `The cursor movement '${ style }' is invalid move.` );
 	}
 }
 
@@ -40,6 +40,6 @@ export function convertTextCursorStyleToANSI( style: ANSI_Cursor_Style_T ): stri
 		case 'visible':
 			return makeANSI( [ '25' ], 'h', '?' );
 		default:
-			return makeANSI( [ '25' ], 'h', '?' );
+			throw new TypeError( `The cursor style '${ style }' is invalid style.` );
 	}
 }
