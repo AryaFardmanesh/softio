@@ -124,6 +124,10 @@ export function isValidHex( hex: string ): boolean {
 }
 
 export function convertHexToRGB( hex: string ): [ number, number, number ] {
+	if ( !isValidHex( hex ) ) {
+		throw new TypeError( `The code '${ hex }' is not a valid hex color.` );
+	}
+
 	if ( hex.startsWith( '#' ) ) {
 		hex = hex.slice( 1 );
 	}
