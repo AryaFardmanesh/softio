@@ -43,7 +43,7 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 		case 'bright-white':
 			return makeANSI( [ '97' ] );
 		default:
-			return makeANSI( [ '39' ] );
+			throw new TypeError( `The color name '${ color }' is invalid for a text color.` );
 	}
 }
 
