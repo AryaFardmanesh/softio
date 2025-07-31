@@ -4,11 +4,11 @@ import {
 	ANSI_Cursor_Style_T
 } from '../../main.d';
 
-export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number | string ): string {
+export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number ): string {
 	const valueType = typeof value;
 
-	if ( valueType != 'number' && valueType != 'string' ) {
-		throw new TypeError( `The value must be a number or string, but you set it to ${ valueType }.` );
+	if ( valueType != 'number' ) {
+		throw new TypeError( `The value must be a number, but you set it to ${ valueType }.` );
 	}
 
 	switch ( style ) {
