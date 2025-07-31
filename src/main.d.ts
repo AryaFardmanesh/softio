@@ -308,16 +308,21 @@ export declare class Utils {
 	/**
 	 * @description Used to change the color of the console text.
 	**/
-	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string;
+	public static color( color: ColorParam_T ): string;
 
 	/**
 	 * @description Used to change the background color of console
 	 * texts.
 	**/
-	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string;
+	public static background( color: BgColorParam_T ): string;
 
 	/**
 	 * @description It is used to change the style of texts.
 	**/
 	public static fontStyle( style: ANSI_Style_T ): string;
+
+	/**
+	 * @description Makes the input printable and returns it as a printable string.
+	**/
+	public static prettier( ..._data: unknown[] ): string;
 }
