@@ -110,10 +110,14 @@ describe( 'Testing input methods - Test Group', () => {
 		} );
 
 		it( 'should throw an error if the message is not a string - Unit 10', () => {
-			expect( () => In.input( 123 as any ) ).toThrow( TypeError );
-			expect( () => In.input( 1.3 as any ) ).toThrow( TypeError );
-			expect( () => In.input( true as any ) ).toThrow( TypeError );
-			expect( () => In.input( null as any ) ).toThrow( TypeError );
+			expect( () => In.input( 123 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( 1.3 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( true as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( null as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( {} as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( [] as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.input( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
 		} );
 	} );
 
@@ -209,10 +213,14 @@ describe( 'Testing input methods - Test Group', () => {
 		} );
 
 		it( 'should throw an error if the message is not a string - Unit 10', () => {
-			expect( () => In.password( 123 as any ) ).toThrow( TypeError );
-			expect( () => In.password( 1.3 as any ) ).toThrow( TypeError );
-			expect( () => In.password( true as any ) ).toThrow( TypeError );
-			expect( () => In.password( null as any ) ).toThrow( TypeError );
+			expect( () => In.password( 123 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( 1.3 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( true as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( null as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( {} as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( [] as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.password( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
 		} );
 	} );
 
@@ -227,47 +235,7 @@ describe( 'Testing input methods - Test Group', () => {
 			expect( result ).toBe( false );
 		} );
 
-		it( 'should read data from input correctly - Unit 2', async () => {
-			const message = 'Are you agree';
-			userInput = 'n';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( false );
-		} );
-
-		it( 'should read data from input correctly - Unit 3', async () => {
-			const message = 'Are you agree';
-			userInput = 'yes';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 4', async () => {
-			const message = 'Are you agree';
-			userInput = 'y';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 5', async () => {
-			const message = 'Are you agree';
-			userInput = 'NO';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( false );
-		} );
-
-		it( 'should read data from input correctly - Unit 6', async () => {
+		it( 'should read data from input correctly - Unit 2', () => {
 			const message = 'Are you agree';
 			userInput = 'No';
 
@@ -277,9 +245,49 @@ describe( 'Testing input methods - Test Group', () => {
 			expect( result ).toBe( false );
 		} );
 
+		it( 'should read data from input correctly - Unit 3', () => {
+			const message = 'Are you agree';
+			userInput = 'nO';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( false );
+		} );
+
+		it( 'should read data from input correctly - Unit 4', () => {
+			const message = 'Are you agree';
+			userInput = 'NO';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( false );
+		} );
+
+		it( 'should read data from input correctly - Unit 5', async () => {
+			const message = 'Are you agree';
+			userInput = 'n';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( false );
+		} );
+
+		it( 'should read data from input correctly - Unit 6', async () => {
+			const message = 'Are you agree';
+			userInput = 'N';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( false );
+		} );
+
 		it( 'should read data from input correctly - Unit 7', async () => {
 			const message = 'Are you agree';
-			userInput = 'YES';
+			userInput = 'yes';
 
 			const result = In.confirm( message );
 
@@ -299,6 +307,56 @@ describe( 'Testing input methods - Test Group', () => {
 
 		it( 'should read data from input correctly - Unit 9', async () => {
 			const message = 'Are you agree';
+			userInput = 'YEs';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( true );
+		} );
+
+		it( 'should read data from input correctly - Unit 10', async () => {
+			const message = 'Are you agree';
+			userInput = 'yeS';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( true );
+		} );
+
+		it( 'should read data from input correctly - Unit 11', async () => {
+			const message = 'Are you agree';
+			userInput = 'yES';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( true );
+		} );
+
+		it( 'should read data from input correctly - Unit 12', async () => {
+			const message = 'Are you agree';
+			userInput = 'YES';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( true );
+		} );
+
+		it( 'should read data from input correctly - Unit 13', async () => {
+			const message = 'Are you agree';
+			userInput = 'y';
+
+			const result = In.confirm( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			expect( result ).toBe( true );
+		} );
+
+		it( 'should read data from input correctly - Unit 14', async () => {
+			const message = 'Are you agree';
 			userInput = 'Y';
 
 			const result = In.confirm( message );
@@ -307,11 +365,15 @@ describe( 'Testing input methods - Test Group', () => {
 			expect( result ).toBe( true );
 		} );
 
-		it( 'should throw an error if the message is not a string - Unit 10', () => {
-			expect( () => In.confirm( 123 as any ) ).toThrow( TypeError );
-			expect( () => In.confirm( 1.3 as any ) ).toThrow( TypeError );
-			expect( () => In.confirm( true as any ) ).toThrow( TypeError );
-			expect( () => In.confirm( null as any ) ).toThrow( TypeError );
+		it( 'should throw an error if the message is not a string - Unit 15', () => {
+			expect( () => In.confirm( 123 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( 1.3 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( true as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( null as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( {} as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( [] as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.confirm( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
 		} );
 	} );
 
@@ -406,11 +468,35 @@ describe( 'Testing input methods - Test Group', () => {
 			expect( result ).toBe( Number( userInput ) );
 		} );
 
-		it( 'should throw an error if the message is not a string - Unit 10', () => {
-			expect( () => In.readNumber( 123 as any ) ).toThrow( TypeError );
-			expect( () => In.readNumber( 1.3 as any ) ).toThrow( TypeError );
-			expect( () => In.readNumber( true as any ) ).toThrow( TypeError );
-			expect( () => In.readNumber( null as any ) ).toThrow( TypeError );
+		it( 'should read data from input correctly - Unit 10', () => {
+			const message = 'Enter your name: ';
+			userInput = '0o76';
+
+			const result = In.readNumber( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( Number( userInput ) );
+		} );
+
+		it( 'should read data from input correctly - Unit 11', () => {
+			const message = 'Enter your name: ';
+			userInput = '0b1111';
+
+			const result = In.readNumber( message );
+
+			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			expect( result ).toBe( Number( userInput ) );
+		} );
+
+		it( 'should throw an error if the message is not a string - Unit 12', () => {
+			expect( () => In.readNumber( 123 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( 1.3 as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( true as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( null as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( {} as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( [] as unknown as string ) ).toThrow( TypeError );
+			expect( () => In.readNumber( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
 		} );
 	} );
 } );

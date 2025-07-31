@@ -20,6 +20,6 @@ export function convertTextStyleToANSI( style: ANSI_Style_T ): string {
 		case 'strikethrough':
 			return makeANSI( [ '9' ] );
 		default:
-			return makeANSI( [ '0' ] );
+			throw new TypeError( `The color name '${ style }' is invalid for a text style.` );
 	}
 }

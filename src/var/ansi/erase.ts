@@ -22,6 +22,6 @@ export function convertTextEraseToANSI( style: ANSI_Erase_T ): string {
 		case 'entire-line':
 			return makeANSI( [ '2K' ], '' );
 		default:
-			return makeANSI( [ '2J' ], '' );
+			throw new TypeError( `The erase '${ style }' is invalid.` );
 	}
 }

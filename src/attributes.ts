@@ -54,7 +54,7 @@ export default class Attr {
 	/**
 	 * @deprecated
 	**/
-	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void {
+	public static colorRGB( red: number, green: number, blue: number ): void {
 		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
 	}
 
@@ -65,7 +65,7 @@ export default class Attr {
 		if ( !isValidHex( hex ) ) {
 			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
 		}
-	
+
 		const rgb = convertHexToRGB( hex );
 		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
 	}
@@ -78,7 +78,7 @@ export default class Attr {
 	/**
 	 * @deprecated
 	**/
-	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void {
+	public static backgroundRGB( red: number, green: number, blue: number ): void {
 		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
 	}
 
@@ -98,11 +98,11 @@ export default class Attr {
 		stdout.write( convertTextStyleToANSI( style ) );
 	}
 
-	public static move( x: number | string, y: number | string ): void {
+	public static move( x: number, y: number ): void {
 		stdout.write( makeANSI( [ x, y ], 'f' ) );
 	}
 
-	public static moveCol( x: number | string ): void {
+	public static moveCol( x: number ): void {
 		stdout.write( makeANSI( [ x, 'G' ], '' ) );
 	}
 
@@ -110,7 +110,7 @@ export default class Attr {
 		stdout.write( makeANSI( [], 'H' ) );
 	}
 
-	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number | string = 1 ): void {
+	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number = 1 ): void {
 		stdout.write( convertTextCursorMoveToANSI( arrow, value ) );
 	}
 

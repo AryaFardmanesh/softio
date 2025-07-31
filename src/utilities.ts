@@ -5,9 +5,9 @@ import colorConvertor from './utils/colorconvertor';
 import {convertTextStyleToANSI } from './var/ansi/style';
 import silentEcho from './utils/silentecho';
 import {
-	ANSI_Background_T,
-	ANSI_Color_T,
-	ANSI_Style_T
+	ANSI_Style_T,
+	ColorParam_T,
+	BgColorParam_T
 } from './main.d';
 
 export default class Utils {
@@ -34,12 +34,12 @@ export default class Utils {
 		return makeANSI( [ '0' ] );
 	}
 
-	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string {
+	public static color( color: ColorParam_T ): string {
 		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
 		return colorConvertor( 'color', 'color', color );
 	}
 
-	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string {
+	public static background( color: BgColorParam_T ): string {
 		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
 		return colorConvertor( 'background', 'bg', color );
 	}

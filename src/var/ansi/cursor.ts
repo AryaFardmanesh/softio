@@ -4,7 +4,13 @@ import {
 	ANSI_Cursor_Style_T
 } from '../../main.d';
 
-export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number | string ): string {
+export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number ): string {
+	const valueType = typeof value;
+
+	if ( valueType != 'number' ) {
+		throw new TypeError( `The value must be a number, but you set it to ${ valueType }.` );
+	}
+
 	switch ( style ) {
 		case 'up':
 			return makeANSI( [ value, 'A' ], '' );
@@ -20,8 +26,10 @@ export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, valu
 			return makeANSI( [ value, 'F' ], '' );
 		case 'go-up':
 			return makeANSI( [ 'M' ], '' );
-		default:
+		case 'home':
 			return makeANSI( [ 'H' ], '' );
+		default:
+			throw new TypeError( `The cursor movement '${ style }' is invalid move.` );
 	}
 }
 
@@ -32,6 +40,6 @@ export function convertTextCursorStyleToANSI( style: ANSI_Cursor_Style_T ): stri
 		case 'visible':
 			return makeANSI( [ '25' ], 'h', '?' );
 		default:
-			return makeANSI( [ '25' ], 'h', '?' );
+			throw new TypeError( `The cursor style '${ style }' is invalid style.` );
 	}
 }

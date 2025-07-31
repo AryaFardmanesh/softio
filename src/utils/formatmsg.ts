@@ -1,4 +1,5 @@
 import silentEcho from './silentecho';
+import typeCheck from './typecheck';
 
 /**
  * @description This function reads the input message
@@ -6,6 +7,8 @@ import silentEcho from './silentecho';
  * with the data in argv.
 **/
 export default function formatMessage( message: string, argv: unknown[] ): string {
+	typeCheck( 'formatMessage', 'string', message );
+
 	let formatMessage: string = '';
 	let argvCursor = 0;
 

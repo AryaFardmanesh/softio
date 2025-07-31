@@ -1,4 +1,4 @@
-/*! Softio v3.30.11 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.30.68 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -119,7 +119,7 @@ class Events {
         (0, typecheck_1.default)('addEventListener', 'string', type);
         (0, typecheck_1.default)('addEventListener', 'function', listener);
         events[type] = listener;
-        process.stdout.on(type, events[type]);
+        process.stdout.on(type, listener);
     }
     static removeEventListener(type) {
         process.stdout.removeListener(type, events[type]);
@@ -236,12 +236,12 @@ class Out {
     }
     static shot(func, style) {
         return ((...data) => {
-            const color = (style.color) ? (0, colorconvertor_1.default)('shot', 'color', style.color) : '';
-            const bg = (style.background) ? (0, colorconvertor_1.default)('shot', 'bg', style.background) : '';
-            const fstyle = (style.style) ? (0, style_1.convertTextStyleToANSI)(style.style) : '';
+            const color = (style === null || style === void 0 ? void 0 : style.color) ? (0, colorconvertor_1.default)('shot', 'color', style.color) : '';
+            const bg = (style === null || style === void 0 ? void 0 : style.background) ? (0, colorconvertor_1.default)('shot', 'bg', style.background) : '';
+            const fstyle = (style === null || style === void 0 ? void 0 : style.style) ? (0, style_1.convertTextStyleToANSI)(style.style) : '';
             stdout_1.stdout.write(color + bg + fstyle);
             const result = func(...data);
-            stderr_1.stderr.write((0, base_1.makeANSI)(['0']));
+            stdout_1.stdout.write((0, base_1.makeANSI)(['0']));
             return result;
         });
     }
@@ -313,7 +313,12 @@ const base_1 = __webpack_require__(273);
 const color_1 = __webpack_require__(285);
 function colorConvertor(name, mode, color) {
     const ansiRgbPrefix = (mode === 'color') ? '38' : '48';
-    if (Array.isArray(color)) {
+    if (Array.isArray(color) && color.length == 3) {
+        for (const part of color) {
+            if (typeof part != 'number' || part > 255 || part < 0) {
+                throw new TypeError(`The RGB value for the '.${name}' function must be between 0 and 255.`);
+            }
+        }
         return (0, base_1.makeANSI)([ansiRgbPrefix, '2', color[0] || '0', color[1] || '0', color[2] || '0']);
     }
     else if (typeof color == 'string' && (0, color_1.isValidHex)(color)) {
@@ -321,9 +326,13 @@ function colorConvertor(name, mode, color) {
         return (0, base_1.makeANSI)([ansiRgbPrefix, '2', rgb[0] || '0', rgb[1] || '0', rgb[2] || '0']);
     }
     else if (typeof color == 'string' || typeof color == 'number') {
-        return (mode == 'color') ?
+        if (typeof color == 'number' && (color > 255 || color < 0)) {
+            throw new TypeError(`The color value for the '.${name}' function must be between 0 and 255.`);
+        }
+        const result = (mode == 'color') ?
             (0, color_1.convertTextColorToANSI)(color) :
             (0, color_1.convertTextBackgroundToANSI)(color);
+        return result;
     }
     throw new TypeError(`The input value for the '.${name}' function is incorrect.`);
 }
@@ -341,7 +350,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = formatMessage;
 const silentecho_1 = __importDefault(__webpack_require__(710));
+const typecheck_1 = __importDefault(__webpack_require__(828));
 function formatMessage(message, argv) {
+    (0, typecheck_1.default)('formatMessage', 'string', message);
     let formatMessage = '';
     let argvCursor = 0;
     for (let i = 0; i < message.length; i++) {
@@ -411,6 +422,15 @@ exports.base = void 0;
 exports.makeANSI = makeANSI;
 exports.base = '\x1B';
 function makeANSI(code, end = 'm', start = '') {
+    const errMsg = `The value of the 'makeANSI' function must be of type ( string | number )[].`;
+    if (!Array.isArray(code)) {
+        throw new TypeError(errMsg);
+    }
+    for (const part of code) {
+        if (typeof part != 'string' && typeof part != 'number') {
+            throw new TypeError(errMsg);
+        }
+    }
     return exports.base + `[${start}${code.join(';')}${end}`;
 }
 
@@ -429,6 +449,9 @@ exports.convertHexToRGB = convertHexToRGB;
 const base_1 = __webpack_require__(273);
 function convertTextColorToANSI(color) {
     if (typeof color === 'number') {
+        if (color > 255 || color < 0) {
+            throw new TypeError(`You have selected the number ${color} for the text color, while the text color code should be between 0 and 255.`);
+        }
         return (0, base_1.makeANSI)(['38', '5', color]);
     }
     switch (color) {
@@ -465,12 +488,15 @@ function convertTextColorToANSI(color) {
         case 'bright-white':
             return (0, base_1.makeANSI)(['97']);
         default:
-            return (0, base_1.makeANSI)(['39']);
+            throw new TypeError(`The color name '${color}' is invalid for a text color.`);
     }
 }
 function convertTextBackgroundToANSI(color) {
     if (typeof color === 'number') {
-        return (0, base_1.makeANSI)([48, 5, color]);
+        if (color > 255 || color < 0) {
+            throw new TypeError(`You have selected the number ${color} for the background color, while the background color code should be between 0 and 255.`);
+        }
+        return (0, base_1.makeANSI)(['48', '5', color]);
     }
     switch (color) {
         case 'black':
@@ -506,7 +532,7 @@ function convertTextBackgroundToANSI(color) {
         case 'bright-white':
             return (0, base_1.makeANSI)(['107']);
         default:
-            return (0, base_1.makeANSI)(['49']);
+            throw new TypeError(`The color name '${color}' is invalid for a background color.`);
     }
 }
 function isValidHex(hex) {
@@ -530,6 +556,9 @@ function isValidHex(hex) {
     return true;
 }
 function convertHexToRGB(hex) {
+    if (!isValidHex(hex)) {
+        throw new TypeError(`The code '${hex}' is not a valid hex color.`);
+    }
     if (hex.startsWith('#')) {
         hex = hex.slice(1);
     }
@@ -562,6 +591,10 @@ exports.convertTextCursorMoveToANSI = convertTextCursorMoveToANSI;
 exports.convertTextCursorStyleToANSI = convertTextCursorStyleToANSI;
 const base_1 = __webpack_require__(273);
 function convertTextCursorMoveToANSI(style, value) {
+    const valueType = typeof value;
+    if (valueType != 'number') {
+        throw new TypeError(`The value must be a number, but you set it to ${valueType}.`);
+    }
     switch (style) {
         case 'up':
             return (0, base_1.makeANSI)([value, 'A'], '');
@@ -577,8 +610,10 @@ function convertTextCursorMoveToANSI(style, value) {
             return (0, base_1.makeANSI)([value, 'F'], '');
         case 'go-up':
             return (0, base_1.makeANSI)(['M'], '');
-        default:
+        case 'home':
             return (0, base_1.makeANSI)(['H'], '');
+        default:
+            throw new TypeError(`The cursor movement '${style}' is invalid move.`);
     }
 }
 function convertTextCursorStyleToANSI(style) {
@@ -588,7 +623,7 @@ function convertTextCursorStyleToANSI(style) {
         case 'visible':
             return (0, base_1.makeANSI)(['25'], 'h', '?');
         default:
-            return (0, base_1.makeANSI)(['25'], 'h', '?');
+            throw new TypeError(`The cursor style '${style}' is invalid style.`);
     }
 }
 
@@ -623,7 +658,7 @@ function convertTextEraseToANSI(style) {
         case 'entire-line':
             return (0, base_1.makeANSI)(['2K'], '');
         default:
-            return (0, base_1.makeANSI)(['2J'], '');
+            throw new TypeError(`The erase '${style}' is invalid.`);
     }
 }
 
@@ -656,7 +691,7 @@ function convertTextStyleToANSI(style) {
         case 'strikethrough':
             return (0, base_1.makeANSI)(['9']);
         default:
-            return (0, base_1.makeANSI)(['0']);
+            throw new TypeError(`The color name '${style}' is invalid for a text style.`);
     }
 }
 
@@ -691,7 +726,7 @@ exports.stdout = process.stdout;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.version = void 0;
-exports.version = '3.30.11';
+exports.version = '3.30.68';
 
 
 /***/ }),
