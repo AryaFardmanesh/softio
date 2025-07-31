@@ -17,7 +17,7 @@ export default function colorConvertor( name: string, mode: 'color' | 'bg', colo
 
 	if ( Array.isArray( color ) && color.length == 3 ) {
 		for ( const part of color ) {
-			if ( typeof part != 'number' || part > 255 ) {
+			if ( typeof part != 'number' || part > 255 || part < 0 ) {
 				throw new TypeError( `The RGB value for the '.${ name }' function must be between 0 and 255.` );
 			}
 		}
