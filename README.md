@@ -54,7 +54,7 @@ Run this simple program to see Softio in action!
 
 ## Documentation
 
-For a comprehensive guide to all features and functionalities, please refer to our [official documentation](https://github.com/AryaFardmanesh/softio/blob/main/DOCS/api.md).
+For a comprehensive guide to all features and functionalities, please refer to our [official documentation](https://github.com/AryaFardmanesh/softio/blob/main/docs/Get-Started.md).
 
 ## License
 
