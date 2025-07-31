@@ -19,7 +19,7 @@ export default class Events {
 
 		events[ type ] = listener;
 
-		process.stdout.on( type, events[ type ] );
+		process.stdout.on( type, listener );
 	}
 
 	public static removeEventListener( type: EventTypesT ): void {
