@@ -119,7 +119,7 @@ export declare class Out {
 	 * @description This method is used to create a customized
 	 * output function.
 	**/
-	public static shot<T extends Function>( func: T, style: ShotStyleT ): T;
+	public static shot<T extends Function>( func: T, style?: ShotStyleT ): T;
 }
 
 /**
@@ -136,7 +136,7 @@ export declare class In {
 	 * @description This method is for capturing passwords
 	 * or important data.
 	**/
-	public static password( message: string, char: string ): string
+	public static password( message?: string, char?: string ): string
 
 	/**
 	 * @description Used to obtain user consent.
