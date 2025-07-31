@@ -73,8 +73,8 @@ export declare type ANSI_Erase_T =
 ;
 
 type ShotStyleT = {
-	color?: ANSI_Color_T | number | [number, number, number] | string,
-	background?: ANSI_Background_T | number | [number, number, number] | string,
+	color?: ColorParam_T,
+	background?: BgColorParam_T,
 	style?: ANSI_Style_T,
 };
 
