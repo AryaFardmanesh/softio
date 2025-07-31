@@ -140,11 +140,13 @@ For Visual Studio Code, you can add the following settings to your workspace set
 ## Testing and Documentation
 
 - **Testing:**
-  - Add tests for new features or bug fixes in the `tests` folder.
+  - Add tests for new features or bug fixes in the `test` folder.
   - Run tests before submitting your pull request:
 
     ```sh
     npm test
+    # OR
+    npm test out # For output methods
     ```
 
 - **Documentation:**
