@@ -34,16 +34,16 @@ export default class Out {
 		stderr.write( message );
 	}
 
-	public static shot<T extends Function>( func: T, style: ShotStyleT ): T {
+	public static shot<T extends Function>( func: T, style?: ShotStyleT ): T {
 		return <Function>( ( ...data: unknown[] ) => {
 
-			const color = ( style.color ) ? colorConvertor( 'shot', 'color', style.color ) : '';
-			const bg = ( style.background ) ? colorConvertor( 'shot', 'bg', style.background ) : '';
-			const fstyle = ( style.style ) ? convertTextStyleToANSI( style.style as ANSI_Style_T ) : '';
+			const color = ( style?.color ) ? colorConvertor( 'shot', 'color', style.color ) : '';
+			const bg = ( style?.background ) ? colorConvertor( 'shot', 'bg', style.background ) : '';
+			const fstyle = ( style?.style ) ? convertTextStyleToANSI( style.style as ANSI_Style_T ) : '';
 
 			stdout.write( color + bg + fstyle );
 			const result = func( ...data );
-			stderr.write( makeANSI( [ '0' ] ) );
+			stdout.write( makeANSI( [ '0' ] ) );
 
 			return result;
 
