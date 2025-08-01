@@ -18,12 +18,24 @@
 	],
 	"keywords": [
 		"softio",
-		"nodejs",
 		"console",
-		"javascript",
-		"typescript",
 		"terminal",
-		"stdio"
+		"nodejs",
+		"typescript",
+		"javascript",
+		"stdio",
+		"stdout",
+		"stdin",
+		"readline",
+		"input",
+		"output",
+		"cli",
+		"cli-tool",
+		"console-app",
+		"console-utility",
+		"text-ui",
+		"ansi-colors",
+		"interactive-cli"
 	],
 	"author": "Softio Contributors",
 	"repository": {
