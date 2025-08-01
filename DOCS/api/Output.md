@@ -171,4 +171,5 @@ For advanced formatting or theming output, consider combining `shot()` with exis
 
 ---
 
-Continue to the next section: [📥 Input Methods →](./Input.md)
+- Back to the previous section: [📘 Introduction ←](./Introduction.md)
+- Continue to the next section: [📥 Input Methods →](./Input.md)

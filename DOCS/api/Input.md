@@ -118,4 +118,5 @@ These input utilities make it easy to build interactive CLI apps with clear prom
 
 ---
 
-Continue to the next section: [🛠️ Utility Methods →](./Utils.md)
+- Back to the previous section: [🖨️ Output Methods ←](./Output.md)
+- Continue to the next section: [🛠️ Utility Methods →](./Utils.md)

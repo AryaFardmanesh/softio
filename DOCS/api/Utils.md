@@ -164,4 +164,5 @@ The `Utils` class helps simplify many common terminal formatting tasks such as:
 
 ---
 
-Continue to the next section: [🎛️ Attr Methods →](./Attr.md)
+- Back to the previous section: [📥 Input Methods ←](./Input.md)
+- Continue to the next section: [🎛️ Attr Methods →](./Attr.md)

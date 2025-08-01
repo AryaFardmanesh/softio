@@ -253,4 +253,5 @@ The `Attr` class provides low-level access to terminal control using ANSI escape
 
 ---
 
-Continue to the next section: [📡 Events Methods →](./Events.md)
+- Back to the previous section: [🛠️ Utils Methods ←](./Utils.md)
+- Continue to the next section: [📡 Events Methods →](./Events.md)

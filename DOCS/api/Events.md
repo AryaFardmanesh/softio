@@ -69,3 +69,7 @@ The `Events` class provides minimal yet essential support for managing runtime c
 * **`resize`** — Enables responsive CLI interfaces that react to terminal size changes.
 
 This is especially useful when designing dynamic layouts or rendering adaptive UIs in the terminal.
+
+---
+
+- Back to the previous section: [🎛️ Attr Methods ←](./Attr.md)
