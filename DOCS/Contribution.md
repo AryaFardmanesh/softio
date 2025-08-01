@@ -36,7 +36,7 @@ Depending on what you're contributing, please consider the following:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Follow these steps to set up the project locally:
 
@@ -64,7 +64,7 @@ Follow these steps to set up the project locally:
 
 ---
 
-## 🧭 Code of Conduct
+## Code of Conduct
 
 We follow the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
 
@@ -72,9 +72,9 @@ Please interact respectfully and constructively in all discussions, reviews, and
 
 ---
 
-## ✨ How to Contribute
+## How to Contribute
 
-### 🐞 Reporting Issues
+### Reporting Issues
 
 If you find a bug, please open an issue and include:
 
@@ -88,7 +88,7 @@ If you find a bug, please open an issue and include:
 
 ---
 
-### 💡 Suggesting Features
+### Suggesting Features
 
 Want to see a new feature in Softio? We’d love to hear from you!
 
@@ -100,7 +100,7 @@ Include the following in your feature request:
 
 ---
 
-### 🔁 Submitting Pull Requests
+### Submitting Pull Requests
 
 When you're ready to contribute code:
 
@@ -128,9 +128,9 @@ When you're ready to contribute code:
 
 ---
 
-## 🧑‍💻 Code Guidelines
+## Code Guidelines
 
-### 🧼 Coding Style
+### Coding Style
 
 Please follow these conventions:
 
@@ -165,7 +165,7 @@ Please follow these conventions:
 
 ---
 
-### ⚙️ Editor Configuration
+### Editor Configuration
 
 Recommended VS Code settings (add to `.vscode/settings.json`):
 
@@ -197,14 +197,14 @@ If you add new features or fix bugs:
   npm test out
   ```
 
-### 📘 Documentation
+### Documentation
 
 * Update any affected sections in `docs/` if your changes alter the public API or behavior.
 * Be clear and consistent in language and formatting.
 
 ---
 
-## 🙌 Thank You!
+## Thank You!
 
 We appreciate your effort and care in making Softio better. If you have any questions or ideas, feel free to [open an issue](https://github.com/AryaFardmanesh/softio/issues) or join the discussion on GitHub.
 
