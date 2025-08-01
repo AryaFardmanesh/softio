@@ -110,8 +110,8 @@ export default class Attr {
 		stdout.write( makeANSI( [], 'H' ) );
 	}
 
-	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number = 1 ): void {
-		stdout.write( convertTextCursorMoveToANSI( arrow, value ) );
+	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value: number = 1 ): void {
+		stdout.write( convertTextCursorMoveToANSI( direction, value ) );
 	}
 
 	public static cursorSave( mode: 'DEC' | 'SCO' = 'SCO' ): void {
@@ -128,7 +128,7 @@ export default class Attr {
 		stdout.write( convertTextCursorStyleToANSI( style ) );
 	}
 
-	public static erase( mode: ANSI_Erase_T ): void {
+	public static erase( mode: ANSI_Erase_T = 'entire' ): void {
 		stdout.write( convertTextEraseToANSI( mode ) );
 	}
 }

@@ -1,8 +1,5 @@
 import typeCheck from './utils/typecheck';
-
-declare type EventTypesT =
-	'resize'
-;
+import { EventTypesT } from './main.d';
 
 type InlineVoidFunctionT = () => void;
 
