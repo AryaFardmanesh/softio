@@ -247,7 +247,7 @@ export declare class Attr {
 	 * @description This method is used to move the cursor
 	 * in different directions.
 	**/
-	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value?: number ): void;
+	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value?: number ): void;
 
 	/**
 	 * @description This method save the cursor position.
@@ -267,7 +267,7 @@ export declare class Attr {
 	/**
 	 * @description This method used for clear the console.
 	**/
-	public static erase( mode: ANSI_Erase_T ): void;
+	public static erase( mode?: ANSI_Erase_T ): void;
 }
 
 /**
