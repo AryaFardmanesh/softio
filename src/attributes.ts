@@ -128,7 +128,7 @@ export default class Attr {
 		stdout.write( convertTextCursorStyleToANSI( style ) );
 	}
 
-	public static erase( mode: ANSI_Erase_T ): void {
+	public static erase( mode: ANSI_Erase_T = 'entire' ): void {
 		stdout.write( convertTextEraseToANSI( mode ) );
 	}
 }
