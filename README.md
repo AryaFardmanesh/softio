@@ -1,9 +1,18 @@
 # Softio: Elegant Console I/O for Node.js 🚀
 
 <p align="center">
-  <img src="https://github.com/AryaFardmanesh/softio/blob/main/logo/logo-300x300.png" alt="Softio Logo" width="200"/>
-  <br />
-  <a href="https://www.designevo.com/" title="Free Online Logo Maker"><sub>&copy; Logo by DesignEvo</sub></a>
+	<img src="https://github.com/AryaFardmanesh/softio/blob/main/logo/logo-300x300.png" alt="Softio Logo" width="200"/>
+	<br />
+	<a href="https://www.designevo.com/" title="Free Online Logo Maker"><sub>&copy; Logo by DesignEvo</sub></a>
+</p>
+
+<p align="center">
+	<a href="https://www.npmjs.com/package/softio">
+		<img src="https://img.shields.io/npm/v/softio.svg?color=blue" alt="NPM version" />
+	</a>
+	<a href="https://github.com/AryaFardmanesh/softio/blob/main/LICENSE">
+		<img src="https://img.shields.io/github/license/AryaFardmanesh/softio.svg" alt="License" />
+	</a>
 </p>
 
 ---
@@ -69,8 +78,8 @@ const name = Console.In.input('Enter your name: ');
 const age = Console.In.readNumber('Enter your age: ');
 
 if (age < 18) {
-  Console.Out.write('Sorry, you must be at least 18.');
-  process.exit();
+	Console.Out.write('Sorry, you must be at least 18.');
+	process.exit();
 }
 
 Console.Out.writeln(Console.Utils.center(`🎉 Welcome, ${name}! 🎉`));
