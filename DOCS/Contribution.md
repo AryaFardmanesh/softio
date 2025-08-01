@@ -210,5 +210,3 @@ If you add new features or fix bugs:
 We appreciate your effort and care in making Softio better. If you have any questions or ideas, feel free to [open an issue](https://github.com/AryaFardmanesh/softio/issues) or join the discussion on GitHub.
 
 Let’s build an exceptional console programming toolkit together! 🚀
-
-```
