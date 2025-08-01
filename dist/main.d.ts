@@ -1,4 +1,4 @@
-/*! Softio v3.30.68 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.30.78 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /*************************************************
  * @file SoftIO Type File
@@ -121,7 +121,7 @@ export declare class Out {
 	 * @description This method is used to create a customized
 	 * output function.
 	**/
-	public static shot<T extends Function>( func: T, style: ShotStyleT ): T;
+	public static shot<T extends Function>( func: T, style?: ShotStyleT ): T;
 }
 
 /**
@@ -138,7 +138,7 @@ export declare class In {
 	 * @description This method is for capturing passwords
 	 * or important data.
 	**/
-	public static password( message: string, char: string ): string
+	public static password( message?: string, char?: string ): string
 
 	/**
 	 * @description Used to obtain user consent.
@@ -249,7 +249,7 @@ export declare class Attr {
 	 * @description This method is used to move the cursor
 	 * in different directions.
 	**/
-	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value?: number ): void;
+	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value?: number ): void;
 
 	/**
 	 * @description This method save the cursor position.
@@ -269,7 +269,7 @@ export declare class Attr {
 	/**
 	 * @description This method used for clear the console.
 	**/
-	public static erase( mode: ANSI_Erase_T ): void;
+	public static erase( mode?: ANSI_Erase_T ): void;
 }
 
 /**
@@ -310,16 +310,21 @@ export declare class Utils {
 	/**
 	 * @description Used to change the color of the console text.
 	**/
-	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string;
+	public static color( color: ColorParam_T ): string;
 
 	/**
 	 * @description Used to change the background color of console
 	 * texts.
 	**/
-	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string;
+	public static background( color: BgColorParam_T ): string;
 
 	/**
 	 * @description It is used to change the style of texts.
 	**/
 	public static fontStyle( style: ANSI_Style_T ): string;
+
+	/**
+	 * @description Makes the input printable and returns it as a printable string.
+	**/
+	public static prettier( ..._data: unknown[] ): string;
 }

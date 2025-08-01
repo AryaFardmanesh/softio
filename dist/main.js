@@ -1,4 +1,4 @@
-/*! Softio v3.30.68 Copyright (c) 2025 Arya Fardmanesh and contributors */
+/*! Softio v3.30.78 Copyright (c) 2025 Arya Fardmanesh and contributors */
 
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -79,8 +79,8 @@ class Attr {
     static moveHome() {
         stdout_1.stdout.write((0, base_1.makeANSI)([], 'H'));
     }
-    static cursorWalk(arrow, value = 1) {
-        stdout_1.stdout.write((0, cursor_1.convertTextCursorMoveToANSI)(arrow, value));
+    static cursorWalk(direction, value = 1) {
+        stdout_1.stdout.write((0, cursor_1.convertTextCursorMoveToANSI)(direction, value));
     }
     static cursorSave(mode = 'SCO') {
         const code = (mode === 'SCO') ? 's' : '7';
@@ -93,7 +93,7 @@ class Attr {
     static cursorStyle(style) {
         stdout_1.stdout.write((0, cursor_1.convertTextCursorStyleToANSI)(style));
     }
-    static erase(mode) {
+    static erase(mode = 'entire') {
         stdout_1.stdout.write((0, erase_1.convertTextEraseToANSI)(mode));
     }
 }
@@ -726,7 +726,7 @@ exports.stdout = process.stdout;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.version = void 0;
-exports.version = '3.30.68';
+exports.version = '3.30.78';
 
 
 /***/ }),
