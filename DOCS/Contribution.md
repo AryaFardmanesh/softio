@@ -59,7 +59,8 @@ Follow these steps to set up the project locally:
 4. **Create a feature branch**:
 
    ```sh
-   git checkout -b my-feature
+   git checkout -b current
+   git branch my-new-feature-name # Like fix-issue-100 or add-feature-name
    ```
 
 ---
