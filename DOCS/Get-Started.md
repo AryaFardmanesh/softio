@@ -125,8 +125,8 @@ This file provides a detailed introduction to the project, including how to inst
 
 For those who want to contribute to Softio, make sure to read:
 
-* [`docs/Contribution.md`](./Contribution.md)
-* [`docs/Git-Branch.md`](./Git-Branch.md)
 * [`docs/Labels.md`](./Labels.md)
+* [`docs/Git-Branch.md`](./Git-Branch.md)
+* [`docs/Contribution.md`](./Contribution.md)
 
 These files outline contribution guidelines, branching strategy, and issue labeling practices.
