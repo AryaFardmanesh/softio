@@ -312,4 +312,88 @@ describe( 'Testing output methods - Test Group', () => {
 			expect( spy ).toHaveBeenCalledWith( expected );
 		} );
 	} );
+
+	describe( 'Testing .shot method - Test Group', () => {
+		it( 'should print data correctly - Unit 1', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+
+			const expected = 'Hello world!';
+			Out.shot( Out.write )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
+		} );
+
+		it( 'should print data correctly - Unit 2', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+
+			let expected = 'Hello world!';
+			Out.shot( Out.writeln )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( silentecho( expected + '\n' ) );
+		} );
+
+		it( 'should print data correctly - Unit 3', () => {
+			const spy = jest.spyOn( process.stderr, 'write' );
+
+			const expected = 'Hello world!';
+			Out.shot( Out.error )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( expected );
+		} );
+
+		it( 'should print data correctly - Unit 4', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+
+			const expected = 'Hello world!';
+			Out.shot( Out.write, {
+				color: 'blue'
+			} )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( `\x1b[34m` );
+			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+		} );
+
+		it( 'should print data correctly - Unit 5', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+
+			const expected = 'Hello world!';
+			Out.shot( Out.write, {
+				color: 18
+			} )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( `\x1b[38;5;18m` );
+			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+		} );
+
+		it( 'should print data correctly - Unit 6', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+
+			const expected = 'Hello world!';
+			Out.shot( Out.write, {
+				color: 18,
+				background: 19
+			} )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( `\x1b[38;5;18m` + `\x1b[48;5;19m` );
+			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+		} );
+
+		it( 'should print data correctly - Unit 7', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+
+			const expected = 'Hello world!';
+			Out.shot( Out.write, {
+				color: 18,
+				background: 19,
+				style: 'bold'
+			} )( expected );
+
+			expect( spy ).toHaveBeenCalledWith( `\x1b[38;5;18m` + `\x1b[48;5;19m` + `\x1b[1m` );
+			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+		} );
+	} );
 } );

@@ -2,9 +2,8 @@ const gulp = require( 'gulp' );
 const clean = require( 'gulp-clean' );
 const typescript = require( 'gulp-typescript' );
 const webpack = require( 'webpack-stream' );
-const babel = require( 'gulp-babel' );
-const terser = require( 'gulp-terser' );
 const replace = require( 'gulp-replace' );
+const writeHeader = require('gulp-header');
 const config = require( './config' );
 const pkg = require( './package.json' );
 
@@ -31,8 +30,7 @@ gulp.task( 'build', () => {
 	return (
 		gulp.src( './dist/main.js' )
 			.pipe( webpack( config.webpack ) )
-			.pipe( babel( config.babel ) )
-			.pipe( terser( config.terser ) )
+			.pipe( writeHeader( config.copyright ) )
 			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
@@ -41,6 +39,8 @@ gulp.task( 'build', () => {
 gulp.task( 'attach:declare', () => {
 	return (
 		gulp.src( './src/**/*.d.ts' )
+			.pipe( writeHeader( config.copyright ) )
+			.pipe( replace( '@VERSION', pkg.version ) )
 			.pipe( gulp.dest( './dist/' ) )
 	);
 } );

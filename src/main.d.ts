@@ -28,9 +28,9 @@ export declare type ANSI_Color_T =
 
 export declare type ANSI_Background_T = ANSI_Color_T;
 
-export type ColorParam_T = ANSI_Color_T | string | number | [ number, number, number ];
+export type ColorParam_T = ANSI_Color_T | (string & {} ) | number | [ number, number, number ];
 
-export type BgColorParam_T = ANSI_Background_T | string | number | [ number, number, number ];
+export type BgColorParam_T = ANSI_Background_T | (string & {} ) | number | [ number, number, number ];
 
 export declare type ANSI_Style_T =
 	'bold'		|
@@ -51,7 +51,8 @@ export declare type ANSI_Cursor_Movement_T =
 	'left'		|
 	'next'		|
 	'previous'	|
-	'go-up'
+	'go-up'		|
+	'home'
 ;
 
 export declare type ANSI_Cursor_Style_T =
@@ -72,8 +73,8 @@ export declare type ANSI_Erase_T =
 ;
 
 type ShotStyleT = {
-	color?: ANSI_Color_T | number | [number, number, number] | string,
-	background?: ANSI_Background_T | number | [number, number, number] | string,
+	color?: ColorParam_T,
+	background?: BgColorParam_T,
 	style?: ANSI_Style_T,
 };
 
@@ -118,7 +119,7 @@ export declare class Out {
 	 * @description This method is used to create a customized
 	 * output function.
 	**/
-	public static shot<T extends Function>( func: T, style: ShotStyleT ): T;
+	public static shot<T extends Function>( func: T, style?: ShotStyleT ): T;
 }
 
 /**
@@ -135,7 +136,7 @@ export declare class In {
 	 * @description This method is for capturing passwords
 	 * or important data.
 	**/
-	public static password( message: string, char: string ): string
+	public static password( message?: string, char?: string ): string
 
 	/**
 	 * @description Used to obtain user consent.
@@ -194,7 +195,7 @@ export declare class Attr {
 	 * @deprecated
 	 * @description To set the text color as RGB.
 	**/
-	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void;
+	public static colorRGB( red: number, green: number, blue: number ): void;
 
 	/**
 	 * @deprecated
@@ -211,7 +212,7 @@ export declare class Attr {
 	 * @deprecated
 	 * @description To set the background color as RGB.
 	**/
-	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void;
+	public static backgroundRGB( red: number, green: number, blue: number ): void;
 
 	/**
 	 * @deprecated
@@ -228,13 +229,13 @@ export declare class Attr {
 	 * @description This method used for moving the cursor
 	 * position in console.
 	**/
-	public static move( x: number | string, y: number | string ): void;
+	public static move( x: number, y: number ): void;
 
 	/**
 	 * @description This method used for moving the cursor
 	 * column in console.
 	**/
-	public static moveCol( x: number | string ): void;
+	public static moveCol( x: number ): void;
 
 	/**
 	 * @description This method move the cursor position in
@@ -246,7 +247,7 @@ export declare class Attr {
 	 * @description This method is used to move the cursor
 	 * in different directions.
 	**/
-	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value?: number | string ): void;
+	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value?: number ): void;
 
 	/**
 	 * @description This method save the cursor position.
@@ -266,7 +267,7 @@ export declare class Attr {
 	/**
 	 * @description This method used for clear the console.
 	**/
-	public static erase( mode: ANSI_Erase_T ): void;
+	public static erase( mode?: ANSI_Erase_T ): void;
 }
 
 /**
@@ -307,16 +308,21 @@ export declare class Utils {
 	/**
 	 * @description Used to change the color of the console text.
 	**/
-	public static color( color: ANSI_Color_T | number | [number, number, number] | string ): string;
+	public static color( color: ColorParam_T ): string;
 
 	/**
 	 * @description Used to change the background color of console
 	 * texts.
 	**/
-	public static background( color: ANSI_Background_T | number | [number, number, number] | string ): string;
+	public static background( color: BgColorParam_T ): string;
 
 	/**
 	 * @description It is used to change the style of texts.
 	**/
 	public static fontStyle( style: ANSI_Style_T ): string;
+
+	/**
+	 * @description Makes the input printable and returns it as a printable string.
+	**/
+	public static prettier( ..._data: unknown[] ): string;
 }
