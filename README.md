@@ -93,8 +93,8 @@ Console.Out.writeln(Console.Utils.center(`🎉 Welcome, ${name}! 🎉`));
 
 🧾 Explore the full documentation:
 
-* 👉 [Getting Started Guide](https://github.com/AryaFardmanesh/softio/blob/main/docs/Get-Started.md)
-* 📘 [API Reference](https://github.com/AryaFardmanesh/softio/blob/main/docs/api/Introduction.md)
+* 👉 [Getting Started Guide](./docs/Get-Started.md)
+* 📘 [API Reference](./docs/api/Introduction.md)
 
 Every module is documented with examples, parameter types, and usage patterns.
 
@@ -104,13 +104,13 @@ Every module is documented with examples, parameter types, and usage patterns.
 
 We welcome contributions! Whether you're fixing bugs, suggesting enhancements, or writing docs, we appreciate your help.
 
-Start here 👉 [Contributing Guide](https://github.com/AryaFardmanesh/softio/blob/main/docs/Contribution.md)
+Start here 👉 [Contributing Guide](./docs/Contribution.md)
 
 ---
 
 ## ⚖️ License
 
-Softio is licensed under the [MIT License](https://github.com/AryaFardmanesh/softio/blob/main/LICENSE). Use it freely in personal or commercial projects.
+Softio is licensed under the [MIT License](./LICENSE). Use it freely in personal or commercial projects.
 
 ---
 
