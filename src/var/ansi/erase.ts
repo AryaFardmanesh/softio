@@ -1,16 +1,5 @@
 import { makeANSI } from './base';
-
-export type ANSI_Erase_T =
-	'in-display'			|
-	'cursor-until-end'		|
-	'cursor-to-beginning'		|
-	'entire'			|
-	'saved-lines'			|
-	'in-line'			|
-	'cursor-until-end-line'		|
-	'start-line-until-cursor'	|
-	'entire-line'
-;
+import { ANSI_Erase_T } from '../../main.d';
 
 export function convertTextEraseToANSI( style: ANSI_Erase_T ): string {
 	switch ( style ) {
@@ -33,6 +22,6 @@ export function convertTextEraseToANSI( style: ANSI_Erase_T ): string {
 		case 'entire-line':
 			return makeANSI( [ '2K' ], '' );
 		default:
-			return makeANSI( [ '2J' ], '' );
+			throw new TypeError( `The erase '${ style }' is invalid.` );
 	}
 }

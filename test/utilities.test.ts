@@ -1,9 +1,5 @@
 import { jest, beforeEach, describe, it, expect } from '@jest/globals';
 import Utilities from '../src/utilities';
-import { makeANSI } from '../src/var/ansi/base';
-import colorConvertor from '../src/utils/colorconvertor';
-import { convertTextBackgroundToANSI, convertTextColorToANSI } from '../src/var/ansi/color';
-import { convertTextStyleToANSI } from '../src/var/ansi/style';
 
 beforeEach( () => {
 	jest.spyOn( process.stdout, 'write' ).mockImplementationOnce( ( str ) => {
@@ -94,7 +90,7 @@ describe( 'Testing utilities methods - Test Group', () => {
 	} );
 
 	describe( 'Testing .reset method - Test Group', () => {
-		const ANSIReset = makeANSI( [ '0' ] );
+		const ANSIReset = `\x1b[0m`;
 
 		it( 'should reset the graphical with ANSI code - Unit 1', () => {
 			const actual = Utilities.reset();
@@ -104,97 +100,292 @@ describe( 'Testing utilities methods - Test Group', () => {
 
 	describe( 'Testing .color method - Test Group', () => {
 		it( 'should change color with ANSI code - Unit 1', () => {
-			const expected = colorConvertor( 'color', 'color', convertTextColorToANSI, 'red' );
 			const actual = Utilities.color( 'red' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[31m` );
 		} );
 
 		it( 'should change color with ANSI code - Unit 2', () => {
-			const expected = colorConvertor( 'color', 'color', convertTextColorToANSI, 18 );
-			const actual = Utilities.color( 18 );
-			expect( actual ).toBe( expected );
+			const actual = Utilities.color( 'blue' );
+			expect( actual ).toBe( `\x1b[34m` );
 		} );
 
 		it( 'should change color with ANSI code - Unit 3', () => {
-			const expected = colorConvertor( 'color', 'color', convertTextColorToANSI, [ 15, 20, 10 ] );
-			const actual = Utilities.color( [ 15, 20, 10 ] );
-			expect( actual ).toBe( expected );
+			const actual = Utilities.color( 18 );
+			expect( actual ).toBe( `\x1b[38;5;18m` );
 		} );
 
 		it( 'should change color with ANSI code - Unit 4', () => {
-			const expected = colorConvertor( 'color', 'color', convertTextColorToANSI, '#FFFC8EA' );
-			const actual = Utilities.color( '#FFFC8EA' );
-			expect( actual ).toBe( expected );
+			const actual = Utilities.color( 255 );
+			expect( actual ).toBe( `\x1b[38;5;255m` );
 		} );
 
 		it( 'should change color with ANSI code - Unit 5', () => {
-			const expected = colorConvertor( 'color', 'color', convertTextColorToANSI, '#FFF' );
+			const actual = Utilities.color( [ 15, 20, 10 ] );
+			expect( actual ).toBe( `\x1b[38;2;15;20;10m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 6', () => {
+			const actual = Utilities.color( [ 38, 225, 0 ] );
+			expect( actual ).toBe( `\x1b[38;2;38;225;0m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 7', () => {
+			const actual = Utilities.color( '#FFFC8E' );
+			expect( actual ).toBe( `\x1b[38;2;255;252;142m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 8', () => {
+			const actual = Utilities.color( '#fffc8e' );
+			expect( actual ).toBe( `\x1b[38;2;255;252;142m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 9', () => {
+			const actual = Utilities.color( 'fffc8e' );
+			expect( actual ).toBe( `\x1b[38;2;255;252;142m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 10', () => {
 			const actual = Utilities.color( '#FFF' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[38;2;255;255;255m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 11', () => {
+			const actual = Utilities.color( '#fff' );
+			expect( actual ).toBe( `\x1b[38;2;255;255;255m` );
+		} );
+
+		it( 'should change color with ANSI code - Unit 12', () => {
+			const actual = Utilities.color( 'fff' );
+			expect( actual ).toBe( `\x1b[38;2;255;255;255m` );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 13', () => {
+			expect( () => Utilities.color( 'test' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 14', () => {
+			expect( () => Utilities.color( '#f' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 15', () => {
+			expect( () => Utilities.color( 'f' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 16', () => {
+			expect( () => Utilities.color( '#ffff' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 17', () => {
+			expect( () => Utilities.color( 'ffff' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 18', () => {
+			expect( () => Utilities.color( '#ffffffa' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 19', () => {
+			expect( () => Utilities.color( 'ffffffa' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 20', () => {
+			expect( () => Utilities.color( 300 ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 21', () => {
+			expect( () => Utilities.color( -1 ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 22', () => {
+			expect( () => Utilities.color( [ 10, 20, 256 ] ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 23', () => {
+			expect( () => Utilities.color( [ 10, 20, -1 ] ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 24', () => {
+			expect( () => Utilities.color( [ 10, 20 ] as unknown as [ number, number, number ] ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 25', () => {
+			expect( () => Utilities.color( [ 10 ] as unknown as [ number, number, number ] ) ).toThrow( TypeError );
 		} );
 	} );
 
 	describe( 'Testing .background method - Test Group', () => {
-		it( 'should change the background color with ANSI code - Unit 1', () => {
-			const expected = colorConvertor( 'color', 'bg', convertTextBackgroundToANSI, 'red' );
+		it( 'should change background with ANSI code - Unit 1', () => {
 			const actual = Utilities.background( 'red' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[41m` );
 		} );
 
-		it( 'should change the background color with ANSI code - Unit 2', () => {
-			const expected = colorConvertor( 'color', 'bg', convertTextBackgroundToANSI, 18 );
+		it( 'should change background with ANSI code - Unit 2', () => {
+			const actual = Utilities.background( 'blue' );
+			expect( actual ).toBe( `\x1b[44m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 3', () => {
 			const actual = Utilities.background( 18 );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[48;5;18m` );
 		} );
 
-		it( 'should change the background color with ANSI code - Unit 3', () => {
-			const expected = colorConvertor( 'color', 'bg', convertTextBackgroundToANSI, [ 15, 20, 10 ] );
+		it( 'should change background with ANSI code - Unit 4', () => {
+			const actual = Utilities.background( 255 );
+			expect( actual ).toBe( `\x1b[48;5;255m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 5', () => {
 			const actual = Utilities.background( [ 15, 20, 10 ] );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[48;2;15;20;10m` );
 		} );
 
-		it( 'should change the background color with ANSI code - Unit 4', () => {
-			const expected = colorConvertor( 'color', 'bg', convertTextBackgroundToANSI, '#FFFC8EA' );
-			const actual = Utilities.background( '#FFFC8EA' );
-			expect( actual ).toBe( expected );
+		it( 'should change background with ANSI code - Unit 6', () => {
+			const actual = Utilities.background( [ 38, 225, 0 ] );
+			expect( actual ).toBe( `\x1b[48;2;38;225;0m` );
 		} );
 
-		it( 'should change the background color with ANSI code - Unit 5', () => {
-			const expected = colorConvertor( 'color', 'bg', convertTextBackgroundToANSI, '#FFF' );
+		it( 'should change background with ANSI code - Unit 7', () => {
+			const actual = Utilities.background( '#FFFC8E' );
+			expect( actual ).toBe( `\x1b[48;2;255;252;142m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 8', () => {
+			const actual = Utilities.background( '#fffc8e' );
+			expect( actual ).toBe( `\x1b[48;2;255;252;142m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 9', () => {
+			const actual = Utilities.background( 'fffc8e' );
+			expect( actual ).toBe( `\x1b[48;2;255;252;142m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 10', () => {
 			const actual = Utilities.background( '#FFF' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[48;2;255;255;255m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 11', () => {
+			const actual = Utilities.background( '#fff' );
+			expect( actual ).toBe( `\x1b[48;2;255;255;255m` );
+		} );
+
+		it( 'should change background with ANSI code - Unit 12', () => {
+			const actual = Utilities.background( 'fff' );
+			expect( actual ).toBe( `\x1b[48;2;255;255;255m` );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 13', () => {
+			expect( () => Utilities.background( 'test' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 14', () => {
+			expect( () => Utilities.background( '#f' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 15', () => {
+			expect( () => Utilities.background( 'f' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 16', () => {
+			expect( () => Utilities.background( '#ffff' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 17', () => {
+			expect( () => Utilities.background( 'ffff' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 18', () => {
+			expect( () => Utilities.background( '#ffffffa' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 19', () => {
+			expect( () => Utilities.background( 'ffffffa' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 20', () => {
+			expect( () => Utilities.background( 300 ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 21', () => {
+			expect( () => Utilities.background( -1 ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 22', () => {
+			expect( () => Utilities.background( [ 10, 20, 256 ] ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 23', () => {
+			expect( () => Utilities.background( [ 10, 20, -1 ] ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 24', () => {
+			expect( () => Utilities.background( [ 10, 20 ] as unknown as [ number, number, number ] ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 25', () => {
+			expect( () => Utilities.background( [ 10 ] as unknown as [ number, number, number ] ) ).toThrow( TypeError );
 		} );
 	} );
 
 	describe( 'Testing .fontStyle method - Test Group', () => {
 		it( 'should change the font style with ANSI code - Unit 1', () => {
-			const expected = convertTextStyleToANSI( 'bold' );
 			const actual = Utilities.fontStyle( 'bold' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[1m` );
 		} );
 
 		it( 'should change the font style with ANSI code - Unit 2', () => {
-			const expected = convertTextStyleToANSI( 'strikethrough' );
 			const actual = Utilities.fontStyle( 'strikethrough' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[9m` );
 		} );
 
 		it( 'should change the font style with ANSI code - Unit 3', () => {
-			const expected = convertTextStyleToANSI( 'dim' );
 			const actual = Utilities.fontStyle( 'dim' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[2m` );
 		} );
 
 		it( 'should change the font style with ANSI code - Unit 4', () => {
-			const expected = convertTextStyleToANSI( 'italic' );
 			const actual = Utilities.fontStyle( 'italic' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[3m` );
 		} );
 
 		it( 'should change the font style with ANSI code - Unit 5', () => {
-			const expected = convertTextStyleToANSI( 'reverse' );
 			const actual = Utilities.fontStyle( 'reverse' );
-			expect( actual ).toBe( expected );
+			expect( actual ).toBe( `\x1b[7m` );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 6', () => {
+			expect( () => Utilities.fontStyle( 'test' as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 7', () => {
+			expect( () => Utilities.fontStyle( 'hello' as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 8', () => {
+			expect( () => Utilities.fontStyle( 12 as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 9', () => {
+			expect( () => Utilities.fontStyle( [ 10, 20, 30 ] as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 10', () => {
+			expect( () => Utilities.fontStyle( {} as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 11', () => {
+			expect( () => Utilities.fontStyle( '#111' as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 12', () => {
+			expect( () => Utilities.fontStyle( '111' as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 13', () => {
+			expect( () => Utilities.fontStyle( '#ffffff' as unknown as 'bold' ) ).toThrow( TypeError );
+		} );
+
+		it( 'should throw an error with incorrect input - Unit 14', () => {
+			expect( () => Utilities.fontStyle( 'ffffff' as unknown as 'bold' ) ).toThrow( TypeError );
 		} );
 	} );
 } );

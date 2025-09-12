@@ -1,33 +1,15 @@
 import { makeANSI } from './base';
-
-export type ANSI_Color_T =
-	'black'			|
-	'red'			|
-	'green'			|
-	'yellow'		|
-	'blue'			|
-	'magenta'		|
-	'cyan'			|
-	'white'			|
-	'bright-black'		|
-	'bright-red'		|
-	'bright-green'		|
-	'bright-yellow'		|
-	'bright-blue'		|
-	'bright-magenta'	|
-	'bright-cyan'		|
-	'bright-white'		|
-	'default'
-;
-
-export type ANSI_Background_T = ANSI_Color_T;
-
-export type ColorParam_T = ANSI_Color_T | string | number | [ number, number, number ];
-
-export type BgColorParam_T = ANSI_Background_T | string | number | [ number, number, number ];
+import {
+	ANSI_Color_T,
+	ANSI_Background_T
+} from '../../main.d';
 
 export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 	if ( typeof color === 'number' ) {
+		if ( color > 255 || color < 0 ) {
+			throw new TypeError( `You have selected the number ${ color } for the text color, while the text color code should be between 0 and 255.` );
+		}
+
 		return makeANSI( [ '38', '5', color ] );
 	}
 
@@ -65,13 +47,17 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 		case 'bright-white':
 			return makeANSI( [ '97' ] );
 		default:
-			return makeANSI( [ '39' ] );
+			throw new TypeError( `The color name '${ color }' is invalid for a text color.` );
 	}
 }
 
 export function convertTextBackgroundToANSI( color: ANSI_Background_T | number ): string {
 	if ( typeof color === 'number' ) {
-		return makeANSI( [ 48, 5, color ] );
+		if ( color > 255 || color < 0 ) {
+			throw new TypeError( `You have selected the number ${ color } for the background color, while the background color code should be between 0 and 255.` );
+		}
+
+		return makeANSI( [ '48', '5', color ] );
 	}
 
 	switch ( color ) {
@@ -108,7 +94,7 @@ export function convertTextBackgroundToANSI( color: ANSI_Background_T | number )
 		case 'bright-white':
 			return makeANSI( [ '107' ] );
 		default:
-			return makeANSI( [ '49' ] );
+			throw new TypeError( `The color name '${ color }' is invalid for a background color.` );
 	}
 }
 
@@ -138,6 +124,10 @@ export function isValidHex( hex: string ): boolean {
 }
 
 export function convertHexToRGB( hex: string ): [ number, number, number ] {
+	if ( !isValidHex( hex ) ) {
+		throw new TypeError( `The code '${ hex }' is not a valid hex color.` );
+	}
+
 	if ( hex.startsWith( '#' ) ) {
 		hex = hex.slice( 1 );
 	}

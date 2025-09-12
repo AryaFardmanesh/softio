@@ -1,29 +1,25 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
+import { convertTextStyleToANSI } from './var/ansi/style';
+import { convertTextEraseToANSI } from './var/ansi/erase';
+import colorConvertor from './utils/colorconvertor';
+import typeCheck from './utils/typecheck';
 import {
-	ANSI_Background_T,
-	ANSI_Color_T,
-	BgColorParam_T,
-	ColorParam_T,
+	convertTextCursorMoveToANSI,
+	convertTextCursorStyleToANSI
+} from './var/ansi/cursor';
+import {
 	convertHexToRGB,
-	convertTextBackgroundToANSI,
-	convertTextColorToANSI,
-	isValidHex,
+	isValidHex
 } from './var/ansi/color';
-import {
-	ANSI_Style_T,
-	convertTextStyleToANSI
-} from './var/ansi/style';
 import {
 	ANSI_Cursor_Movement_T,
 	ANSI_Cursor_Style_T,
-	convertTextCursorMoveToANSI,
-	convertTextCursorStyleToANSI,
-} from './var/ansi/cursor';
-import {
-	ANSI_Erase_T,
-	convertTextEraseToANSI
-} from './var/ansi/erase';
+	BgColorParam_T,
+	ANSI_Style_T,
+	ColorParam_T,
+	ANSI_Erase_T
+} from './main.d';
 
 export default class Attr {
 	public static get title(): string {
@@ -51,26 +47,14 @@ export default class Attr {
 	}
 
 	public static color( color: ColorParam_T ): void {
-		// Check RGB color
-		if ( Array.isArray( color ) ) {
-			stdout.write( makeANSI( [ '38', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] ) );
-			return;
-		}
-
-		// Check Hex color
-		if ( typeof color == 'string' && isValidHex( color ) ) {
-			const rgb = convertHexToRGB( color );
-			stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
-			return;
-		}
-
-		stdout.write( convertTextColorToANSI( color as ( ANSI_Color_T | number ) ) );
+		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
+		stdout.write( colorConvertor( 'color', 'color', color ) );
 	}
 
 	/**
 	 * @deprecated
 	**/
-	public static colorRGB( red: string | number, green: string | number, blue: string | number ): void {
+	public static colorRGB( red: number, green: number, blue: number ): void {
 		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
 	}
 
@@ -81,32 +65,20 @@ export default class Attr {
 		if ( !isValidHex( hex ) ) {
 			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
 		}
-	
+
 		const rgb = convertHexToRGB( hex );
 		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
 	}
 
 	public static background( color: BgColorParam_T ): void {
-		// Check RGB color
-		if ( Array.isArray( color ) ) {
-			stdout.write( makeANSI( [ '48', '2', color[ 0 ], color[ 1 ], color[ 2 ] ] ) );
-			return;
-		}
-
-		// Check Hex color
-		if ( typeof color == 'string' && isValidHex( color ) ) {
-			const rgb = convertHexToRGB( color );
-			stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
-			return;
-		}
-
-		stdout.write( convertTextBackgroundToANSI( color as ( ANSI_Background_T | number ) ) );
+		typeCheck( 'background', [ 'string', 'number', 'object' ], color );
+		stdout.write( colorConvertor( 'background', 'bg', color ) );
 	}
 
 	/**
 	 * @deprecated
 	**/
-	public static backgroundRGB( red: string | number, green: string | number, blue: string | number ): void {
+	public static backgroundRGB( red: number, green: number, blue: number ): void {
 		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
 	}
 
@@ -126,11 +98,11 @@ export default class Attr {
 		stdout.write( convertTextStyleToANSI( style ) );
 	}
 
-	public static move( x: number | string, y: number | string ): void {
+	public static move( x: number, y: number ): void {
 		stdout.write( makeANSI( [ x, y ], 'f' ) );
 	}
 
-	public static moveCol( x: number | string ): void {
+	public static moveCol( x: number ): void {
 		stdout.write( makeANSI( [ x, 'G' ], '' ) );
 	}
 
@@ -138,8 +110,8 @@ export default class Attr {
 		stdout.write( makeANSI( [], 'H' ) );
 	}
 
-	public static cursorWalk( arrow: ANSI_Cursor_Movement_T, value: number | string = 1 ): void {
-		stdout.write( convertTextCursorMoveToANSI( arrow, value ) );
+	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value: number = 1 ): void {
+		stdout.write( convertTextCursorMoveToANSI( direction, value ) );
 	}
 
 	public static cursorSave( mode: 'DEC' | 'SCO' = 'SCO' ): void {
@@ -156,7 +128,7 @@ export default class Attr {
 		stdout.write( convertTextCursorStyleToANSI( style ) );
 	}
 
-	public static erase( mode: ANSI_Erase_T ): void {
+	public static erase( mode: ANSI_Erase_T = 'entire' ): void {
 		stdout.write( convertTextEraseToANSI( mode ) );
 	}
 }

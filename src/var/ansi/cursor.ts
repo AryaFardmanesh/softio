@@ -1,21 +1,16 @@
 import { makeANSI } from './base';
+import {
+	ANSI_Cursor_Movement_T,
+	ANSI_Cursor_Style_T
+} from '../../main.d';
 
-export type ANSI_Cursor_Movement_T =
-	'up'		|
-	'down'		|
-	'right'		|
-	'left'		|
-	'next'		|
-	'previous'	|
-	'go-up'
-;
+export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number ): string {
+	const valueType = typeof value;
 
-export type ANSI_Cursor_Style_T =
-	'invisible'	|
-	'visible'
-;
+	if ( valueType != 'number' ) {
+		throw new TypeError( `The value must be a number, but you set it to ${ valueType }.` );
+	}
 
-export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, value: number | string ): string {
 	switch ( style ) {
 		case 'up':
 			return makeANSI( [ value, 'A' ], '' );
@@ -31,8 +26,10 @@ export function convertTextCursorMoveToANSI( style: ANSI_Cursor_Movement_T, valu
 			return makeANSI( [ value, 'F' ], '' );
 		case 'go-up':
 			return makeANSI( [ 'M' ], '' );
-		default:
+		case 'home':
 			return makeANSI( [ 'H' ], '' );
+		default:
+			throw new TypeError( `The cursor movement '${ style }' is invalid move.` );
 	}
 }
 
@@ -43,6 +40,6 @@ export function convertTextCursorStyleToANSI( style: ANSI_Cursor_Style_T ): stri
 		case 'visible':
 			return makeANSI( [ '25' ], 'h', '?' );
 		default:
-			return makeANSI( [ '25' ], 'h', '?' );
+			throw new TypeError( `The cursor style '${ style }' is invalid style.` );
 	}
 }
