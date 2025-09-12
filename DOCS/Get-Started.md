@@ -119,6 +119,8 @@ docs/api/Introduction.md
 
 This file provides a detailed introduction to the project, including how to install, configure, and use Softio. It serves as the starting point for the in-depth API documentation that follows in the same directory.
 
+[Learn Now!](./api/Introduction.md)
+
 ---
 
 ## 🙌 Contributing
