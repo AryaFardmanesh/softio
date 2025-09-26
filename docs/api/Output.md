@@ -155,6 +155,26 @@ const print = Console.Out.shot(Console.Out.write, {
 print('Styled text: blue, red background, underlined');
 ```
 
+* **Bug**: When using this function, you should be careful not to break the defined styles by passing a function as input to this function. Consider the following example:
+
+```js
+const fn = Out.shot(Out.printf, {
+	color: 'blue'
+});
+
+/*
+Note: In the output, the entire text is not blue,
+because when the `printf` function wants to
+place the number 10, it places it with the
+style associated with numbers, and this position
+causes the text tone to change and the rest of
+the text to become the default color.
+*/
+fn("Hello %v with id %v and role %v.\n", "user", 10, "Admin");
+```
+
+> When using this function, give it functions that do not change the defined styles.
+
 ---
 
 ## 📝 Summary
