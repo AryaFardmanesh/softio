@@ -250,7 +250,7 @@ describe( 'Testing output methods - Test Group', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 
 			const msg = '%v';
-			const params = [];
+			const params: unknown[] = [];
 			const expected = `${ silentecho( params[ 0 ] ) }`;
 			Out.printf( msg, ...params );
 
@@ -305,7 +305,7 @@ describe( 'Testing output methods - Test Group', () => {
 			const spy = jest.spyOn( process.stderr, 'write' );
 
 			const msg = '%v';
-			const params = [];
+			const params: unknown[] = [];
 			const expected = `${ silentecho( params[ 0 ] ) }`;
 			Out.error( msg, ...params );
 
