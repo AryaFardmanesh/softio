@@ -125,6 +125,18 @@ export default class Attr {
 		}
 	}
 
+	public static styleOffAll(): void {
+		stdout.write(
+			convertDisableTextStyleANSI( 'bold' ) +
+			convertDisableTextStyleANSI( 'italic' ) +
+			convertDisableTextStyleANSI( 'underline' ) +
+			convertDisableTextStyleANSI( 'blinking' ) +
+			convertDisableTextStyleANSI( 'reverse' ) +
+			convertDisableTextStyleANSI( 'hidden' ) +
+			convertDisableTextStyleANSI( 'strikethrough' )
+		);
+	}
+
 	public static move( x: number, y: number ): void {
 		stdout.write( makeANSI( [ x, y ], 'f' ) );
 	}
