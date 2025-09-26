@@ -154,6 +154,22 @@ describe( 'Testing attributes methods - Test Group', () => {
 		} );
 	} );
 
+	describe( 'Testing .styleOffAll method - Test Group', () => {
+		it( 'should chage the text style - Unit 1', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+			Attr.styleOffAll();
+			expect( spy ).toHaveBeenCalledWith(
+				'\x1b[22m' +
+				'\x1b[23m' +
+				'\x1b[24m' +
+				'\x1b[25m' +
+				'\x1b[27m' +
+				'\x1b[28m' +
+				'\x1b[29m'
+			);
+		} );
+	} );
+
 	describe( 'Testing .move method - Test Group', () => {
 		it( 'should chage the cursor position - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
