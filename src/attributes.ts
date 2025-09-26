@@ -1,6 +1,6 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
-import { convertTextStyleToANSI } from './var/ansi/style';
+import { convertDisableTextStyleANSI, convertTextStyleToANSI } from './var/ansi/style';
 import { convertTextEraseToANSI } from './var/ansi/erase';
 import colorConvertor from './utils/colorconvertor';
 import typeCheck from './utils/typecheck';
@@ -31,7 +31,7 @@ export default class Attr {
 
 	static [_color]: ColorParam_T = 'default';
 
-	static [_fontStyle]: ANSI_Style_T = 'default';
+	static [_fontStyle]: ANSI_Style_T[] = [];
 
 	public static get title(): string {
 		return process.title;
@@ -113,7 +113,16 @@ export default class Attr {
 
 	public static style( style: ANSI_Style_T ): void {
 		stdout.write( convertTextStyleToANSI( style ) );
-		this[_fontStyle] = style;
+		this[_fontStyle].push( style );
+	}
+
+	public static styleOff( style: ANSI_Style_T ): void {
+		stdout.write( convertDisableTextStyleANSI( style ) );
+
+		const index = this[_fontStyle].indexOf( style );
+		if ( index !== -1 ) {
+			this[_fontStyle].splice( index, 1 );
+		}
 	}
 
 	public static move( x: number, y: number ): void {
