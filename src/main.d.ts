@@ -226,6 +226,11 @@ export declare class Attr {
 	public static style( style: ANSI_Style_T ): void;
 
 	/**
+	 * @description To turn off styles.
+	**/
+	public static styleOff( style: ANSI_Style_T ): void {}
+
+	/**
 	 * @description This method used for moving the cursor
 	 * position in console.
 	**/

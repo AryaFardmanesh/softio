@@ -7,6 +7,7 @@ import {
 	convertHexToRGB
 } from '../src/var/ansi/color';
 import {
+	convertDisableTextStyleANSI,
 	convertTextStyleToANSI
 } from '../src/var/ansi/style';
 import {
@@ -511,6 +512,74 @@ describe( 'Testing ANSI methods - Test Group', () => {
 		it( 'should convert style to ansi correctly - Unit 11', () => {
 			expect( () => {
 				convertTextStyleToANSI( 11n as unknown as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+	} );
+
+	describe( 'Testing style disable conversion functions to ANSI - Test Group', () => {
+		it( 'should convert style to ansi correctly - Unit 1', () => {
+			const actual = convertDisableTextStyleANSI( 'dim' );
+
+			expect( actual ).toBe( '\x1B[22m' );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 2', () => {
+			const actual = convertDisableTextStyleANSI( 'strikethrough' );
+
+			expect( actual ).toBe( '\x1B[29m' );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 3', () => {
+			const actual = convertDisableTextStyleANSI( 'bold' );
+
+			expect( actual ).toBe( '\x1B[22m' );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 4', () => {
+			const actual = convertDisableTextStyleANSI( 'reverse' );
+
+			expect( actual ).toBe( '\x1B[27m' );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 5', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( 'test' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 6', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( 'bol' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 7', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( 'old' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 8', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( 'Bold' as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 9', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( 256 as unknown as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 10', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( -10 as unknown as 'bold' );
+			} ).toThrow( TypeError );
+		} );
+
+		it( 'should convert style to ansi correctly - Unit 11', () => {
+			expect( () => {
+				convertDisableTextStyleANSI( 11n as unknown as 'bold' );
 			} ).toThrow( TypeError );
 		} );
 	} );

@@ -30,6 +30,8 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 			return makeANSI( [ '36' ] );
 		case 'white':
 			return makeANSI( [ '37' ] );
+		case 'default':
+			return makeANSI( [ '39' ] );
 		case 'bright-black':
 			return makeANSI( [ '90' ] );
 		case 'bright-red':
@@ -77,6 +79,8 @@ export function convertTextBackgroundToANSI( color: ANSI_Background_T | number )
 			return makeANSI( [ '46' ] );
 		case 'white':
 			return makeANSI( [ '47' ] );
+		case 'default':
+			return makeANSI( [ '49' ] );
 		case 'bright-black':
 			return makeANSI( [ '100' ] );
 		case 'bright-red':

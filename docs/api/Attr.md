@@ -103,6 +103,21 @@ Console.Attr.style('underline');
 
 ---
 
+### 🔹 `static styleOff(style: ANSI_Style_T): void`
+
+Whatever text style you give it, it will destroy it.
+
+* **Supported styles**:
+  `bold`, `dim`, `italic`, `underline`, `blinking`, `reverse`, `hidden`, `strikethrough`, `default`
+
+```js
+Console.Attr.style('underline');
+Console.Out.write('Hello world!');
+Console.Attr.styleOff('underline');
+```
+
+---
+
 ### 🔹 `static reset(): void`
 
 Resets all formatting styles and colors to default.

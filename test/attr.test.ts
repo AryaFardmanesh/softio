@@ -140,6 +140,20 @@ describe( 'Testing attributes methods - Test Group', () => {
 		} );
 	} );
 
+	describe( 'Testing .styleOff method - Test Group', () => {
+		it( 'should chage the text style - Unit 1', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+			Attr.styleOff( 'bold' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[22m' );
+		} );
+
+		it( 'should chage the text style - Unit 2', () => {
+			const spy = jest.spyOn( process.stdout, 'write' );
+			Attr.styleOff( 'strikethrough' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[29m' );
+		} );
+	} );
+
 	describe( 'Testing .move method - Test Group', () => {
 		it( 'should chage the cursor position - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
