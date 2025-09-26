@@ -398,6 +398,7 @@ describe( 'Testing output methods - Test Group', () => {
 			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
 			expect( spy ).toHaveBeenCalledWith( `\x1b[49m` );
 			expect( spy ).toHaveBeenCalledWith( `\x1b[39m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[22m` );
 		} );
 	} );
 } );
