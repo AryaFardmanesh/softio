@@ -23,3 +23,26 @@ export function convertTextStyleToANSI( style: ANSI_Style_T ): string {
 			throw new TypeError( `The color name '${ style }' is invalid for a text style.` );
 	}
 }
+
+export function convertDisableTextStyleANSI( style: ANSI_Style_T ): string {
+	switch ( style ) {
+		case 'bold':
+			return makeANSI( [ '22' ] );
+		case 'dim':
+			return makeANSI( [ '22' ] );
+		case 'italic':
+			return makeANSI( [ '23' ] );
+		case 'underline':
+			return makeANSI( [ '24' ] );
+		case 'blinking':
+			return makeANSI( [ '25' ] );
+		case 'reverse':
+			return makeANSI( [ '27' ] );
+		case 'hidden':
+			return makeANSI( [ '28' ] );
+		case 'strikethrough':
+			return makeANSI( [ '29' ] );
+		default:
+			throw new TypeError( `The color name '${ style }' is invalid for a text style.` );
+	}
+}
