@@ -95,7 +95,7 @@ Console.Attr.background([0, 255, 255]);
 Applies a **text style** using ANSI codes.
 
 * **Supported styles**:
-  `bold`, `dim`, `italic`, `underline`, `blinking`, `reverse`, `hidden`, `strikethrough`, `default`
+  `bold`, `dim`, `italic`, `underline`, `blinking`, `reverse`, `hidden`, `strikethrough`
 
 ```js
 Console.Attr.style('underline');
@@ -108,7 +108,7 @@ Console.Attr.style('underline');
 Whatever text style you give it, it will destroy it.
 
 * **Supported styles**:
-  `bold`, `dim`, `italic`, `underline`, `blinking`, `reverse`, `hidden`, `strikethrough`, `default`
+  `bold`, `dim`, `italic`, `underline`, `blinking`, `reverse`, `hidden`, `strikethrough`
 
 ```js
 Console.Attr.style('underline');
