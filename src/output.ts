@@ -3,13 +3,18 @@ import silentEcho from './utils/silentecho';
 import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { stderr } from './var/stderr';
-import { makeANSI } from './var/ansi/base';
 import colorConvertor from './utils/colorconvertor';
 import { convertTextStyleToANSI } from './var/ansi/style';
 import {
 	ShotStyleT,
 	ANSI_Style_T
 } from './main.d';
+import {
+	_bg,
+	_color,
+	_fontStyle
+} from './var/attrSymbols';
+import Attr from './attributes';
 
 export default class Out {
 	public static write( ...message: unknown[] ): void {
@@ -42,8 +47,13 @@ export default class Out {
 			const fstyle = ( style?.style ) ? convertTextStyleToANSI( style.style as ANSI_Style_T ) : '';
 
 			stdout.write( color + bg + fstyle );
+
 			const result = func( ...data );
-			stdout.write( makeANSI( [ '0' ] ) );
+
+			// Retrieve the styles
+			Attr.background(Attr[_bg]);
+			Attr.color(Attr[_color]);
+			if ( style?.style ) Attr.styleOff( style.style as ANSI_Style_T );
 
 			return result;
 

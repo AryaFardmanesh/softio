@@ -40,8 +40,7 @@ export declare type ANSI_Style_T =
 	'blinking'	|
 	'reverse'	|
 	'hidden'	|
-	'strikethrough' |
-	'default'
+	'strikethrough'
 ;
 
 export declare type ANSI_Cursor_Movement_T =
@@ -224,6 +223,11 @@ export declare class Attr {
 	 * @description To set the text style.
 	**/
 	public static style( style: ANSI_Style_T ): void;
+
+	/**
+	 * @description To turn off styles.
+	**/
+	public static styleOff( style: ANSI_Style_T ): void {}
 
 	/**
 	 * @description This method used for moving the cursor

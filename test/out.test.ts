@@ -250,7 +250,7 @@ describe( 'Testing output methods - Test Group', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 
 			const msg = '%v';
-			const params = [];
+			const params: unknown[] = [];
 			const expected = `${ silentecho( params[ 0 ] ) }`;
 			Out.printf( msg, ...params );
 
@@ -305,7 +305,7 @@ describe( 'Testing output methods - Test Group', () => {
 			const spy = jest.spyOn( process.stderr, 'write' );
 
 			const msg = '%v';
-			const params = [];
+			const params: unknown[] = [];
 			const expected = `${ silentecho( params[ 0 ] ) }`;
 			Out.error( msg, ...params );
 
@@ -351,7 +351,8 @@ describe( 'Testing output methods - Test Group', () => {
 
 			expect( spy ).toHaveBeenCalledWith( `\x1b[34m` );
 			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
-			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[49m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[39m` );
 		} );
 
 		it( 'should print data correctly - Unit 5', () => {
@@ -364,7 +365,8 @@ describe( 'Testing output methods - Test Group', () => {
 
 			expect( spy ).toHaveBeenCalledWith( `\x1b[38;5;18m` );
 			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
-			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[49m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[39m` );
 		} );
 
 		it( 'should print data correctly - Unit 6', () => {
@@ -378,7 +380,8 @@ describe( 'Testing output methods - Test Group', () => {
 
 			expect( spy ).toHaveBeenCalledWith( `\x1b[38;5;18m` + `\x1b[48;5;19m` );
 			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
-			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[49m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[39m` );
 		} );
 
 		it( 'should print data correctly - Unit 7', () => {
@@ -393,7 +396,9 @@ describe( 'Testing output methods - Test Group', () => {
 
 			expect( spy ).toHaveBeenCalledWith( `\x1b[38;5;18m` + `\x1b[48;5;19m` + `\x1b[1m` );
 			expect( spy ).toHaveBeenCalledWith( silentecho( expected ) );
-			expect( spy ).toHaveBeenCalledWith( `\x1b[0m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[49m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[39m` );
+			expect( spy ).toHaveBeenCalledWith( `\x1b[22m` );
 		} );
 	} );
 } );
