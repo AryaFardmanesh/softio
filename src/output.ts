@@ -53,7 +53,7 @@ export default class Out {
 			// Retrieve the styles
 			Attr.background(Attr[_bg]);
 			Attr.color(Attr[_color]);
-			if ( fstyle ) Attr.styleOff( fstyle as ANSI_Style_T );
+			if ( style?.style ) Attr.styleOff( style.style as ANSI_Style_T );
 
 			return result;
 
