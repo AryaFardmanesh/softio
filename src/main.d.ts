@@ -40,8 +40,7 @@ export declare type ANSI_Style_T =
 	'blinking'	|
 	'reverse'	|
 	'hidden'	|
-	'strikethrough' |
-	'default'
+	'strikethrough'
 ;
 
 export declare type ANSI_Cursor_Movement_T =
