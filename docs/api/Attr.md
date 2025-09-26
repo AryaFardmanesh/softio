@@ -118,6 +118,19 @@ Console.Attr.styleOff('underline');
 
 ---
 
+### 🔹 `static styleOffAll(): void`
+
+Removes all text styles.
+
+```js
+Console.Attr.style('bold');
+Console.Attr.style('underline');
+Console.Out.write('Hello world!');
+Console.Attr.styleOffAll();
+```
+
+---
+
 ### 🔹 `static reset(): void`
 
 Resets all formatting styles and colors to default.
