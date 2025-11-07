@@ -49,6 +49,9 @@ const styles = {
 	reverse: ( text: string ) => Utils.fontStyle( 'reverse' ) + text,
 	hidden: ( text: string ) => Utils.fontStyle( 'hidden' ) + text,
 	strikethrough: ( text: string ) => Utils.fontStyle( 'strikethrough' ) + text,
+
+	// Etc.
+	center: ( text: string ) => Utils.center( text ),
 };
 
 function createAttr( applied: StyleFunction[] = [] ) {
