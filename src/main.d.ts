@@ -330,3 +330,46 @@ export declare class Utils {
 	**/
 	public static prettier( ..._data: unknown[] ): string;
 }
+
+/**
+ * @description This class is used to style text in a chain.
+**/
+export type StyleFunction = ( text: string ) => string;
+
+/**
+ * @description The main `Styler` interface that represents
+ * a chainable and callable style builder.
+**/
+export interface IStyler {
+	/**
+	 * @description Applies all accumulated styles to the given text.
+	 * @param text The text to style.
+	 * @returns The styled text string.
+	 */
+	(text: string): string;
+
+	/**
+	 * @description Applies the blue color style to the text.
+	 */
+	blue: IStyler;
+
+	/**
+	 * @description Applies the red color style to the text.
+	 */
+	red: IStyler;
+
+	/**
+	 * @description Applies bold styling to the text.
+	 */
+	bold: IStyler;
+
+	/**
+	 * @description Applies underline styling to the text.
+	 */
+	underline: IStyler;
+}
+
+/**
+ * @description The global `Styler` instance.
+ */
+export declare const Styler: IStyler;
