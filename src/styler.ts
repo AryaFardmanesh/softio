@@ -39,6 +39,16 @@ const styles = {
 	bgBrightCyan: ( text: string ) => Utils.color( 'bright-cyan' ) + text,
 	bgBrightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
 	bgReset: ( text: string ) => Utils.color( 'default' ) + text,
+
+	// Fonts
+	bold: ( text: string ) => Utils.fontStyle( 'bold' ) + text,
+	dim: ( text: string ) => Utils.fontStyle( 'dim' ) + text,
+	italic: ( text: string ) => Utils.fontStyle( 'italic' ) + text,
+	underline: ( text: string ) => Utils.fontStyle( 'underline' ) + text,
+	blinking: ( text: string ) => Utils.fontStyle( 'blinking' ) + text,
+	reverse: ( text: string ) => Utils.fontStyle( 'reverse' ) + text,
+	hidden: ( text: string ) => Utils.fontStyle( 'hidden' ) + text,
+	strikethrough: ( text: string ) => Utils.fontStyle( 'strikethrough' ) + text,
 };
 
 function createAttr( applied: StyleFunction[] = [] ) {
