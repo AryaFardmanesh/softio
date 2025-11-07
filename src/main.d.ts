@@ -507,6 +507,46 @@ export interface IStyler {
 	 * @description Applies the bright white background color style to the text.
 	 */
 	bgBrightWhite: IStyler;
+
+	/**
+	 * @description Applies bold styling to the text.
+	 */
+	bold: IStyler;
+
+	/**
+	 * @description Applies dim styling to the text.
+	 */
+	dim: IStyler;
+
+	/**
+	 * @description Applies italic styling to the text.
+	 */
+	italic: IStyler;
+
+	/**
+	 * @description Applies underline styling to the text.
+	 */
+	underline: IStyler;
+
+	/**
+	 * @description Applies blinking styling to the text.
+	 */
+	blinking: IStyler;
+
+	/**
+	 * @description Applies reverse styling to the text.
+	 */
+	reverse: IStyler;
+
+	/**
+	 * @description Applies hidden styling to the text.
+	 */
+	hidden: IStyler;
+
+	/**
+	 * @description Applies strikethrough styling to the text.
+	 */
+	strikethrough: IStyler;
 }
 
 /**
