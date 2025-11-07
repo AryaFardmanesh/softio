@@ -349,9 +349,9 @@ export interface IStyler {
 	(text: string): string;
 
 	/**
-	 * @description Applies the blue color style to the text.
+	 * @description Applies the black color style to the text.
 	 */
-	blue: IStyler;
+	black: IStyler;
 
 	/**
 	 * @description Applies the red color style to the text.
@@ -359,14 +359,74 @@ export interface IStyler {
 	red: IStyler;
 
 	/**
-	 * @description Applies bold styling to the text.
+	 * @description Applies the green color style to the text.
 	 */
-	bold: IStyler;
+	green: IStyler;
 
 	/**
-	 * @description Applies underline styling to the text.
+	 * @description Applies the yellow color style to the text.
 	 */
-	underline: IStyler;
+	yellow: IStyler;
+
+	/**
+	 * @description Applies the blue color style to the text.
+	 */
+	blue: IStyler;
+
+	/**
+	 * @description Applies the magenta color style to the text.
+	 */
+	magenta: IStyler;
+
+	/**
+	 * @description Applies the cyan color style to the text.
+	 */
+	cyan: IStyler;
+
+	/**
+	 * @description Applies the white color style to the text.
+	 */
+	white: IStyler;
+
+	/**
+	 * @description Applies the bright black color style to the text.
+	 */
+	brightBlack: IStyler;
+
+	/**
+	 * @description Applies the bright red color style to the text.
+	 */
+	brightRed: IStyler;
+
+	/**
+	 * @description Applies the bright green color style to the text.
+	 */
+	brightGreen: IStyler;
+
+	/**
+	 * @description Applies the bright yellow color style to the text.
+	 */
+	brightYellow: IStyler;
+
+	/**
+	 * @description Applies the bright blue color style to the text.
+	 */
+	brightBlue: IStyler;
+
+	/**
+	 * @description Applies the bright magenta color style to the text.
+	 */
+	brightMagenta: IStyler;
+
+	/**
+	 * @description Applies the bright cyan color style to the text.
+	 */
+	brightCyan: IStyler;
+
+	/**
+	 * @description Applies the bright white color style to the text.
+	 */
+	brightWhite: IStyler;
 }
 
 /**
