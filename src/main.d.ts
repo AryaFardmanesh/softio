@@ -547,9 +547,15 @@ export interface IStyler {
 	 * @description Applies strikethrough styling to the text.
 	 */
 	strikethrough: IStyler;
+
+	/**
+	 * @description Make center the text.
+	 */
+	center: IStyler;
 }
 
 /**
- * @description The global `Styler` instance.
- */
+ * @description The main `Styler` interface that represents
+ * a chainable and callable style builder.
+**/
 export declare const Styler: IStyler;
