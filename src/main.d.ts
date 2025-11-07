@@ -427,6 +427,86 @@ export interface IStyler {
 	 * @description Applies the bright white color style to the text.
 	 */
 	brightWhite: IStyler;
+
+	/**
+	 * @description Applies the black background color style to the text.
+	 */
+	bgBlack: IStyler;
+
+	/**
+	 * @description Applies the red background color style to the text.
+	 */
+	bgRed: IStyler;
+
+	/**
+	 * @description Applies the green background color style to the text.
+	 */
+	bgGreen: IStyler;
+
+	/**
+	 * @description Applies the yellow background color style to the text.
+	 */
+	bgYellow: IStyler;
+
+	/**
+	 * @description Applies the blue background color style to the text.
+	 */
+	bgBlue: IStyler;
+
+	/**
+	 * @description Applies the magenta background color style to the text.
+	 */
+	bgMagenta: IStyler;
+
+	/**
+	 * @description Applies the cyan background color style to the text.
+	 */
+	bgCyan: IStyler;
+
+	/**
+	 * @description Applies the white background color style to the text.
+	 */
+	bgWhite: IStyler;
+
+	/**
+	 * @description Applies the bright black background color style to the text.
+	 */
+	bgBrightBlack: IStyler;
+
+	/**
+	 * @description Applies the bright red background color style to the text.
+	 */
+	bgBrightRed: IStyler;
+
+	/**
+	 * @description Applies the bright green background color style to the text.
+	 */
+	bgBrightGreen: IStyler;
+
+	/**
+	 * @description Applies the bright yellow background color style to the text.
+	 */
+	bgBrightYellow: IStyler;
+
+	/**
+	 * @description Applies the bright blue background color style to the text.
+	 */
+	bgBrightBlue: IStyler;
+
+	/**
+	 * @description Applies the bright magenta background color style to the text.
+	 */
+	bgBrightMagenta: IStyler;
+
+	/**
+	 * @description Applies the bright cyan background color style to the text.
+	 */
+	bgBrightCyan: IStyler;
+
+	/**
+	 * @description Applies the bright white background color style to the text.
+	 */
+	bgBrightWhite: IStyler;
 }
 
 /**
