@@ -349,6 +349,11 @@ export interface IStyler {
 	(text: string): string;
 
 	/**
+	 * @description Applies the color style to the text.
+	 */
+	color( color: ColorParam_T ): IStyler;
+
+	/**
 	 * @description Applies the black color style to the text.
 	 */
 	black: IStyler;
