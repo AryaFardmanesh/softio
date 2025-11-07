@@ -2,10 +2,24 @@ import { StyleFunction } from './main.d';
 import { Utils } from './main';
 
 const styles = {
-	blue: ( text: string ) => Utils.color( 'blue' ) + text,
+	// Colors
+	black: ( text: string ) => Utils.color( 'black' ) + text,
 	red: ( text: string ) => Utils.color( 'red' ) + text,
-	bold: ( text: string ) => Utils.fontStyle( 'bold' ) + text,
-	underline: ( text: string ) => Utils.fontStyle( 'underline' ) + text,
+	green: ( text: string ) => Utils.color( 'green' ) + text,
+	yellow: ( text: string ) => Utils.color( 'yellow' ) + text,
+	blue: ( text: string ) => Utils.color( 'blue' ) + text,
+	magenta: ( text: string ) => Utils.color( 'magenta' ) + text,
+	cyan: ( text: string ) => Utils.color( 'cyan' ) + text,
+	white: ( text: string ) => Utils.color( 'white' ) + text,
+	brightBlack: ( text: string ) => Utils.color( 'bright-black' ) + text,
+	brightRed: ( text: string ) => Utils.color( 'bright-red' ) + text,
+	brightGreen: ( text: string ) => Utils.color( 'bright-green' ) + text,
+	brightYellow: ( text: string ) => Utils.color( 'bright-yellow' ) + text,
+	brightBlue: ( text: string ) => Utils.color( 'bright-blue' ) + text,
+	brightMagenta: ( text: string ) => Utils.color( 'bright-magenta' ) + text,
+	brightCyan: ( text: string ) => Utils.color( 'bright-cyan' ) + text,
+	brightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
+	reset: ( text: string ) => Utils.color( 'default' ) + text,
 };
 
 function createAttr( applied: StyleFunction[] = [] ) {
