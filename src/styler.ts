@@ -3,7 +3,6 @@ import { Utils } from './main';
 
 const styles = {
 	// Colors
-	color: ( color: string ) => Utils.color( color ),
 	black: ( text: string ) => Utils.color( 'black' ) + text,
 	red: ( text: string ) => Utils.color( 'red' ) + text,
 	green: ( text: string ) => Utils.color( 'green' ) + text,
@@ -22,7 +21,6 @@ const styles = {
 	brightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
 
 	// Backgrounds
-	background: ( color: string ) => Utils.color( color ),
 	bgBlack: ( text: string ) => Utils.background( 'black' ) + text,
 	bgRed: ( text: string ) => Utils.background( 'red' ) + text,
 	bgGreen: ( text: string ) => Utils.background( 'green' ) + text,
