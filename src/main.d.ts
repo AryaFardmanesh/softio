@@ -434,6 +434,11 @@ export interface IStyler {
 	brightWhite: IStyler;
 
 	/**
+	 * @description Applies the background color style to the text.
+	 */
+	background( color: BgColorParam_T ): IStyler;
+
+	/**
 	 * @description Applies the black background color style to the text.
 	 */
 	bgBlack: IStyler;
