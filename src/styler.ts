@@ -1,4 +1,4 @@
-import { ColorParam_T, StyleFunction } from './main.d';
+import { BgColorParam_T, ColorParam_T, StyleFunction } from './main.d';
 import { Utils } from './main';
 
 const styles = {
@@ -64,26 +64,19 @@ function createStyler( applied: StyleFunction[] = [] ) {
 
 	return new Proxy( fn, {
 		get( target, prop, receiver ) {
-			if ( prop === 'color' ) {
-				console.log( true );
-				return ( color: ColorParam_T ) => {
-					return createStyler(
-						[
-							...applied,
-							( text ) => `${ Utils.color( color ) }${ text }${ Utils.color( 'default' ) }`
-						]
-					);
-				};
-			}else if ( prop === 'background' ) {
-				console.log( true );
-				return ( color: ColorParam_T ) => {
-					return createStyler(
-						[
-							...applied,
-							( text ) => `${ Utils.background( color ) }${ text }${ Utils.background( 'default' ) }`
-						]
-					);
-				};
+			let methodName: string|null = null;
+
+			if ( prop === 'color' || prop === 'background' ) {
+				methodName = prop;
+			}
+
+			if ( methodName !== null ) {
+				return ( color: ColorParam_T|BgColorParam_T ) => createStyler( [
+					...applied,
+					( text ) => {
+						return `${ Utils[ methodName ]( color ) }${ text }${ Utils[ methodName ]( 'default' ) }`;
+					}
+				] );
 			}else if ( typeof prop === 'string' && prop in styles ) {
 				return createStyler( [ ...applied, styles[ prop ] ] );
 			}
