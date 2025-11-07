@@ -521,6 +521,11 @@ export interface IStyler {
 	/**
 	 * @description Applies bold styling to the text.
 	 */
+	fontStyle( style: ANSI_Style_T ): IStyler;
+
+	/**
+	 * @description Applies font styling to the text.
+	 */
 	bold: IStyler;
 
 	/**
