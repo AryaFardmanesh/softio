@@ -37,7 +37,6 @@ const styles = {
 	bgBrightMagenta: ( text: string ) => Utils.color( 'bright-magenta' ) + text,
 	bgBrightCyan: ( text: string ) => Utils.color( 'bright-cyan' ) + text,
 	bgBrightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
-	bgReset: ( text: string ) => Utils.color( 'default' ) + text,
 
 	// Fonts
 	bold: ( text: string ) => Utils.fontStyle( 'bold' ) + text,
