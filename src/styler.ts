@@ -20,6 +20,25 @@ const styles = {
 	brightCyan: ( text: string ) => Utils.color( 'bright-cyan' ) + text,
 	brightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
 	reset: ( text: string ) => Utils.color( 'default' ) + text,
+
+	// Backgrounds
+	bgBlack: ( text: string ) => Utils.color( 'black' ) + text,
+	bgRed: ( text: string ) => Utils.color( 'red' ) + text,
+	bgGreen: ( text: string ) => Utils.color( 'green' ) + text,
+	bgYellow: ( text: string ) => Utils.color( 'yellow' ) + text,
+	bgBlue: ( text: string ) => Utils.color( 'blue' ) + text,
+	bgMagenta: ( text: string ) => Utils.color( 'magenta' ) + text,
+	bgCyan: ( text: string ) => Utils.color( 'cyan' ) + text,
+	bgWhite: ( text: string ) => Utils.color( 'white' ) + text,
+	bgBrightBlack: ( text: string ) => Utils.color( 'bright-black' ) + text,
+	bgBrightRed: ( text: string ) => Utils.color( 'bright-red' ) + text,
+	bgBrightGreen: ( text: string ) => Utils.color( 'bright-green' ) + text,
+	bgBrightYellow: ( text: string ) => Utils.color( 'bright-yellow' ) + text,
+	bgBrightBlue: ( text: string ) => Utils.color( 'bright-blue' ) + text,
+	bgBrightMagenta: ( text: string ) => Utils.color( 'bright-magenta' ) + text,
+	bgBrightCyan: ( text: string ) => Utils.color( 'bright-cyan' ) + text,
+	bgBrightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
+	bgReset: ( text: string ) => Utils.color( 'default' ) + text,
 };
 
 function createAttr( applied: StyleFunction[] = [] ) {
