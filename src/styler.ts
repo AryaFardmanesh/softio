@@ -1,8 +1,9 @@
-import { StyleFunction } from './main.d';
+import { ColorParam_T, StyleFunction } from './main.d';
 import { Utils } from './main';
 
 const styles = {
 	// Colors
+	color: ( color: string ) => Utils.color( color ),
 	black: ( text: string ) => Utils.color( 'black' ) + text,
 	red: ( text: string ) => Utils.color( 'red' ) + text,
 	green: ( text: string ) => Utils.color( 'green' ) + text,
@@ -21,6 +22,7 @@ const styles = {
 	brightWhite: ( text: string ) => Utils.color( 'bright-white' ) + text,
 
 	// Backgrounds
+	background: ( color: string ) => Utils.color( color ),
 	bgBlack: ( text: string ) => Utils.background( 'black' ) + text,
 	bgRed: ( text: string ) => Utils.background( 'red' ) + text,
 	bgGreen: ( text: string ) => Utils.background( 'green' ) + text,
@@ -52,15 +54,42 @@ const styles = {
 	center: ( text: string ) => Utils.center( text ),
 };
 
-function createAttr( applied: StyleFunction[] = [] ) {
+function createStyler( applied: StyleFunction[] = [] ) {
 	const fn = ( text: string ) => {
-		return applied.reduce( ( acc, fn ) => fn( acc ), text ) + Utils.reset();
+		return applied.reduce( ( acc, fn ) => {
+			// console.log('FN.', acc, fn);
+			if ( fn.name === 'color' ) {
+				return Utils.color( acc );
+			}
+			return fn( acc );
+		}, text ) + Utils.reset();
 	};
 
 	return new Proxy( fn, {
 		get( target, prop, receiver ) {
-			if ( typeof prop === 'string' && prop in styles ) {
-				return createAttr( [ ...applied, styles[ prop ] ] );
+			if ( prop === 'color' ) {
+				console.log( true );
+				return ( color: ColorParam_T ) => {
+					return createStyler(
+						[
+							...applied,
+							( text ) => `${ Utils.color( color ) }${ text }${ Utils.color( 'default' ) }`
+						]
+					);
+				};
+			}else if ( prop === 'background' ) {
+				console.log( true );
+				return ( color: ColorParam_T ) => {
+					return createStyler(
+						[
+							...applied,
+							( text ) => `${ Utils.background( color ) }${ text }${ Utils.background( 'default' ) }`
+						]
+					);
+				};
+			}else if ( typeof prop === 'string' && prop in styles ) {
+				// console.log(applied, styles, prop);
+				return createStyler( [ ...applied, styles[ prop ] ] );
 			}
 
 			return Reflect.get( target, prop, receiver );
@@ -68,4 +97,4 @@ function createAttr( applied: StyleFunction[] = [] ) {
 	} );
 }
 
-export default createAttr();
+export default createStyler();
