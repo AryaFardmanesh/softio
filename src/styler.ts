@@ -55,7 +55,6 @@ const styles = {
 function createStyler( applied: StyleFunction[] = [] ) {
 	const fn = ( text: string ) => {
 		return applied.reduce( ( acc, fn ) => {
-			// console.log('FN.', acc, fn);
 			if ( fn.name === 'color' ) {
 				return Utils.color( acc );
 			}
@@ -86,7 +85,6 @@ function createStyler( applied: StyleFunction[] = [] ) {
 					);
 				};
 			}else if ( typeof prop === 'string' && prop in styles ) {
-				// console.log(applied, styles, prop);
 				return createStyler( [ ...applied, styles[ prop ] ] );
 			}
 
