@@ -1,12 +1,3 @@
-import { stdout } from './var/stdout';
-import {
-	convertHexToRGB
-} from './var/ansi/color';
-import {
-	_bg,
-	_color,
-	_fontStyle
-} from './var/attrSymbols';
 import {
 	ANSI_Cursor_Movement_T,
 	ANSI_Cursor_Style_T,
@@ -17,6 +8,7 @@ import {
 } from './main.d';
 import {
 	backgroundColors,
+	convertHexToRGB,
 	cursorDirection,
 	cursorVisibility,
 	eraseMode,
@@ -25,6 +17,13 @@ import {
 	resetFonts,
 	textColors
 } from './var/ansi';
+import {
+	_bg,
+	_color,
+	_fontStyle
+} from './var/attrSymbols';
+import { stdout } from './var/io';
+
 
 export default class Attr {
 	static [_bg]: BgColorParam_T = 'default';
