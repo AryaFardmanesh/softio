@@ -73,3 +73,4 @@ This is especially useful when designing dynamic layouts or rendering adaptive U
 ---
 
 - Back to the previous section: [🎛️ Attr Methods ←](./Attr.md)
+- Continue to the next section: [🍁 Styler Methods →](./Styler.md)
