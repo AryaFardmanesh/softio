@@ -1,5 +1,4 @@
-import { stdin } from './var/stdin';
-import { stdout } from './var/stdout';
+import { stdin, stdout } from './var/io';
 import readline from 'node:readline/promises';
 
 export default class In {
