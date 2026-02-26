@@ -28,13 +28,11 @@ export default class Out {
 	}
 
 	public static printf( message: string, ...argv: unknown[] ): void {
-		typeCheck( 'printf', 'string', message );
 		message = formatMessage( message, argv );
 		stdout.write( message );
 	}
 
 	public static error( message: string, ...argv: unknown[] ): void {
-		typeCheck( 'error', 'string', message );
 		message = formatMessage( message, argv );
 		stderr.write( message );
 	}
@@ -53,7 +51,7 @@ export default class Out {
 			// Retrieve the styles
 			Attr.background(Attr[_bg]);
 			Attr.color(Attr[_color]);
-			if ( style?.style ) Attr.styleOff( style.style as ANSI_Style_T );
+			if ( style?.style ) Attr.styleReset( style.style as ANSI_Style_T );
 
 			return result;
 
