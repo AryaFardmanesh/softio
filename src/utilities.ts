@@ -7,6 +7,7 @@ import silentEcho from './utils/silentecho';
 import {
 	backgroundColors,
 	convertHexToRGB,
+	fonts,
 	hexPattern,
 	textColors
 } from './var/ansi';
@@ -77,8 +78,13 @@ export default class Utils {
 	}
 
 	public static fontStyle( style: ANSI_Style_T ): string {
-		typeCheck( 'fontStyle', 'string', style );
-		return convertTextStyleToANSI( style );
+		const result = fonts[ style ];
+
+		if ( result !== undefined ) {
+			return result;
+		}
+
+		return '';
 	}
 
 	public static prettier( ..._data: unknown[] ): string {
