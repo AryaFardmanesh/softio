@@ -1,11 +1,4 @@
 import { stdout } from './var/stdout';
-import { makeANSI } from './var/ansi/base';
-import { convertDisableTextStyleANSI } from './var/ansi/style';
-import { convertTextEraseToANSI } from './var/ansi/erase';
-import {
-	convertTextCursorMoveToANSI,
-	convertTextCursorStyleToANSI
-} from './var/ansi/cursor';
 import {
 	convertHexToRGB
 } from './var/ansi/color';
@@ -22,7 +15,16 @@ import {
 	ColorParam_T,
 	ANSI_Erase_T
 } from './main.d';
-import { backgroundColors, fonts, hexPattern, resetFonts, textColors } from './var/ansi';
+import {
+	backgroundColors,
+	cursorDirection,
+	cursorVisibility,
+	eraseMode,
+	fonts,
+	hexPattern,
+	resetFonts,
+	textColors
+} from './var/ansi';
 
 export default class Attr {
 	static [_bg]: BgColorParam_T = 'default';
@@ -143,37 +145,37 @@ export default class Attr {
 		);
 	}
 
-	public static move( x: number, y: number ): void {
-		stdout.write( makeANSI( [ x, y ], 'f' ) );
+	public static move( x: number, y: number, suffix: ( 'H'|'f' ) = 'f' ): void {
+		stdout.write( `\x1B[${ x };${ y }${ suffix }` );
 	}
 
 	public static moveCol( x: number ): void {
-		stdout.write( makeANSI( [ x, 'G' ], '' ) );
+		stdout.write( `\x1B[${ x }G` );
 	}
 
 	public static moveHome(): void {
-		stdout.write( makeANSI( [], 'H' ) );
+		stdout.write( '\x1B[H' );
 	}
 
 	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value: number = 1 ): void {
-		stdout.write( convertTextCursorMoveToANSI( direction, value ) );
+		stdout.write( cursorDirection[ direction ].replace( '#', value.toString() ) );
 	}
 
 	public static cursorSave( mode: 'DEC' | 'SCO' = 'SCO' ): void {
 		const code = ( mode === 'SCO' ) ? 's' : '7';
-		stdout.write( makeANSI( [ code ], '' ) );
+		stdout.write( '\x1B[' + code );
 	}
 
 	public static cursorRestore( mode: 'DEC' | 'SCO' = 'SCO' ): void {
 		const code = ( mode === 'SCO' ) ? 'u' : '8';
-		stdout.write( makeANSI( [ code ], '' ) );
+		stdout.write( '\x1B[' + code );
 	}
 
 	public static cursorStyle( style: ANSI_Cursor_Style_T ): void {
-		stdout.write( convertTextCursorStyleToANSI( style ) );
+		stdout.write( cursorVisibility[ style ] );
 	}
 
 	public static erase( mode: ANSI_Erase_T = 'entire' ): void {
-		stdout.write( convertTextEraseToANSI( mode ) );
+		stdout.write( eraseMode[ mode ] );
 	}
 }
