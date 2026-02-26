@@ -37,7 +37,7 @@ describe( 'Testing utils functions - Test Group', () => {
 		it( 'should convert color to ansi code correctly - Unit 4', () => {
 			const actual = colorConvertor( '$TEST$', 'bg', 'yellow' );
 
-			expect( actual ).toBe( '\x1B[44m' );
+			expect( actual ).toBe( '\x1B[43m' );
 		} );
 
 		it( 'should convert color to ansi code correctly - Unit 5', () => {
