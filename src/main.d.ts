@@ -330,3 +330,247 @@ export declare class Utils {
 	**/
 	public static prettier( ..._data: unknown[] ): string;
 }
+
+/**
+ * @description This class is used to style text in a chain.
+**/
+export type StyleFunction = ( text: string ) => string;
+
+/**
+ * @description The main `Styler` interface that represents
+ * a chainable and callable style builder.
+**/
+export interface IStyler {
+	/**
+	 * @description Applies all accumulated styles to the given text.
+	 * @param text The text to style.
+	 * @returns The styled text string.
+	 */
+	(text: string): string;
+
+	/**
+	 * @description Applies the color style to the text.
+	 */
+	color( color: ColorParam_T ): IStyler;
+
+	/**
+	 * @description Applies the black color style to the text.
+	 */
+	black: IStyler;
+
+	/**
+	 * @description Applies the red color style to the text.
+	 */
+	red: IStyler;
+
+	/**
+	 * @description Applies the green color style to the text.
+	 */
+	green: IStyler;
+
+	/**
+	 * @description Applies the yellow color style to the text.
+	 */
+	yellow: IStyler;
+
+	/**
+	 * @description Applies the blue color style to the text.
+	 */
+	blue: IStyler;
+
+	/**
+	 * @description Applies the magenta color style to the text.
+	 */
+	magenta: IStyler;
+
+	/**
+	 * @description Applies the cyan color style to the text.
+	 */
+	cyan: IStyler;
+
+	/**
+	 * @description Applies the white color style to the text.
+	 */
+	white: IStyler;
+
+	/**
+	 * @description Applies the bright black color style to the text.
+	 */
+	brightBlack: IStyler;
+
+	/**
+	 * @description Applies the bright red color style to the text.
+	 */
+	brightRed: IStyler;
+
+	/**
+	 * @description Applies the bright green color style to the text.
+	 */
+	brightGreen: IStyler;
+
+	/**
+	 * @description Applies the bright yellow color style to the text.
+	 */
+	brightYellow: IStyler;
+
+	/**
+	 * @description Applies the bright blue color style to the text.
+	 */
+	brightBlue: IStyler;
+
+	/**
+	 * @description Applies the bright magenta color style to the text.
+	 */
+	brightMagenta: IStyler;
+
+	/**
+	 * @description Applies the bright cyan color style to the text.
+	 */
+	brightCyan: IStyler;
+
+	/**
+	 * @description Applies the bright white color style to the text.
+	 */
+	brightWhite: IStyler;
+
+	/**
+	 * @description Applies the background color style to the text.
+	 */
+	background( color: BgColorParam_T ): IStyler;
+
+	/**
+	 * @description Applies the black background color style to the text.
+	 */
+	bgBlack: IStyler;
+
+	/**
+	 * @description Applies the red background color style to the text.
+	 */
+	bgRed: IStyler;
+
+	/**
+	 * @description Applies the green background color style to the text.
+	 */
+	bgGreen: IStyler;
+
+	/**
+	 * @description Applies the yellow background color style to the text.
+	 */
+	bgYellow: IStyler;
+
+	/**
+	 * @description Applies the blue background color style to the text.
+	 */
+	bgBlue: IStyler;
+
+	/**
+	 * @description Applies the magenta background color style to the text.
+	 */
+	bgMagenta: IStyler;
+
+	/**
+	 * @description Applies the cyan background color style to the text.
+	 */
+	bgCyan: IStyler;
+
+	/**
+	 * @description Applies the white background color style to the text.
+	 */
+	bgWhite: IStyler;
+
+	/**
+	 * @description Applies the bright black background color style to the text.
+	 */
+	bgBrightBlack: IStyler;
+
+	/**
+	 * @description Applies the bright red background color style to the text.
+	 */
+	bgBrightRed: IStyler;
+
+	/**
+	 * @description Applies the bright green background color style to the text.
+	 */
+	bgBrightGreen: IStyler;
+
+	/**
+	 * @description Applies the bright yellow background color style to the text.
+	 */
+	bgBrightYellow: IStyler;
+
+	/**
+	 * @description Applies the bright blue background color style to the text.
+	 */
+	bgBrightBlue: IStyler;
+
+	/**
+	 * @description Applies the bright magenta background color style to the text.
+	 */
+	bgBrightMagenta: IStyler;
+
+	/**
+	 * @description Applies the bright cyan background color style to the text.
+	 */
+	bgBrightCyan: IStyler;
+
+	/**
+	 * @description Applies the bright white background color style to the text.
+	 */
+	bgBrightWhite: IStyler;
+
+	/**
+	 * @description Applies bold styling to the text.
+	 */
+	fontStyle( style: ANSI_Style_T ): IStyler;
+
+	/**
+	 * @description Applies font styling to the text.
+	 */
+	bold: IStyler;
+
+	/**
+	 * @description Applies dim styling to the text.
+	 */
+	dim: IStyler;
+
+	/**
+	 * @description Applies italic styling to the text.
+	 */
+	italic: IStyler;
+
+	/**
+	 * @description Applies underline styling to the text.
+	 */
+	underline: IStyler;
+
+	/**
+	 * @description Applies blinking styling to the text.
+	 */
+	blinking: IStyler;
+
+	/**
+	 * @description Applies reverse styling to the text.
+	 */
+	reverse: IStyler;
+
+	/**
+	 * @description Applies hidden styling to the text.
+	 */
+	hidden: IStyler;
+
+	/**
+	 * @description Applies strikethrough styling to the text.
+	 */
+	strikethrough: IStyler;
+
+	/**
+	 * @description Make center the text.
+	 */
+	center: IStyler;
+}
+
+/**
+ * @description The main `Styler` interface that represents
+ * a chainable and callable style builder.
+**/
+export declare const Styler: IStyler;
