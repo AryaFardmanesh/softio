@@ -1,3 +1,7 @@
+# Version 4.0.0
+\+ Add: Chain styles<br />
+\+ Fix: Some bugs.<br />
+
 # Version 3.30.68
 \+ Add: Project label documentation.<br />
 \+ Add: Unit tests.<br />
