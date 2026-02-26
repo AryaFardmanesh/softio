@@ -1,12 +1,8 @@
 import formatMessage from './utils/formatmsg';
 import silentEcho from './utils/silentecho';
-import { stdout } from './var/stdout';
-import { stderr } from './var/stderr';
-import colorConvertor from './utils/colorconvertor';
-import { convertTextStyleToANSI } from './var/ansi/style';
 import {
 	ShotStyleT,
-	ANSI_Style_T
+	Utils
 } from './main.d';
 import {
 	_bg,
@@ -14,6 +10,7 @@ import {
 	_fontStyle
 } from './var/attrSymbols';
 import Attr from './attributes';
+import { stderr, stdout } from './var/io';
 
 export default class Out {
 	public static write( ...message: unknown[] ): void {
@@ -38,22 +35,19 @@ export default class Out {
 
 	public static shot<T extends Function>( func: T, style?: ShotStyleT ): T {
 		return <Function>( ( ...data: unknown[] ) => {
-
-			const color = ( style?.color ) ? colorConvertor( 'shot', 'color', style.color ) : '';
-			const bg = ( style?.background ) ? colorConvertor( 'shot', 'bg', style.background ) : '';
-			const fstyle = ( style?.style ) ? convertTextStyleToANSI( style.style as ANSI_Style_T ) : '';
+			const color = ( style?.color ) ? Utils.color( style.color ) : '';
+			const bg = ( style?.background ) ? Utils.background( style.background ) : '';
+			const fstyle = ( style?.style ) ? Utils.fontStyle( style.style ) : '';
 
 			stdout.write( color + bg + fstyle );
-
 			const result = func( ...data );
 
 			// Retrieve the styles
-			Attr.background(Attr[_bg]);
-			Attr.color(Attr[_color]);
-			if ( style?.style ) Attr.styleReset( style.style as ANSI_Style_T );
+			Attr.background( Attr[ _bg ] );
+			Attr.color( Attr[ _color ] );
+			if ( style?.style ) Attr.styleReset( style.style );
 
 			return result;
-
 		} ) as T;
 	}
 }
