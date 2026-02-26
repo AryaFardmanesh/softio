@@ -44,6 +44,8 @@ const backgroundColors = {
 	'bright-white': '\x1B[107m'
 };
 
+export const hexPattern = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
+
 export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 	if ( typeof color === 'number' ) {
 		if ( color > 255 || color < 0 ) {
@@ -76,31 +78,6 @@ export function convertTextBackgroundToANSI( color: ANSI_Background_T | number )
 	}
 
 	return result;
-}
-
-export function isValidHex( hex: string ): boolean {
-	if ( hex.startsWith( '#' ) ) {
-		hex = hex.slice( 1 );
-	}
-
-	if ( hex.length !== 6 && hex.length !== 3 ) {
-		return false;
-	}
-
-	hex = hex.toUpperCase();
-	for ( let i = 0; i < hex.length; i++ ) {
-		const ascii = hex.charCodeAt( i );
-
-		if ( ascii >= 48 /* 0 */ && ascii <= 57 /* 9 */ ) {
-			continue;
-		}else if ( ascii >= 65 /* A */ && ascii <= 70 /* F */ ) {
-			continue;
-		}
-
-		return false;
-	}
-
-	return true;
 }
 
 export function convertHexToRGB( hex: string ): [ number, number, number ] {
