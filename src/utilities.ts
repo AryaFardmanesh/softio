@@ -1,4 +1,4 @@
-import { stdout } from './var/stdout';
+import { stdout } from './var/io';
 import silentEcho from './utils/silentecho';
 import {
 	backgroundColors,
