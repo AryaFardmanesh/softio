@@ -5,6 +5,7 @@ import {
 	convertHexToRGB,
 	fonts,
 	hexPattern,
+	resetFonts,
 	textColors
 } from './var/ansi';
 import {
@@ -73,6 +74,16 @@ export default class Utils {
 
 	public static fontStyle( style: ANSI_Style_T ): string {
 		const result = fonts[ style ];
+
+		if ( result !== undefined ) {
+			return result;
+		}
+
+		return '';
+	}
+
+	public static fontStyleReset( style: ANSI_Style_T ): string {
+		const result = resetFonts[ style ];
 
 		if ( result !== undefined ) {
 			return result;
