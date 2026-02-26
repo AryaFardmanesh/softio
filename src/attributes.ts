@@ -1,9 +1,7 @@
 import { stdout } from './var/stdout';
 import { makeANSI } from './var/ansi/base';
-import { convertDisableTextStyleANSI, convertTextStyleToANSI } from './var/ansi/style';
+import { convertDisableTextStyleANSI } from './var/ansi/style';
 import { convertTextEraseToANSI } from './var/ansi/erase';
-import colorConvertor from './utils/colorconvertor';
-import typeCheck from './utils/typecheck';
 import {
 	convertTextCursorMoveToANSI,
 	convertTextCursorStyleToANSI
@@ -24,7 +22,7 @@ import {
 	ColorParam_T,
 	ANSI_Erase_T
 } from './main.d';
-import { backgroundColors, hexPattern, textColors } from './var/ansi';
+import { backgroundColors, fonts, hexPattern, resetFonts, textColors } from './var/ansi';
 
 export default class Attr {
 	static [_bg]: BgColorParam_T = 'default';
@@ -54,7 +52,7 @@ export default class Attr {
 	}
 
 	public static color( color: ColorParam_T ): void {
-		this[_color] = color;
+		this[ _color ] = color;
 
 		if ( Array.isArray( color ) ) {
 			stdout.write( `\x1B[38;2;${ color[0] };${ color[1] };${ color[2] }m` );
@@ -69,7 +67,7 @@ export default class Attr {
 	}
 
 	public static colorRGB( red: number, green: number, blue: number ): void {
-		this[_color] = [ red, green, blue ];
+		this[ _color ] = [ red, green, blue ];
 		stdout.write( `\x1B[38;2;${ red };${ green };${ blue }m` );
 	}
 
@@ -79,12 +77,12 @@ export default class Attr {
 		}
 
 		const rgb = convertHexToRGB( hex );
-		this[_color] = rgb;
+		this[ _color ] = rgb;
 		stdout.write( `\x1B[38;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
 	public static background( color: BgColorParam_T ): void {
-		this[_bg] = color;
+		this[ _bg ] = color;
 
 		if ( Array.isArray( color ) ) {
 			stdout.write( `\x1B[48;2;${ color[0] };${ color[1] };${ color[2] }m` );
@@ -99,7 +97,7 @@ export default class Attr {
 	}
 
 	public static backgroundRGB( red: number, green: number, blue: number ): void {
-		this[_bg] = [ red, green, blue ];
+		this[ _bg ] = [ red, green, blue ];
 		stdout.write( `\x1B[48;2;${ red };${ green };${ blue }m` );
 	}
 
@@ -112,19 +110,22 @@ export default class Attr {
 		}
 
 		const rgb = convertHexToRGB( hex );
-		this[_bg] = rgb;
+		this[ _bg ] = rgb;
 		stdout.write( `\x1B[48;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
 	public static style( style: ANSI_Style_T ): void {
-		stdout.write( convertTextStyleToANSI( style ) );
-		this[_fontStyle].push( style );
+		const result = fonts[ style ];
+		if ( result !== undefined ) {
+			this[ _fontStyle ].push( style );
+			stdout.write( result );
+		}
 	}
 
 	public static styleReset( style: ANSI_Style_T ): void {
-		stdout.write( convertDisableTextStyleANSI( style ) );
+		stdout.write( resetFonts[ style ] );
 
-		const index = this[_fontStyle].indexOf( style );
+		const index = this[ _fontStyle ].indexOf( style );
 		if ( index !== -1 ) {
 			this[_fontStyle].splice( index, 1 );
 		}
@@ -132,13 +133,13 @@ export default class Attr {
 
 	public static styleOffAll(): void {
 		stdout.write(
-			convertDisableTextStyleANSI( 'bold' ) +
-			convertDisableTextStyleANSI( 'italic' ) +
-			convertDisableTextStyleANSI( 'underline' ) +
-			convertDisableTextStyleANSI( 'blinking' ) +
-			convertDisableTextStyleANSI( 'reverse' ) +
-			convertDisableTextStyleANSI( 'hidden' ) +
-			convertDisableTextStyleANSI( 'strikethrough' )
+			resetFonts[ 'bold' ] +
+			resetFonts[ 'italic' ] +
+			resetFonts[ 'underline' ] +
+			resetFonts[ 'blinking' ] +
+			resetFonts[ 'reverse' ] +
+			resetFonts[ 'hidden' ] +
+			resetFonts[ 'strikethrough' ]
 		);
 	}
 
