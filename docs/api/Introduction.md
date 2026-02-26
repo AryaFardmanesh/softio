@@ -88,6 +88,7 @@ Softio’s features are grouped into static methods across specialized modules. 
 | [**Utils**](./Utils.md)   | Utility functions like clearing the screen, centering text, or delaying output.   |
 | [**Attr**](./Attr.md)     | Access and manage terminal properties such as width, height, and text attributes. |
 | [**Events**](./Events.md) | Register and handle console events (e.g., screen resize).                         |
+| [**Styler**](./Styler.md) | Chain text styling feature.				                        |
 
 > 🔗 Click on each section to explore more and dive into specific functionality.
 
