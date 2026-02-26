@@ -1,44 +1,35 @@
-import readlineSync from 'readline-sync';
-import typeCheck from './utils/typecheck';
+import { stdin } from './var/stdin';
+import { stdout } from './var/stdout';
+import readline from 'node:readline/promises';
 
 export default class In {
-	public static input( message: string = '' ): string {
-		typeCheck( 'In.input', 'string', message );
-		return readlineSync.question( message );
+
+	public static async input( message: string = '' ): Promise<string> {
+		const rl = readline.createInterface( {
+			input: stdin,
+			output: stdout,
+		} );
+
+		const line = await rl.question( message );
+		rl.close();
+		return line;
 	}
 
-	public static password( message: string = '', char: string = '' ): string {
-		typeCheck( 'In.password', 'string', message );
-		typeCheck( 'In.password', 'string', char );
-		return readlineSync.question( message, { hideEchoBack: true, mask: char } );
+	public static async password( message: string = '', mask: string = '' ): Promise<string> {
+		// ????
+		const rl = readline.createInterface( {
+			input: stdin
+		} );
+
+		const data = await rl.question( message );
+		rl.close();
+		return data;
 	}
 
-	public static confirm( message: string = '' ): boolean {
-		/*
-			@Warning: We must check the type of the input
-			message before doing anything because it may
-			cause an error.
-			The input message is checked once more when it
-			is given to the 'input' function, but we cannot
-			rely on checking the 'input' data type alone
-			because if the input message is anything other
-			than a string, it will be affected by the
-			`message += ' (y/n) ';`	expression.
-
-			Consider the following examples:
-				message: <number>( 2 )
-				<- message += ' (y/n) ';
-				-> '2 (y/n) '
-
-			Therefore, type checking must be done in this
-			method.
-		*/
-		typeCheck( 'confirm', 'string', message );
-		/* .................................... */
-
+	public static async confirm( message: string = '' ): Promise<boolean> {
 		message += ' (y/n) ';
 
-		const result = this.input( message ).trim().toUpperCase();
+		const result = ( await this.input( message ) ).trim().toUpperCase();
 
 		switch ( result ) {
 			case 'Y':
@@ -50,8 +41,8 @@ export default class In {
 		}
 	}
 
-	public static readNumber( message: string = '' ): number {
-		const result = this.input( message );
+	public static async readNumber( message: string = '' ): Promise<number> {
+		const result = await this.input( message );
 		return Number( result );
 	}
 }
