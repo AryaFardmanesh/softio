@@ -1,16 +1,16 @@
 import formatMessage from './utils/formatmsg';
 import silentEcho from './utils/silentecho';
 import {
-	ShotStyleT,
-	Utils
-} from './main.d';
-import {
 	_bg,
 	_color,
 	_fontStyle
 } from './var/attrSymbols';
 import Attr from './attributes';
+import Utils from './utilities';
 import { stderr, stdout } from './var/io';
+import {
+	ShotStyleT
+} from './main.d';
 
 export default class Out {
 	public static write( ...message: unknown[] ): void {

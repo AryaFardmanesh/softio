@@ -14,7 +14,7 @@ export default class In {
 		return line;
 	}
 
-	public static async password( message: string = '', mask: string = '' ): Promise<string> {
+	public static async password( message: string = '', _mask: string = '' ): Promise<string> {
 		// ????
 		const rl = readline.createInterface( {
 			input: stdin
