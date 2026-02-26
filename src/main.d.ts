@@ -50,7 +50,7 @@ export declare type ANSI_Cursor_Movement_T =
 	'left'		|
 	'next'		|
 	'previous'	|
-	'go-up'		|
+	'line-up'	|
 	'home'
 ;
 
