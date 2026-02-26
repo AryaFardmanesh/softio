@@ -10,44 +10,44 @@ export function convertTextColorToANSI( color: ANSI_Color_T | number ): string {
 			throw new TypeError( `You have selected the number ${ color } for the text color, while the text color code should be between 0 and 255.` );
 		}
 
-		return makeANSI( [ '38', '5', color ] );
+		return `\x1B[38;5;${color}m`;
 	}
 
 	switch ( color ) {
 		case 'black':
-			return makeANSI( [ '30' ] );
+			return '\x1B[30m';
 		case 'red':
-			return makeANSI( [ '31' ] );
+			return '\x1B[31m';
 		case 'green':
-			return makeANSI( [ '32' ] );
+			return '\x1B[32m';
 		case 'yellow':
-			return makeANSI( [ '33' ] );
+			return '\x1B[33m';
 		case 'blue':
-			return makeANSI( [ '34' ] );
+			return '\x1B[34m';
 		case 'magenta':
-			return makeANSI( [ '35' ] );
+			return '\x1B[35m';
 		case 'cyan':
-			return makeANSI( [ '36' ] );
+			return '\x1B[36m';
 		case 'white':
-			return makeANSI( [ '37' ] );
+			return '\x1B[37m';
 		case 'default':
-			return makeANSI( [ '39' ] );
+			return '\x1B[39m';
 		case 'bright-black':
-			return makeANSI( [ '90' ] );
+			return '\x1B[90m';
 		case 'bright-red':
-			return makeANSI( [ '91' ] );
+			return '\x1B[91m';
 		case 'bright-green':
-			return makeANSI( [ '92' ] );
+			return '\x1B[92m';
 		case 'bright-yellow':
-			return makeANSI( [ '93' ] );
+			return '\x1B[93m';
 		case 'bright-blue':
-			return makeANSI( [ '94' ] );
+			return '\x1B[94m';
 		case 'bright-magenta':
-			return makeANSI( [ '95' ] );
+			return '\x1B[95m';
 		case 'bright-cyan':
-			return makeANSI( [ '96' ] );
+			return '\x1B[96m';
 		case 'bright-white':
-			return makeANSI( [ '97' ] );
+			return '\x1B[97m';
 		default:
 			throw new TypeError( `The color name '${ color }' is invalid for a text color.` );
 	}
