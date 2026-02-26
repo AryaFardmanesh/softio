@@ -1,8 +1,4 @@
-import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
-import { makeANSI } from './var/ansi/base';
-import colorConvertor from './utils/colorconvertor';
-import {convertTextStyleToANSI } from './var/ansi/style';
 import silentEcho from './utils/silentecho';
 import {
 	backgroundColors,
@@ -19,8 +15,6 @@ import {
 
 export default class Utils {
 	public static center( message: string ): string {
-		typeCheck( 'center', 'string', message );
-
 		const endSpace: number = ( stdout.columns / 2 ) - ( message.length / 2 );
 		let centerMessage: string = '';
 
