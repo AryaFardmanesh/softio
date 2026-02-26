@@ -10,6 +10,7 @@ bench( 'Console.Styler.color(name)', () => Styler.color( 'red' )( text ) );
 bench( 'Console.Styler.color(hex)', () => Styler.color( '#ccc' )( text ) );
 bench( 'Console.Styler.color(rgb)', () => Styler.color( [ 10, 20, 30 ] )( text ) );
 bench( 'Console.Styler.color(ansi)', () => Styler.color( 18 )( text ) );
+bench( 'Console.Styler.blue', () => Styler.blue( text ) );
 
 console.log();
 
@@ -17,6 +18,7 @@ bench( 'Console.Styler.background(name)', () => Styler.background( 'red' )( text
 bench( 'Console.Styler.background(hex)', () => Styler.background( '#ccc' )( text ) );
 bench( 'Console.Styler.background(rgb)', () => Styler.background( [ 10, 20, 30 ] )( text ) );
 bench( 'Console.Styler.background(ansi)', () => Styler.background( 18 )( text ) );
+bench( 'Console.Styler.bgBlue', () => Styler.bgBlue( text ) );
 
 console.log();
 
@@ -60,5 +62,23 @@ Console.Styler.background(ansi): 78.50 ms
 
 Console.Styler.bold.red(text): 99.47 ms
 Console.Styler.bold.red.bgBlue(text): 126.85 ms
+========================================
+
+Version 4.1.0:
+=========== Softio Benchmark ===========
+Console.Styler.color(name): 41.17 ms
+Console.Styler.color(hex): 75.43 ms
+Console.Styler.color(rgb): 41.97 ms
+Console.Styler.color(ansi): 40.21 ms
+Console.Styler.blue : 24.90 ms
+
+Console.Styler.background(name): 40.97 ms
+Console.Styler.background(hex): 75.72 ms
+Console.Styler.background(rgb): 81.94 ms
+Console.Styler.background(ansi): 47.46 ms
+Console.Styler.bgBlue: 28.07 ms
+
+Console.Styler.bold.red(text): 52.65 ms
+Console.Styler.bold.red.bgBlue(text): 75.04 ms
 ========================================
 */
