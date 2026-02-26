@@ -1,6 +1,6 @@
 {
 	"name": "softio",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "Elegant and unified terminal I/O for Node.js — simplify reading input, writing output, and controlling the console with ease.",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
