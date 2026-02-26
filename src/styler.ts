@@ -64,17 +64,11 @@ function createStyler( applied: StyleFunction[] = [] ) {
 
 	return new Proxy( fn, {
 		get( target, prop, receiver ) {
-			let methodName: string|null = null;
-
 			if ( prop === 'color' || prop === 'background' ) {
-				methodName = prop;
-			}
-
-			if ( methodName !== null ) {
 				return ( color: ColorParam_T|BgColorParam_T ) => createStyler( [
 					...applied,
 					( text ) => {
-						return `${ Utils[ methodName ]( color ) }${ text }${ Utils[ methodName ]( 'default' ) }`;
+						return `${ Utils[ prop ]( color ) }${ text }${ Utils[ prop ]( 'default' ) }`;
 					}
 				] );
 			}else if ( typeof prop === 'string' && prop in styles ) {
