@@ -9,8 +9,7 @@ import {
 	convertTextCursorStyleToANSI
 } from './var/ansi/cursor';
 import {
-	convertHexToRGB,
-	isValidHex
+	convertHexToRGB
 } from './var/ansi/color';
 import {
 	_bg,
@@ -25,6 +24,7 @@ import {
 	ColorParam_T,
 	ANSI_Erase_T
 } from './main.d';
+import { backgroundColors, hexPattern, textColors } from './var/ansi';
 
 export default class Attr {
 	static [_bg]: BgColorParam_T = 'default';
@@ -38,10 +38,6 @@ export default class Attr {
 	}
 
 	public static set title( value: string ) {
-		if ( typeof value !== 'string' ) {
-			throw new TypeError( `The 'title' property only takes a string as a title.` );
-		}
-
 		process.title = value;
 	}
 
@@ -54,61 +50,70 @@ export default class Attr {
 	}
 
 	public static reset(): void {
-		stdout.write( makeANSI( [ '0' ] ) );
+		stdout.write( '\x1B[0m' );
 	}
 
 	public static color( color: ColorParam_T ): void {
-		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
 		this[_color] = color;
-		stdout.write( colorConvertor( 'color', 'color', color ) );
+
+		if ( Array.isArray( color ) ) {
+			stdout.write( `\x1B[38;2;${ color[0] };${ color[1] };${ color[2] }m` );
+		}else if ( typeof color === 'number' ) {
+			stdout.write( `\x1B[38;5;${ color }m` );
+		}else if ( hexPattern.test( color ) ) {
+			const rgb = convertHexToRGB( color );
+			stdout.write( `\x1B[38;2;${ rgb[0] };${ rgb[1] };${ rgb[2] }m` );
+		}else {
+			stdout.write( textColors[ color ] || textColors.default );
+		}
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static colorRGB( red: number, green: number, blue: number ): void {
-		this[_color] = [red, green, blue];
-		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
+		this[_color] = [ red, green, blue ];
+		stdout.write( `\x1B[38;2;${ red };${ green };${ blue }m` );
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static colorHex( hex: string ): void {
-		if ( !isValidHex( hex ) ) {
+		if ( !hexPattern.test( hex ) ) {
 			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
 		}
 
 		const rgb = convertHexToRGB( hex );
 		this[_color] = rgb;
-		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+		stdout.write( `\x1B[38;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
 	public static background( color: BgColorParam_T ): void {
-		typeCheck( 'background', [ 'string', 'number', 'object' ], color );
 		this[_bg] = color;
-		stdout.write( colorConvertor( 'background', 'bg', color ) );
+
+		if ( Array.isArray( color ) ) {
+			stdout.write( `\x1B[48;2;${ color[0] };${ color[1] };${ color[2] }m` );
+		}else if ( typeof color === 'number' ) {
+			stdout.write( `\x1B[48;5;${ color }m` );
+		}else if ( hexPattern.test( color ) ) {
+			const rgb = convertHexToRGB( color );
+			stdout.write( `\x1B[48;2;${ rgb[0] };${ rgb[1] };${ rgb[2] }m` );
+		}else {
+			stdout.write( backgroundColors[ color ] || backgroundColors.default );
+		}
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static backgroundRGB( red: number, green: number, blue: number ): void {
-		this[_bg] = [red, green, blue];
-		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
+		this[_bg] = [ red, green, blue ];
+		stdout.write( `\x1B[48;2;${ red };${ green };${ blue }m` );
 	}
 
 	/**
 	 * @deprecated
 	**/
 	public static backgroundHex( hex: string ): void {
-		if ( !isValidHex( hex ) ) {
+		if ( !hexPattern.test( hex ) ) {
 			throw new TypeError( `Attr.backgroundHex: '${ hex }' is not valid Hex value.` );
 		}
-	
+
 		const rgb = convertHexToRGB( hex );
 		this[_bg] = rgb;
-		stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+		stdout.write( `\x1B[48;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
 	public static style( style: ANSI_Style_T ): void {
@@ -116,7 +121,7 @@ export default class Attr {
 		this[_fontStyle].push( style );
 	}
 
-	public static styleOff( style: ANSI_Style_T ): void {
+	public static styleReset( style: ANSI_Style_T ): void {
 		stdout.write( convertDisableTextStyleANSI( style ) );
 
 		const index = this[_fontStyle].indexOf( style );
