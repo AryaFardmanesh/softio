@@ -27,8 +27,8 @@ export default class Utils {
 		return centerMessage;
 	}
 
-	public static clear(): void {
-		stdout.write( '\x1B[2J' );
+	public static clear(): string {
+		return '\x1B[2J';
 	}
 
 	public static reset(): string {
