@@ -1,6 +1,5 @@
 import formatMessage from './utils/formatmsg';
 import silentEcho from './utils/silentecho';
-import typeCheck from './utils/typecheck';
 import { stdout } from './var/stdout';
 import { stderr } from './var/stderr';
 import colorConvertor from './utils/colorconvertor';
