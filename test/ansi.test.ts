@@ -127,7 +127,7 @@ describe( 'Testing ANSI methods - Test Group', () => {
 			expect( actual ).toBeTruthy();
 		} );
 
-		it( 'It should correctly detect whether the string is hex code or not. - fuzzing - Unit 25', () => {
+		it( 'It should correctly detect whether the string is hex code or not. - Fuzzing - Unit 25', () => {
 			for ( let i = 0; i < 1000; i++ ) {
 				let len = 6;
 				const chance = TestUtils.random( 0, 2 );
@@ -178,7 +178,7 @@ describe( 'Testing ANSI methods - Test Group', () => {
 			expect( actual ).toEqual( expected );
 		} );
 
-		it ( 'It should convert the hex to rgb color correctly - fuzzing - Unit 6', () => {
+		it ( 'It should convert the hex to rgb color correctly - Fuzzing - Unit 6', () => {
 			for ( let i = 0; i < 1000; i++ ) {
 				let red = TestUtils.random( 0, 256 ).toString( 16 );
 				let green = TestUtils.random( 0, 256 ).toString( 16 );
