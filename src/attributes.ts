@@ -4,7 +4,9 @@ import {
 	BgColorParam_T,
 	ANSI_Style_T,
 	ColorParam_T,
-	ANSI_Erase_T
+	ANSI_Erase_T,
+	ANSI_Color_T,
+	ANSI_Background_T
 } from './main.d';
 import {
 	backgroundColors,
@@ -82,6 +84,14 @@ export default class Attr {
 		stdout.write( `\x1B[38;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
+	public static colorAnsi256( color: number ): void {
+		stdout.write( `\x1B[38;5;${ color }m` );
+	}
+
+	public static colorName( name: ANSI_Color_T ): void {
+		stdout.write( textColors[ name ] || textColors.default );
+	}
+
 	public static background( color: BgColorParam_T ): void {
 		this[ _bg ] = color;
 
@@ -112,7 +122,15 @@ export default class Attr {
 		stdout.write( `\x1B[48;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
-	public static style( style: ANSI_Style_T ): void {
+	public static backgroundAnsi256( color: number ): void {
+		stdout.write( `\x1B[48;5;${ color }m` );
+	}
+
+	public static backgroundName( name: ANSI_Background_T ): void {
+		stdout.write( backgroundColors[ name ] || backgroundColors.default );
+	}
+
+	public static fontStyle( style: ANSI_Style_T ): void {
 		const result = fonts[ style ];
 		if ( result !== undefined ) {
 			this[ _fontStyle ].push( style );
@@ -120,7 +138,7 @@ export default class Attr {
 		}
 	}
 
-	public static styleReset( style: ANSI_Style_T ): void {
+	public static fontStyleReset( style: ANSI_Style_T ): void {
 		stdout.write( resetFonts[ style ] );
 
 		const index = this[ _fontStyle ].indexOf( style );
@@ -129,7 +147,7 @@ export default class Attr {
 		}
 	}
 
-	public static styleOffAll(): void {
+	public static fontStyleResetAll(): void {
 		stdout.write(
 			resetFonts[ 'bold' ] +
 			resetFonts[ 'italic' ] +
