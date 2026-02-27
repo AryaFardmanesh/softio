@@ -1,16 +1,6 @@
-import { jest, beforeEach, describe, it, expect } from '@jest/globals';
+import { jest, describe, it, expect } from '@jest/globals';
 import silentecho from '../src/utils/silentecho';
 import formatmsg from '../src/utils/formatmsg';
-
-beforeEach( () => {
-	jest.spyOn( process.stdout, 'write' ).mockImplementationOnce( ( str ) => {
-		return str as any;
-	} );
-
-	jest.spyOn( process.stderr, 'write' ).mockImplementationOnce( ( str ) => {
-		return str as any;
-	} );
-} );
 
 describe( 'Testing utils functions - Test Group', () => {
 	describe( 'Testing formatmsg function - Test Group', () => {

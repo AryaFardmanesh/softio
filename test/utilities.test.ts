@@ -1,18 +1,8 @@
-import { jest, beforeEach, describe, it, expect } from '@jest/globals';
+import { jest, describe, it, expect } from '@jest/globals';
 import TestUtils from './utils';
 import Utilities from '../src/utilities';
 import { backgroundColors, fonts, resetFonts, textColors } from '../src/var/ansi';
 import { ANSI_Color_T, ANSI_Style_T } from '../src/main.d';
-
-beforeEach( () => {
-	jest.spyOn( process.stdout, 'write' ).mockImplementationOnce( ( str ) => {
-		return str as any;
-	} );
-
-	jest.spyOn( process.stderr, 'write' ).mockImplementationOnce( ( str ) => {
-		return str as any;
-	} );
-} );
 
 function makeSpace( text: string, space: number ): string {
 	let newText = '';
