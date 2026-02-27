@@ -102,9 +102,6 @@ export default class Attr {
 		stdout.write( `\x1B[48;2;${ red };${ green };${ blue }m` );
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static backgroundHex( hex: string ): void {
 		if ( !hexPattern.test( hex ) ) {
 			throw new TypeError( `Attr.backgroundHex: '${ hex }' is not valid Hex value.` );
