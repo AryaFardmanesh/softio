@@ -261,4 +261,12 @@ describe( 'Testing styler methods - Test Group', () => {
 			expect( actual ).toBe( '\x1B[3m\x1B[7m\x1B[1mHello\x1B[22m\x1B[27m\x1B[23m' );
 		} );
 	} );
+
+	describe( 'Testing .center method - Test Group', () => {
+		it( 'should make selected font to the text correctly - Unit 1', () => {
+			process.stdout.columns = 10;
+			const actual = styler.center( 'Hello' );
+			expect( actual ).toBe( '  Hello' );
+		} );
+	} );
 } );
