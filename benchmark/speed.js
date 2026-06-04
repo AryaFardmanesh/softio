@@ -2,28 +2,38 @@ const { performance } = require( 'node:perf_hooks' );
 const Console = require( './../dist/main' );
 
 console.log( '\n=========== Softio Benchmark ===========' );
+const Styler = Console.Styler;
 const text = 'Hello, benchmark!';
 
-const Styler = Console.Styler;
+console.log( 'Styler methods:' );
 
-bench( 'Console.Styler.color(name)', () => Styler.color( 'red' )( text ) );
-bench( 'Console.Styler.color(hex)', () => Styler.color( '#ccc' )( text ) );
-bench( 'Console.Styler.color(rgb)', () => Styler.color( [ 10, 20, 30 ] )( text ) );
-bench( 'Console.Styler.color(ansi)', () => Styler.color( 18 )( text ) );
-bench( 'Console.Styler.blue', () => Styler.blue( text ) );
-
-console.log();
-
-bench( 'Console.Styler.background(name)', () => Styler.background( 'red' )( text ) );
-bench( 'Console.Styler.background(hex)', () => Styler.background( '#ccc' )( text ) );
-bench( 'Console.Styler.background(rgb)', () => Styler.background( [ 10, 20, 30 ] )( text ) );
-bench( 'Console.Styler.background(ansi)', () => Styler.background( 18 )( text ) );
-bench( 'Console.Styler.bgBlue', () => Styler.bgBlue( text ) );
+bench( '  Console.Styler.color(name)', () => Styler.color( 'red' )( text ) );
+bench( '  Console.Styler.color(hex)', () => Styler.color( '#ccc' )( text ) );
+bench( '  Console.Styler.color(rgb)', () => Styler.color( [ 10, 20, 30 ] )( text ) );
+bench( '  Console.Styler.color(ansi)', () => Styler.color( 18 )( text ) );
+bench( '  Console.Styler.red', () => Styler.red( text ) );
+bench( '  Console.Styler.blue', () => Styler.blue( text ) );
 
 console.log();
 
-bench( 'Console.Styler.bold.red(text)', () => Styler.bold.red( text ) );
-bench( 'Console.Styler.bold.red.bgBlue(text)', () => Styler.bold.red.bgBlue( text ) );
+bench( '  Console.Styler.background(name)', () => Styler.background( 'red' )( text ) );
+bench( '  Console.Styler.background(hex)', () => Styler.background( '#ccc' )( text ) );
+bench( '  Console.Styler.background(rgb)', () => Styler.background( [ 10, 20, 30 ] )( text ) );
+bench( '  Console.Styler.background(ansi)', () => Styler.background( 18 )( text ) );
+bench( '  Console.Styler.bgRed', () => Styler.bgRed( text ) );
+bench( '  Console.Styler.bgBlue', () => Styler.bgBlue( text ) );
+
+console.log();
+
+bench( '  Console.Styler.bold(text)', () => Styler.bold( text ) );
+bench( '  Console.Styler.dim(text)', () => Styler.dim( text ) );
+bench( '  Console.Styler.italic(text)', () => Styler.italic( text ) );
+
+console.log();
+
+bench( '  Console.Styler.bold.italic(text)', () => Styler.bold.italic( text ) );
+bench( '  Console.Styler.dim.italic.underline(text)', () => Styler.dim.italic.underline( text ) );
+bench( '  Console.Styler.italic.bold.red.bgBlack(text)', () => Styler.italic.bold.red.bgBlack( text ) );
 
 console.log( '========================================\n' );
 
