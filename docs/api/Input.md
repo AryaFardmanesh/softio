@@ -32,7 +32,7 @@ Prompts the user to enter a value via the console.
 * **Example**:
 
 ```js
-const name = Console.In.input('Enter your name: ');
+const name = await Console.In.input('Enter your name: ');
 Console.Out.writeln(`Hello, ${name}!`);
 ```
 
@@ -50,7 +50,7 @@ Prompts the user for a **password or hidden input**, masking the characters they
 * **Example**:
 
 ```js
-const pass = Console.In.password('Enter your password: ', '*');
+const pass = await Console.In.password('Enter your password: ', '*');
 Console.Out.writeln('Password received!');
 ```
 
@@ -72,7 +72,7 @@ Displays a **yes/no confirmation prompt** and returns a `boolean`.
 * **Example**:
 
 ```js
-const confirmed = Console.In.confirm('Do you want to continue?');
+const confirmed = await Console.In.confirm('Do you want to continue?');
 if (confirmed) {
   Console.Out.writeln('Continuing...');
 } else {
@@ -95,7 +95,7 @@ Prompts the user to enter a **numeric value**.
 * **Example**:
 
 ```js
-const age = Console.In.readNumber('How old are you? ');
+const age = await Console.In.readNumber('How old are you? ');
 if (!isNaN(age)) {
   Console.Out.writeln(`You're ${age} years old!`);
 } else {
