@@ -74,8 +74,8 @@ Here’s a simple interactive program using Softio:
 ```js
 const Console = require('softio');
 
-const name = Console.In.input('Enter your name: ');
-const age = Console.In.readNumber('Enter your age: ');
+const name = await Console.In.input('Enter your name: ');
+const age = await Console.In.readNumber('Enter your age: ');
 
 if (age < 18) {
 	Console.Out.write('Sorry, you must be at least 18.');
