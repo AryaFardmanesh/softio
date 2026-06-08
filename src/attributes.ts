@@ -172,7 +172,14 @@ export default class Attr {
 	}
 
 	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value: number = 1 ): void {
-		stdout.write( cursorDirection[ direction ].replace( '#', value.toString() ) );
+		const code = cursorDirection[ direction ];
+
+		if ( code === undefined ) {
+			throw new TypeError( `The value '${ direction }' is invalid for the 'cursorWalk' method.` );
+			return;
+		}
+
+		stdout.write( code.replace( '#', value.toString() ) );
 	}
 
 	public static cursorSave( mode: 'DEC' | 'SCO' = 'SCO' ): void {
@@ -186,10 +193,24 @@ export default class Attr {
 	}
 
 	public static cursorStyle( style: ANSI_Cursor_Style_T ): void {
-		stdout.write( cursorVisibility[ style ] );
+		const code = cursorVisibility[ style ];
+
+		if ( code === undefined ) {
+			throw new TypeError( `The value '${ style }' is invalid for the 'cursorStyle' method.` );
+			return;
+		}
+
+		stdout.write( code );
 	}
 
 	public static erase( mode: ANSI_Erase_T = 'entire' ): void {
-		stdout.write( eraseMode[ mode ] );
+		const code = eraseMode[ mode ];
+
+		if ( code === undefined ) {
+			throw new TypeError( `The value '${ mode }' is invalid for the 'erase' method.` );
+			return;
+		}
+
+		stdout.write( code );
 	}
 }
