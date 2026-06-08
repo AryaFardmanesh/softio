@@ -1,5 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
-import TestUtils from './utils';
+import TestUtils from './utils/utils';
 import {
 	hexPattern,
 	convertHexToRGB

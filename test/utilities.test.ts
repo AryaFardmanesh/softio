@@ -1,5 +1,5 @@
 import { jest, describe, it, expect } from '@jest/globals';
-import TestUtils from './utils';
+import TestUtils from './utils/utils';
 import Utilities from '../src/utilities';
 import { backgroundColors, fonts, resetFonts, textColors } from '../src/var/ansi';
 import { ANSI_Color_T, ANSI_Style_T } from '../src/main.d';
