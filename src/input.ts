@@ -14,15 +14,47 @@ export default class In {
 		return line;
 	}
 
-	public static async password( message: string = '', _mask: string = '' ): Promise<string> {
-		// ????
-		const rl = readline.createInterface( {
-			input: stdin
-		} );
+	public static async password( message: string = '', mask: string = '' ): Promise<string> {
+		return new Promise( ( resolve ) => {
+			stdout.write( message );
 
-		const data = await rl.question( message );
-		rl.close();
-		return data;
+			let value = '';
+
+			stdin.setRawMode( true );
+			stdin.resume();
+			stdin.setEncoding( 'utf8' );
+
+			function onData( char ) {
+				if ( char === '\r' || char === '\n' ) {
+					stdout.write( '\n' );
+					stdin.setRawMode( false );
+					stdin.pause();
+					stdin.removeListener( 'data', onData );
+					resolve( value );
+					return;
+				}
+
+				if ( char === '\u0003' /* Ctrl+C */ ) {
+					process.exit();
+				}
+
+				if ( char === '\u007f' /* Backspace */ ) {
+					if ( value.length > 0 ) {
+						value = value.slice( 0, -1 );
+
+						for (let i = 0; i < mask.length; i++) {
+							stdout.write( '\b \b' );
+						}
+					}
+					return;
+				}
+
+				value += char;
+				stdout.write( mask );
+			}
+
+			stdin.on( 'data', onData );
+		} );
 	}
 
 	public static async confirm( message: string = '' ): Promise<boolean> {
