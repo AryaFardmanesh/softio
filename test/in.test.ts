@@ -5,6 +5,10 @@ import { stdin, stdout } from '../src/var/io';
 let writeSpy: unknown;
 
 beforeEach( () => {
+	if ( !stdin.setRawMode ) {
+		( stdin as any ).setRawMode = () => {};
+	}
+
 	jest.spyOn( stdin, 'setRawMode' ).mockImplementation( () => {} );
 	jest.spyOn( stdin, 'resume' ).mockImplementation( () => {} );
 	jest.spyOn( stdin, 'pause' ).mockImplementation( () => {} );
