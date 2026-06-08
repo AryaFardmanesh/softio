@@ -1,4 +1,3 @@
-const path = require( 'node:path' );
 const nodeExternals = require( 'webpack-node-externals' );
 const tsconfig = require( './tsconfig.json' );
 

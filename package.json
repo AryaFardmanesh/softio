@@ -1,6 +1,6 @@
 {
 	"name": "softio",
-	"version": "4.0.1",
+	"version": "4.1.0",
 	"description": "Elegant and unified terminal I/O for Node.js — simplify reading input, writing output, and controlling the console with ease.",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
@@ -52,6 +52,7 @@
 		"@babel/preset-env": "^7.26.0",
 		"@babel/preset-typescript": "^7.26.0",
 		"@jest/globals": "^29.7.0",
+		"@types/node": "^25.9.1",
 		"@types/readline-sync": "^1.4.8",
 		"gulp": "^5.0.0",
 		"gulp-clean": "^0.4.0",
@@ -63,8 +64,5 @@
 		"typescript": "^5.7.2",
 		"webpack-node-externals": "^3.0.0",
 		"webpack-stream": "^7.0.0"
-	},
-	"dependencies": {
-		"readline-sync": "^1.4.10"
 	}
 }

@@ -1,502 +1,302 @@
-import { jest, beforeEach, describe, it, expect } from '@jest/globals';
-import readlineSync from 'readline-sync';
+import { jest, beforeEach, afterEach, describe, it, expect } from '@jest/globals';
 import In from '../src/input';
+import { stdin, stdout } from '../src/var/io';
 
-jest.mock( 'readline-sync' );
-
-let spyQuestion;
-let userInput = '';
+let writeSpy: unknown;
 
 beforeEach( () => {
-	spyQuestion = jest.spyOn( readlineSync, 'question' ).mockImplementationOnce( ( _query: string ) => {
-		return userInput;
-	} );
+	if ( !stdin.setRawMode ) {
+		( stdin as any ).setRawMode = () => {};
+	}
+
+	jest.spyOn( stdin, 'setRawMode' ).mockImplementation( () => {} );
+	jest.spyOn( stdin, 'resume' ).mockImplementation( () => {} );
+	jest.spyOn( stdin, 'pause' ).mockImplementation( () => {} );
+	jest.spyOn( stdin, 'setEncoding' ).mockImplementation( () => {} );
+
+	writeSpy = jest.spyOn( stdout, 'write' ).mockImplementation( () => {} );
 } );
+
+afterEach(() => {
+	jest.restoreAllMocks();
+});
 
 function makeConfirmText( message: string ): string {
 	return `${ message } (y/n) `;
 }
 
+function emitDataToStdin( data: string = '', addNewline: boolean = true ) {
+	for ( let i = 0; i < data.length; i++ ) {
+		stdin.emit( 'data', data[ i ] );
+	}
+
+	if ( addNewline ) {
+		stdin.emit( 'data', '\n' );
+	}
+}
+
 describe( 'Testing input methods - Test Group', () => {
 	describe( 'Testing .input method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', () => {
-			userInput = '';
+		it( 'should read data from input correctly - Unit 1', async () => {
+			const userInput = 'Hello';
 			const message = '';
+			const promise = In.input( message );
 
-			const result = In.input( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( userInput );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 
 		it( 'should read data from input correctly - Unit 2', async () => {
-			const message = 'Enter your name: ';
-			userInput = 'John Doe';
+			const userInput = 'Arya';
+			const message = 'What is your name: ';
+			const promise = In.input( message );
 
-			const result = In.input( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 3', async () => {
-			const message = 'Enter something here... ';
-			userInput = 'Hello world!';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 4', async () => {
-			const message = 'Enter something here... ';
-			userInput = '20';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 5', async () => {
-			const message = 'Hello';
-			userInput = 'Hello';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 6', async () => {
-			const message = 'Enter your text: ';
-			userInput = '     ';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 7', async () => {
-			const message = '...';
-			userInput = '!';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 8', async () => {
-			const message = 'Enter something here... ';
-			userInput = '    Hello world      ';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 9', async () => {
-			const message = 'Enter something here... ';
-			userInput = 'dsadsad sa fjsa   Hello world     312903 219dadksj dkaj i ';
-
-			const result = In.input( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should throw an error if the message is not a string - Unit 10', () => {
-			expect( () => In.input( 123 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( 1.3 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( true as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( null as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( {} as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( [] as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.input( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 	} );
 
 	describe( 'Testing .password method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', () => {
-			userInput = '';
-			const message = '';
+		it( 'should read data from input correctly - Unit 1', async () => {
+			const label = 'Password: ';
+			const mask = '*';
+			const userInput = 'abc';
 
-			const result = In.password( message );
+			const promise = In.password( label, mask );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			emitDataToStdin( userInput );
+
+			const result = await promise;
+
 			expect( result ).toBe( userInput );
+			expect( writeSpy ).toHaveBeenCalledWith( label );
+			expect( writeSpy ).toHaveBeenCalledWith( mask );
 		} );
 
-		it( 'should read data from input correctly - Unit 2', () => {
-			const message = 'Enter your name: ';
-			userInput = 'John Doe';
+		it( 'should read data from input correctly - Unit 2', async () => {
+			const label = 'Enter your password: ';
+			const mask = '*';
+			const userInput = 'Hello world!';
 
-			const result = In.password( message );
+			const promise = In.password( label, mask );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			emitDataToStdin( userInput );
+
+			const result = await promise;
+
 			expect( result ).toBe( userInput );
+			expect( writeSpy ).toHaveBeenCalledWith( label );
+			expect( writeSpy ).toHaveBeenCalledWith( mask );
 		} );
 
-		it( 'should read data from input correctly - Unit 3', () => {
-			const message = 'Enter something here... ';
-			userInput = 'Hello world!';
+		it( 'should read data from input correctly - Unit 3', async () => {
+			const label = 'Enter your password: ';
+			const mask = '*';
+			const userInput = 'AB\u007f';
 
-			const result = In.password( message );
+			const promise = In.password( label, mask );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
+			emitDataToStdin( userInput );
+
+			const result = await promise;
+
+			expect( result ).toBe( 'A' );
+			expect( writeSpy ).toHaveBeenCalledWith( label );
+			expect( writeSpy ).toHaveBeenCalledWith( mask );
 		} );
 
-		it( 'should read data from input correctly - Unit 4', () => {
-			const message = 'Enter something here... ';
-			userInput = '20';
+		it( 'should read data from input correctly - Unit 4', async () => {
+			const label = 'Enter your password: ';
+			const mask = '*';
+			const userInput = 'AB\u007f\u007f';
 
-			const result = In.password( message );
+			const promise = In.password( label, mask );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
+			emitDataToStdin( userInput );
 
-		it( 'should read data from input correctly - Unit 5', () => {
-			const message = 'Hello';
-			userInput = 'Hello';
+			const result = await promise;
 
-			const result = In.password( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 6', () => {
-			const message = 'Enter your text: ';
-			userInput = '     ';
-
-			const result = In.password( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 7', () => {
-			const message = '...';
-			userInput = '!';
-
-			const result = In.password( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 8', () => {
-			const message = 'Enter something here... ';
-			userInput = '    Hello world      ';
-
-			const result = In.password( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should read data from input correctly - Unit 9', () => {
-			const message = 'Enter something here... ';
-			userInput = 'dsadsad sa fjsa   Hello world     312903 219dadksj dkaj i ';
-
-			const result = In.password( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( userInput );
-		} );
-
-		it( 'should throw an error if the message is not a string - Unit 10', () => {
-			expect( () => In.password( 123 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( 1.3 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( true as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( null as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( {} as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( [] as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.password( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
+			expect( result ).toBe( '' );
+			expect( writeSpy ).toHaveBeenCalledWith( label );
+			expect( writeSpy ).toHaveBeenCalledWith( mask );
 		} );
 	} );
 
 	describe( 'Testing .confirm method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', () => {
-			const message = 'Are you agree';
-			userInput = 'no';
+		it( 'should read data from input correctly - Unit 1', async () => {
+			const userInput = 'Yes';
+			const message = 'Do you want to delete this items ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( false );
+			const result = await promise;
+			expect( result ).toBe( true );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
-		it( 'should read data from input correctly - Unit 2', () => {
-			const message = 'Are you agree';
-			userInput = 'No';
+		it( 'should read data from input correctly - Unit 2', async () => {
+			const userInput = 'YES';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( false );
+			const result = await promise;
+			expect( result ).toBe( true );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
-		it( 'should read data from input correctly - Unit 3', () => {
-			const message = 'Are you agree';
-			userInput = 'nO';
+		it( 'should read data from input correctly - Unit 3', async () => {
+			const userInput = 'yes';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( false );
+			const result = await promise;
+			expect( result ).toBe( true );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
-		it( 'should read data from input correctly - Unit 4', () => {
-			const message = 'Are you agree';
-			userInput = 'NO';
+		it( 'should read data from input correctly - Unit 4', async () => {
+			const userInput = 'yeS';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( false );
+			const result = await promise;
+			expect( result ).toBe( true );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
 		it( 'should read data from input correctly - Unit 5', async () => {
-			const message = 'Are you agree';
-			userInput = 'n';
+			const userInput = 'No';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			const result = await promise;
 			expect( result ).toBe( false );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
 		it( 'should read data from input correctly - Unit 6', async () => {
-			const message = 'Are you agree';
-			userInput = 'N';
+			const userInput = 'NO';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
+			const result = await promise;
 			expect( result ).toBe( false );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
 		it( 'should read data from input correctly - Unit 7', async () => {
-			const message = 'Are you agree';
-			userInput = 'yes';
+			const userInput = 'no';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
+			const result = await promise;
+			expect( result ).toBe( false );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 
 		it( 'should read data from input correctly - Unit 8', async () => {
-			const message = 'Are you agree';
-			userInput = 'Yes';
+			const userInput = 'nO';
+			const message = 'Do you want to delete this item ?';
+			const promise = In.confirm( message );
 
-			const result = In.confirm( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 9', async () => {
-			const message = 'Are you agree';
-			userInput = 'YEs';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 10', async () => {
-			const message = 'Are you agree';
-			userInput = 'yeS';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 11', async () => {
-			const message = 'Are you agree';
-			userInput = 'yES';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 12', async () => {
-			const message = 'Are you agree';
-			userInput = 'YES';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 13', async () => {
-			const message = 'Are you agree';
-			userInput = 'y';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should read data from input correctly - Unit 14', async () => {
-			const message = 'Are you agree';
-			userInput = 'Y';
-
-			const result = In.confirm( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( makeConfirmText( message ) );
-			expect( result ).toBe( true );
-		} );
-
-		it( 'should throw an error if the message is not a string - Unit 15', () => {
-			expect( () => In.confirm( 123 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( 1.3 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( true as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( null as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( {} as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( [] as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.confirm( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
+			const result = await promise;
+			expect( result ).toBe( false );
+			expect( writeSpy ).toHaveBeenCalledWith( makeConfirmText( message ) );
 		} );
 	} );
 
 	describe( 'Testing .readNumber method - Test Group', () => {
-		it( 'should read data from input correctly - Unit 1', () => {
+		it( 'should read data from input correctly - Unit 1', async () => {
+			const userInput = '21';
 			const message = 'Enter your age: ';
-			userInput = '21';
+			const promise = In.readNumber( message );
 
-			const result = In.readNumber( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( Number( userInput ) );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 
-		it( 'should read data from input correctly - Unit 2', () => {
-			const message = 'Enter your name: ';
-			userInput = '0';
+		it( 'should read data from input correctly - Unit 2', async () => {
+			const userInput = '12315';
+			const message = 'Enter your number: ';
+			const promise = In.readNumber( message );
 
-			const result = In.readNumber( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( Number( userInput ) );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 
-		it( 'should read data from input correctly - Unit 3', () => {
-			const message = 'Enter your name: ';
-			userInput = '';
+		it( 'should read data from input correctly - Unit 3', async () => {
+			const userInput = '0x15';
+			const message = 'Enter your number: ';
+			const promise = In.readNumber( message );
 
-			const result = In.readNumber( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( Number( userInput ) );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 
-		it( 'should read data from input correctly - Unit 4', () => {
-			const message = 'Enter your name: ';
-			userInput = 'Hello';
+		it( 'should read data from input correctly - Unit 4', async () => {
+			const userInput = '0b101010';
+			const message = 'Enter your number: ';
+			const promise = In.readNumber( message );
 
-			const result = In.readNumber( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( Number( userInput ) );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 
-		it( 'should read data from input correctly - Unit 5', () => {
-			const message = 'Enter your name: ';
-			userInput = '  +10  ';
+		it( 'should read data from input correctly - Unit 5', async () => {
+			const userInput = '0o147156';
+			const message = 'Enter your number: ';
+			const promise = In.readNumber( message );
 
-			const result = In.readNumber( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( Number( userInput ) );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 
-		it( 'should read data from input correctly - Unit 6', () => {
-			const message = 'Enter your name: ';
-			userInput = '-10';
+		it( 'should read data from input correctly - Unit 6', async () => {
+			const userInput = 'no-numberic';
+			const message = 'Enter your number: ';
+			const promise = In.readNumber( message );
 
-			const result = In.readNumber( message );
+			emitDataToStdin( userInput );
 
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
+			const result = await promise;
 			expect( result ).toBe( Number( userInput ) );
-		} );
-
-		it( 'should read data from input correctly - Unit 7', () => {
-			const message = 'Enter your name: ';
-			userInput = '+2.5';
-
-			const result = In.readNumber( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( Number( userInput ) );
-		} );
-
-		it( 'should read data from input correctly - Unit 8', () => {
-			const message = 'Enter your name: ';
-			userInput = '-12.515';
-
-			const result = In.readNumber( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( Number( userInput ) );
-		} );
-
-		it( 'should read data from input correctly - Unit 9', () => {
-			const message = 'Enter your name: ';
-			userInput = '0x50';
-
-			const result = In.readNumber( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( Number( userInput ) );
-		} );
-
-		it( 'should read data from input correctly - Unit 10', () => {
-			const message = 'Enter your name: ';
-			userInput = '0o76';
-
-			const result = In.readNumber( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( Number( userInput ) );
-		} );
-
-		it( 'should read data from input correctly - Unit 11', () => {
-			const message = 'Enter your name: ';
-			userInput = '0b1111';
-
-			const result = In.readNumber( message );
-
-			expect( spyQuestion ).toHaveBeenCalledWith( message );
-			expect( result ).toBe( Number( userInput ) );
-		} );
-
-		it( 'should throw an error if the message is not a string - Unit 12', () => {
-			expect( () => In.readNumber( 123 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( 1.3 as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( true as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( null as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( {} as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( { id: 'Hello' } as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( [] as unknown as string ) ).toThrow( TypeError );
-			expect( () => In.readNumber( [ 'Hello' ] as unknown as string ) ).toThrow( TypeError );
+			expect( writeSpy ).toHaveBeenCalledWith( message );
 		} );
 	} );
 } );

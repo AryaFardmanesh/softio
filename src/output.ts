@@ -1,20 +1,16 @@
 import formatMessage from './utils/formatmsg';
 import silentEcho from './utils/silentecho';
-import typeCheck from './utils/typecheck';
-import { stdout } from './var/stdout';
-import { stderr } from './var/stderr';
-import colorConvertor from './utils/colorconvertor';
-import { convertTextStyleToANSI } from './var/ansi/style';
-import {
-	ShotStyleT,
-	ANSI_Style_T
-} from './main.d';
 import {
 	_bg,
 	_color,
 	_fontStyle
 } from './var/attrSymbols';
 import Attr from './attributes';
+import Utils from './utilities';
+import { stderr, stdout } from './var/io';
+import {
+	ShotStyleT
+} from './main.d';
 
 export default class Out {
 	public static write( ...message: unknown[] ): void {
@@ -28,35 +24,30 @@ export default class Out {
 	}
 
 	public static printf( message: string, ...argv: unknown[] ): void {
-		typeCheck( 'printf', 'string', message );
 		message = formatMessage( message, argv );
 		stdout.write( message );
 	}
 
 	public static error( message: string, ...argv: unknown[] ): void {
-		typeCheck( 'error', 'string', message );
 		message = formatMessage( message, argv );
 		stderr.write( message );
 	}
 
 	public static shot<T extends Function>( func: T, style?: ShotStyleT ): T {
 		return <Function>( ( ...data: unknown[] ) => {
-
-			const color = ( style?.color ) ? colorConvertor( 'shot', 'color', style.color ) : '';
-			const bg = ( style?.background ) ? colorConvertor( 'shot', 'bg', style.background ) : '';
-			const fstyle = ( style?.style ) ? convertTextStyleToANSI( style.style as ANSI_Style_T ) : '';
+			const color = ( style?.color ) ? Utils.color( style.color ) : '';
+			const bg = ( style?.background ) ? Utils.background( style.background ) : '';
+			const fstyle = ( style?.style ) ? Utils.fontStyle( style.style ) : '';
 
 			stdout.write( color + bg + fstyle );
-
 			const result = func( ...data );
 
 			// Retrieve the styles
-			Attr.background(Attr[_bg]);
-			Attr.color(Attr[_color]);
-			if ( style?.style ) Attr.styleOff( style.style as ANSI_Style_T );
+			Attr.background( Attr[ _bg ] );
+			Attr.color( Attr[ _color ] );
+			if ( style?.style ) Attr.fontStyleReset( style.style );
 
 			return result;
-
 		} ) as T;
 	}
 }

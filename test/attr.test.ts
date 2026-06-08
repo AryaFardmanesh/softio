@@ -132,32 +132,32 @@ describe( 'Testing attributes methods - Test Group', () => {
 		} );
 	} );
 
-	describe( 'Testing .style method - Test Group', () => {
+	describe( 'Testing .fontStyle method - Test Group', () => {
 		it( 'should chage the text style - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
-			Attr.style( 'bold' );
+			Attr.fontStyle( 'bold' );
 			expect( spy ).toHaveBeenCalledWith( '\x1b[1m' );
 		} );
 	} );
 
-	describe( 'Testing .styleOff method - Test Group', () => {
+	describe( 'Testing .fontStyleReset method - Test Group', () => {
 		it( 'should chage the text style - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
-			Attr.styleOff( 'bold' );
+			Attr.fontStyleReset( 'bold' );
 			expect( spy ).toHaveBeenCalledWith( '\x1b[22m' );
 		} );
 
 		it( 'should chage the text style - Unit 2', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
-			Attr.styleOff( 'strikethrough' );
+			Attr.fontStyleReset( 'strikethrough' );
 			expect( spy ).toHaveBeenCalledWith( '\x1b[29m' );
 		} );
 	} );
 
-	describe( 'Testing .styleOffAll method - Test Group', () => {
+	describe( 'Testing .fontStyleResetAll method - Test Group', () => {
 		it( 'should chage the text style - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
-			Attr.styleOffAll();
+			Attr.fontStyleResetAll();
 			expect( spy ).toHaveBeenCalledWith(
 				'\x1b[22m' +
 				'\x1b[23m' +
@@ -182,7 +182,7 @@ describe( 'Testing attributes methods - Test Group', () => {
 		it( 'should chage the cursor position - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.moveCol( 10 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[10;G' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[10G' );
 		} );
 	} );
 
@@ -198,42 +198,42 @@ describe( 'Testing attributes methods - Test Group', () => {
 		it( 'should chage the cursor position - Unit 1', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.cursorWalk( 'up', 1 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[1;A' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[1A' );
 		} );
 
 		it( 'should chage the cursor position - Unit 2', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.cursorWalk( 'down', 1 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[1;B' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[1B' );
 		} );
 
 		it( 'should chage the cursor position - Unit 3', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.cursorWalk( 'right', 1 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[1;C' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[1C' );
 		} );
 
 		it( 'should chage the cursor position - Unit 4', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.cursorWalk( 'left', 1 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[1;D' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[1D' );
 		} );
 
 		it( 'should chage the cursor position - Unit 5', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.cursorWalk( 'next', 1 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[1;E' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[1E' );
 		} );
 
 		it( 'should chage the cursor position - Unit 6', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
 			Attr.cursorWalk( 'previous', 1 );
-			expect( spy ).toHaveBeenCalledWith( '\x1b[1;F' );
+			expect( spy ).toHaveBeenCalledWith( '\x1b[1F' );
 		} );
 
 		it( 'should chage the cursor position - Unit 7', () => {
 			const spy = jest.spyOn( process.stdout, 'write' );
-			Attr.cursorWalk( 'go-up' );
+			Attr.cursorWalk( 'line-up' );
 			expect( spy ).toHaveBeenCalledWith( '\x1b[M' );
 		} );
 

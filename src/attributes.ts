@@ -1,30 +1,31 @@
-import { stdout } from './var/stdout';
-import { makeANSI } from './var/ansi/base';
-import { convertDisableTextStyleANSI, convertTextStyleToANSI } from './var/ansi/style';
-import { convertTextEraseToANSI } from './var/ansi/erase';
-import colorConvertor from './utils/colorconvertor';
-import typeCheck from './utils/typecheck';
-import {
-	convertTextCursorMoveToANSI,
-	convertTextCursorStyleToANSI
-} from './var/ansi/cursor';
-import {
-	convertHexToRGB,
-	isValidHex
-} from './var/ansi/color';
-import {
-	_bg,
-	_color,
-	_fontStyle
-} from './var/attrSymbols';
 import {
 	ANSI_Cursor_Movement_T,
 	ANSI_Cursor_Style_T,
 	BgColorParam_T,
 	ANSI_Style_T,
 	ColorParam_T,
-	ANSI_Erase_T
+	ANSI_Erase_T,
+	ANSI_Color_T,
+	ANSI_Background_T
 } from './main.d';
+import {
+	backgroundColors,
+	convertHexToRGB,
+	cursorDirection,
+	cursorVisibility,
+	eraseMode,
+	fonts,
+	hexPattern,
+	resetFonts,
+	textColors
+} from './var/ansi';
+import {
+	_bg,
+	_color,
+	_fontStyle
+} from './var/attrSymbols';
+import { stdout } from './var/io';
+
 
 export default class Attr {
 	static [_bg]: BgColorParam_T = 'default';
@@ -38,10 +39,6 @@ export default class Attr {
 	}
 
 	public static set title( value: string ) {
-		if ( typeof value !== 'string' ) {
-			throw new TypeError( `The 'title' property only takes a string as a title.` );
-		}
-
 		process.title = value;
 	}
 
@@ -54,120 +51,166 @@ export default class Attr {
 	}
 
 	public static reset(): void {
-		stdout.write( makeANSI( [ '0' ] ) );
+		stdout.write( '\x1B[0m' );
 	}
 
 	public static color( color: ColorParam_T ): void {
-		typeCheck( 'color', [ 'string', 'number', 'object' ], color );
-		this[_color] = color;
-		stdout.write( colorConvertor( 'color', 'color', color ) );
+		this[ _color ] = color;
+
+		if ( Array.isArray( color ) ) {
+			stdout.write( `\x1B[38;2;${ color[0] };${ color[1] };${ color[2] }m` );
+		}else if ( typeof color === 'number' ) {
+			stdout.write( `\x1B[38;5;${ color }m` );
+		}else if ( hexPattern.test( color ) ) {
+			const rgb = convertHexToRGB( color );
+			stdout.write( `\x1B[38;2;${ rgb[0] };${ rgb[1] };${ rgb[2] }m` );
+		}else {
+			stdout.write( textColors[ color ] || textColors.default );
+		}
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static colorRGB( red: number, green: number, blue: number ): void {
-		this[_color] = [red, green, blue];
-		stdout.write( makeANSI( [ '38', '2', red, green, blue ] ) );
+		this[ _color ] = [ red, green, blue ];
+		stdout.write( `\x1B[38;2;${ red };${ green };${ blue }m` );
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static colorHex( hex: string ): void {
-		if ( !isValidHex( hex ) ) {
+		if ( !hexPattern.test( hex ) ) {
 			throw new TypeError( `Attr.colorHex: '${ hex }' is not valid Hex value.` );
 		}
 
 		const rgb = convertHexToRGB( hex );
-		this[_color] = rgb;
-		stdout.write( makeANSI( [ '38', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+		this[ _color ] = rgb;
+		stdout.write( `\x1B[38;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
+	}
+
+	public static colorAnsi256( color: number ): void {
+		stdout.write( `\x1B[38;5;${ color }m` );
+	}
+
+	public static colorName( name: ANSI_Color_T ): void {
+		stdout.write( textColors[ name ] || textColors.default );
 	}
 
 	public static background( color: BgColorParam_T ): void {
-		typeCheck( 'background', [ 'string', 'number', 'object' ], color );
-		this[_bg] = color;
-		stdout.write( colorConvertor( 'background', 'bg', color ) );
+		this[ _bg ] = color;
+
+		if ( Array.isArray( color ) ) {
+			stdout.write( `\x1B[48;2;${ color[0] };${ color[1] };${ color[2] }m` );
+		}else if ( typeof color === 'number' ) {
+			stdout.write( `\x1B[48;5;${ color }m` );
+		}else if ( hexPattern.test( color ) ) {
+			const rgb = convertHexToRGB( color );
+			stdout.write( `\x1B[48;2;${ rgb[0] };${ rgb[1] };${ rgb[2] }m` );
+		}else {
+			stdout.write( backgroundColors[ color ] || backgroundColors.default );
+		}
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static backgroundRGB( red: number, green: number, blue: number ): void {
-		this[_bg] = [red, green, blue];
-		stdout.write( makeANSI( [ '48', '2', red, green, blue ] ) );
+		this[ _bg ] = [ red, green, blue ];
+		stdout.write( `\x1B[48;2;${ red };${ green };${ blue }m` );
 	}
 
-	/**
-	 * @deprecated
-	**/
 	public static backgroundHex( hex: string ): void {
-		if ( !isValidHex( hex ) ) {
+		if ( !hexPattern.test( hex ) ) {
 			throw new TypeError( `Attr.backgroundHex: '${ hex }' is not valid Hex value.` );
 		}
-	
+
 		const rgb = convertHexToRGB( hex );
-		this[_bg] = rgb;
-		stdout.write( makeANSI( [ '48', '2', rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] ] ) );
+		this[ _bg ] = rgb;
+		stdout.write( `\x1B[48;2;${ rgb[ 0 ] };${ rgb[ 1 ] };${ rgb[ 2 ] }m` );
 	}
 
-	public static style( style: ANSI_Style_T ): void {
-		stdout.write( convertTextStyleToANSI( style ) );
-		this[_fontStyle].push( style );
+	public static backgroundAnsi256( color: number ): void {
+		stdout.write( `\x1B[48;5;${ color }m` );
 	}
 
-	public static styleOff( style: ANSI_Style_T ): void {
-		stdout.write( convertDisableTextStyleANSI( style ) );
+	public static backgroundName( name: ANSI_Background_T ): void {
+		stdout.write( backgroundColors[ name ] || backgroundColors.default );
+	}
 
-		const index = this[_fontStyle].indexOf( style );
+	public static fontStyle( style: ANSI_Style_T ): void {
+		const result = fonts[ style ];
+		if ( result !== undefined ) {
+			this[ _fontStyle ].push( style );
+			stdout.write( result );
+		}
+	}
+
+	public static fontStyleReset( style: ANSI_Style_T ): void {
+		stdout.write( resetFonts[ style ] );
+
+		const index = this[ _fontStyle ].indexOf( style );
 		if ( index !== -1 ) {
 			this[_fontStyle].splice( index, 1 );
 		}
 	}
 
-	public static styleOffAll(): void {
+	public static fontStyleResetAll(): void {
 		stdout.write(
-			convertDisableTextStyleANSI( 'bold' ) +
-			convertDisableTextStyleANSI( 'italic' ) +
-			convertDisableTextStyleANSI( 'underline' ) +
-			convertDisableTextStyleANSI( 'blinking' ) +
-			convertDisableTextStyleANSI( 'reverse' ) +
-			convertDisableTextStyleANSI( 'hidden' ) +
-			convertDisableTextStyleANSI( 'strikethrough' )
+			resetFonts[ 'bold' ] +
+			resetFonts[ 'italic' ] +
+			resetFonts[ 'underline' ] +
+			resetFonts[ 'blinking' ] +
+			resetFonts[ 'reverse' ] +
+			resetFonts[ 'hidden' ] +
+			resetFonts[ 'strikethrough' ]
 		);
 	}
 
-	public static move( x: number, y: number ): void {
-		stdout.write( makeANSI( [ x, y ], 'f' ) );
+	public static move( x: number, y: number, suffix: ( 'H'|'f' ) = 'f' ): void {
+		stdout.write( `\x1B[${ x };${ y }${ suffix }` );
 	}
 
 	public static moveCol( x: number ): void {
-		stdout.write( makeANSI( [ x, 'G' ], '' ) );
+		stdout.write( `\x1B[${ x }G` );
 	}
 
 	public static moveHome(): void {
-		stdout.write( makeANSI( [], 'H' ) );
+		stdout.write( '\x1B[H' );
 	}
 
 	public static cursorWalk( direction: ANSI_Cursor_Movement_T, value: number = 1 ): void {
-		stdout.write( convertTextCursorMoveToANSI( direction, value ) );
+		const code = cursorDirection[ direction ];
+
+		if ( code === undefined ) {
+			throw new TypeError( `The value '${ direction }' is invalid for the 'cursorWalk' method.` );
+			return;
+		}
+
+		stdout.write( code.replace( '#', value.toString() ) );
 	}
 
 	public static cursorSave( mode: 'DEC' | 'SCO' = 'SCO' ): void {
 		const code = ( mode === 'SCO' ) ? 's' : '7';
-		stdout.write( makeANSI( [ code ], '' ) );
+		stdout.write( '\x1B[' + code );
 	}
 
 	public static cursorRestore( mode: 'DEC' | 'SCO' = 'SCO' ): void {
 		const code = ( mode === 'SCO' ) ? 'u' : '8';
-		stdout.write( makeANSI( [ code ], '' ) );
+		stdout.write( '\x1B[' + code );
 	}
 
 	public static cursorStyle( style: ANSI_Cursor_Style_T ): void {
-		stdout.write( convertTextCursorStyleToANSI( style ) );
+		const code = cursorVisibility[ style ];
+
+		if ( code === undefined ) {
+			throw new TypeError( `The value '${ style }' is invalid for the 'cursorStyle' method.` );
+			return;
+		}
+
+		stdout.write( code );
 	}
 
 	public static erase( mode: ANSI_Erase_T = 'entire' ): void {
-		stdout.write( convertTextEraseToANSI( mode ) );
+		const code = eraseMode[ mode ];
+
+		if ( code === undefined ) {
+			throw new TypeError( `The value '${ mode }' is invalid for the 'erase' method.` );
+			return;
+		}
+
+		stdout.write( code );
 	}
 }
