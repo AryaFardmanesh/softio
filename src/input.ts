@@ -42,7 +42,7 @@ export default class In {
 					if ( value.length > 0 ) {
 						value = value.slice( 0, -1 );
 
-						for (let i = 0; i < mask.length; i++) {
+						for ( let i = 0; i < mask.length; i++ ) {
 							stdout.write( '\b \b' );
 						}
 					}
