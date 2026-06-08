@@ -1,5 +1,4 @@
 import { describe, it, expect } from '@jest/globals';
-import TestUtils from './utils/utils';
 import { Styler as StylerI } from '../src/main.d';
 import Styler from '../src/styler';
 
