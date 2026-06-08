@@ -1,6 +1,6 @@
 import { jest, beforeEach, afterEach, describe, it, expect } from '@jest/globals';
 import In from '../src/input';
-import { stdin, stdout } from 'node:process';
+import { stdin, stdout } from '../src/var/io';
 
 let writeSpy: unknown;
 
