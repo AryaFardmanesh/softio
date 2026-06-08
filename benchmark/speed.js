@@ -76,19 +76,26 @@ Console.Styler.bold.red.bgBlue(text): 126.85 ms
 
 Version 4.1.0:
 =========== Softio Benchmark ===========
-Console.Styler.color(name): 41.17 ms
-Console.Styler.color(hex): 75.43 ms
-Console.Styler.color(rgb): 41.97 ms
-Console.Styler.color(ansi): 40.21 ms
-Console.Styler.blue : 24.90 ms
+Console.Styler.color(name): 38.18 ms
+Console.Styler.color(hex): 72.62 ms
+Console.Styler.color(rgb): 40.99 ms
+Console.Styler.color(ansi): 35.64 ms
+Console.Styler.red: 22.23 ms
+Console.Styler.blue: 27.21 ms
 
-Console.Styler.background(name): 40.97 ms
-Console.Styler.background(hex): 75.72 ms
-Console.Styler.background(rgb): 81.94 ms
-Console.Styler.background(ansi): 47.46 ms
-Console.Styler.bgBlue: 28.07 ms
+Console.Styler.background(name): 43.57 ms
+Console.Styler.background(hex): 69.64 ms
+Console.Styler.background(rgb): 41.21 ms
+Console.Styler.background(ansi): 36.55 ms
+Console.Styler.bgRed: 26.11 ms
+Console.Styler.bgBlue: 25.95 ms
 
-Console.Styler.bold.red(text): 52.65 ms
-Console.Styler.bold.red.bgBlue(text): 75.04 ms
+Console.Styler.bold(text): 29.06 ms
+Console.Styler.dim(text): 27.77 ms
+Console.Styler.italic(text): 27.13 ms
+
+Console.Styler.bold.italic(text): 50.77 ms
+Console.Styler.dim.italic.underline(text): 71.27 ms
+Console.Styler.italic.bold.red.bgBlack(text): 163.95 ms
 ========================================
 */
