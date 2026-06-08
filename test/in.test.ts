@@ -26,7 +26,9 @@ function emitDataToStdin( data: string = '', addNewline: boolean = true ) {
 		stdin.emit( 'data', data[ i ] );
 	}
 
-	stdin.emit( 'data', '\n' );
+	if ( addNewline ) {
+		stdin.emit( 'data', '\n' );
+	}
 }
 
 describe( 'Testing input methods - Test Group', () => {
