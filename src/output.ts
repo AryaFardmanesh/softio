@@ -45,7 +45,7 @@ export default class Out {
 			// Retrieve the styles
 			Attr.background( Attr[ _bg ] );
 			Attr.color( Attr[ _color ] );
-			if ( style?.style ) Attr.styleReset( style.style );
+			if ( style?.style ) Attr.fontStyleReset( style.style );
 
 			return result;
 		} ) as T;
