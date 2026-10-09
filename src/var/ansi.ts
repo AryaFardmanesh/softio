@@ -90,29 +90,34 @@ export const eraseMode = {
 
 export const hexPattern = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
 
-export function convertHexToRGB( hex: string ): [ number, number, number ] {
-	if ( !hexPattern.test( hex ) ) {
-		throw new TypeError( `The code '${ hex }' is not a valid hex color.` );
-	}
+export function convertHexToRGB(hex: string): readonly [number, number, number] {
+	let cleanHex = hex.startsWith('#') ? hex.slice(1) : hex;
 
-	if ( hex.startsWith( '#' ) ) {
-		hex = hex.slice( 1 );
-	}
+	if (cleanHex.length === 3) {
+		const r = parseInt(cleanHex[0]! + cleanHex[0]!, 16);
+		const g = parseInt(cleanHex[1]! + cleanHex[1]!, 16);
+		const b = parseInt(cleanHex[2]! + cleanHex[2]!, 16);
 
-	const rgb: [ number, number, number ] = [ 0, 0, 0 ];
-
-	if ( hex.length === 3 ) {
-		for ( let i = 0; i < 3; i++ ) {
-			const section = '0x' + ( hex[ i ] + hex[ i ] );
-			rgb[ i ] = Number( section );
+		if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) {
+			throw new TypeError(`The code '${hex}' is not a valid hex color.`);
 		}
-	}else if ( hex.length === 6 ) {
-		let index = 0;
-		for ( let i = 0; i < 6; i += 2 ) {
-			const section = '0x' + ( hex[ i ] + hex[ i + 1 ] );
-			rgb[ index++ ] = Number( section );
-		}
+
+		return [r, g, b] as const;
 	}
 
-	return rgb;
+	if (cleanHex.length === 6) {
+		const num = parseInt(cleanHex, 16);
+
+		if (Number.isNaN(num)) {
+			throw new TypeError(`The code '${hex}' is not a valid hex color.`);
+		}
+
+		const r = (num >> 16) & 255;
+		const g = (num >> 8) & 255;
+		const b = num & 255;
+
+		return [r, g, b] as const;
+	}
+
+	throw new TypeError(`The code '${hex}' is not a valid hex color.`);
 }
