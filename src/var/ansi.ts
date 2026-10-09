@@ -16,7 +16,9 @@ export const textColors = {
 	'bright-magenta': '\x1B[95m',
 	'bright-cyan': '\x1B[96m',
 	'bright-white': '\x1B[97m'
-};
+} as const;
+
+export type TextColorName = keyof typeof textColors;
 
 export const backgroundColors = {
 	'black': '\x1B[40m',
@@ -36,7 +38,9 @@ export const backgroundColors = {
 	'bright-magenta': '\x1B[105m',
 	'bright-cyan': '\x1B[106m',
 	'bright-white': '\x1B[107m'
-};
+} as const;
+
+export type BackgroundColorName = keyof typeof backgroundColors;
 
 export const fonts = {
 	'bold': '\x1B[1m',
@@ -47,7 +51,9 @@ export const fonts = {
 	'reverse': '\x1B[7m',
 	'hidden': '\x1B[8m',
 	'strikethrough': '\x1B[9m'
-};
+} as const;
+
+export type FontStyleName = keyof typeof fonts;
 
 export const resetFonts = {
 	'bold': '\x1B[22m',
@@ -58,7 +64,9 @@ export const resetFonts = {
 	'reverse': '\x1B[27m',
 	'hidden': '\x1B[28m',
 	'strikethrough': '\x1B[29m'
-};
+} as const;
+
+export type ResetFontStyleName = keyof typeof resetFonts;
 
 export const cursorDirection = {
 	'up': '\x1B[#A',
@@ -69,12 +77,16 @@ export const cursorDirection = {
 	'previous': '\x1B[#F',
 	'line-up': '\x1B[M',
 	'home': '\x1B[H'
-};
+} as const;
+
+export type CursorDirectionName = keyof typeof cursorDirection;
 
 export const cursorVisibility = {
 	'invisible': '\x1B[?25l',
 	'visible': '\x1B[?25h'
-};
+} as const;
+
+export type CursorVisibilityName = keyof typeof cursorVisibility;
 
 export const eraseMode = {
 	'in-display': '\x1B[J',
@@ -86,7 +98,9 @@ export const eraseMode = {
 	'cursor-until-end-line': '\x1B[0K',
 	'start-line-until-cursor': '\x1B[1K',
 	'entire-line': '\x1B[2K'
-};
+} as const;
+
+export type EraseModeName = keyof typeof eraseMode;
 
 export const hexPattern = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
 
