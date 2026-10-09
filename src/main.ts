@@ -15,3 +15,15 @@ export {
 	Utils,
 	Styler
 };
+
+const softio = {
+	version,
+	Out,
+	In,
+	Attr,
+	Events,
+	Utils,
+	Styler
+};
+
+export default softio;
