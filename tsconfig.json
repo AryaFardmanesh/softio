@@ -1,27 +1,34 @@
 {
 	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["ES2022"],
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"types": ["node"],
-		"outDir": "./dist",
-		"target": "es2016",
-		"module": "commonjs",
-		"sourceMap": true,
-		"removeComments": true,
+		"noEmit": true,
 		"newLine": "lf",
-		"noEmitOnError": true,
-		"allowJs": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
 		"strict": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"noImplicitThis": true,
+		"noImplicitReturns": true,
+		"noImplicitOverride": true,
 		"useUnknownInCatchVariables": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noImplicitReturns": true,
-		"noImplicitOverride": true,
-		"skipLibCheck": true
+		"exactOptionalPropertyTypes": true,
+		"noUncheckedIndexedAccess": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"isolatedModules": true
 	},
 	"include": [
-		"src/**/*.ts"
+		"src/**/*",
+		"tsup.config.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist"
 	]
 }

@@ -6,9 +6,8 @@
 	"types": "dist/main.d.ts",
 	"scripts": {
 		"bench:speed": "node ./benchmark/speed.js",
-		"clean:temp": "gulp clean:temp",
-		"clean": "gulp clean:out",
-		"build": "gulp",
+		"clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
+		"build": "tsup",
 		"test": "jest"
 	},
 	"files": [
@@ -44,8 +43,10 @@
 		"url": "git+https://github.com/AryaFardmanesh/softio.git"
 	},
 	"bugs": {
-		"url": "https://github.com/AryaFardmanesh/softio/issues"
+		"url": "https://github.com/AryaFardmanesh/softio/issues",
+		"email": "AryaFardmanesh.1383@gmail.com"
 	},
+	"homepage": "https://github.com/AryaFardmanesh/softio#readme",
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "^7.26.0",
@@ -53,16 +54,9 @@
 		"@babel/preset-typescript": "^7.26.0",
 		"@jest/globals": "^29.7.0",
 		"@types/node": "^25.9.1",
-		"@types/readline-sync": "^1.4.8",
-		"gulp": "^5.0.0",
-		"gulp-clean": "^0.4.0",
-		"gulp-header": "^1.8.9",
-		"gulp-replace": "^1.1.4",
-		"gulp-typescript": "^6.0.0-alpha.1",
 		"jest": "^29.7.0",
 		"ts-jest": "^29.2.5",
-		"typescript": "^5.7.2",
-		"webpack-node-externals": "^3.0.0",
-		"webpack-stream": "^7.0.0"
+		"tsup": "^8.5.1",
+		"typescript": "^5.7.2"
 	}
 }
