@@ -5,21 +5,32 @@ import silentEcho from './silentecho';
  * and replaces the variables defined in the message
  * with the data in argv.
 **/
-export default function formatMessage( message: string, argv: unknown[] ): string {
-	let formatMessage: string = '';
+export default function formatMessage(message: string, argv: readonly unknown[]): string {
+	if (argv.length === 0 || !message.includes('%v')) {
+		return message;
+	}
+
+	let formatted = '';
 	let argvCursor = 0;
+	const len = message.length;
 
-	for ( let i: number = 0; i < message.length; i++ ) {
-		const ch = message[ i ];
+	for (let i = 0; i < len; i++) {
+		const ch = message[i]!;
 
-		if ( ch === '%' && message[ i + 1 ] === 'v' ) {
+		if (ch === '%' && i + 1 < len && message[i + 1] === 'v') {
 			i++;
-			formatMessage += silentEcho( argv[ argvCursor++ ] );
+
+			if (argvCursor < argv.length) {
+				formatted += silentEcho(argv[argvCursor++]);
+			} else {
+				formatted += '%v';
+			}
+
 			continue;
 		}
 
-		formatMessage += ch;
+		formatted += ch;
 	}
 
-	return formatMessage;
+	return formatted;
 }
